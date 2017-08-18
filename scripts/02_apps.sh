@@ -1,17 +1,16 @@
 install_brew_apps() {
-  brew install mpv --with-bundle
-  brew install sox --with-flac --with-lame --with-libvorbis
+  renew_sudo
   brew install zsh --without-etcdir
 
-  brew install aria2 chromedriver cpulimit duti eye-d3 ffmpeg ghi git git-ftp handbrake haskell-stack hr httpie imagemagick jq livestreamer mas mediainfo mkvtoolnix mp4v2 onepass pup ripgrep rmlint shellcheck subliminal svgcleaner trash tree youtube-dl z
+  brew install aria2 avrdude cask ccache cmake cowsay cpulimit dockutil duti ffmpeg fontconfig ghi git git-ftp handbrake hr imagemagick lame livestreamer m-cli mas mediainfo mp4v2 python python3 qemu ripgrep rmlint shellcheck trash tree wget youtube-dl z
+  renew_sudo
 
   # install zsh_plugins
   brew install zsh-autosuggestions zsh-completions zsh-history-substring-search zsh-syntax-highlighting
-
+  renew_sudo
   # install apps from other taps
   brew install laurent22/massren/massren
-  brew install neovim/neovim/neovim
-  brew install vitorgalvao/geotoad/geotoad
+  renew_sudo
 
   # install and configure tor
   brew install tor torsocks
@@ -21,13 +20,13 @@ install_brew_apps() {
 
 install_cask_apps() {
   renew_sudo # to make the Caskroom on first install
-  brew cask install alfred anka-run apple-events atom bartender bettertouchtool blockblock calibre dolphin dropbox electron-api-demos fog gifloopcoder gitup google-chrome imageoptim imitone iterm2 keka oversight processing shotcut spectacle steam torbrowser transmission veertu-desktop whale whatsyoursign wwdc yacreader
+  brew cask install alfred amazon-music android-file-transfer android-studio applepi-baker anka-run apple-events arduino atom bartender bettertouchtool blockblock calibre dolphin dropbox electron-api-demos fog gifloopcoder gitup google-chrome imageoptim imitone iterm2 keka oversight processing shotcut spectacle steam torbrowser transmission veertu-desktop whale whatsyoursign wwdc yacreader
 
   brew cask install pokerstars --language='PT'
 
-  # install alternative versions
+  # install alternative versionss
   brew tap caskroom/versions
-  brew cask install affinity-designer-beta affinity-photo-beta dash3 google-chrome-canary openemu-experimental screenflow5
+  brew cask install dash3 google-chrome-canary openemu-experimental screenflow5
 
   # drivers
   brew tap caskroom/drivers
@@ -65,7 +64,7 @@ install_tinyscripts() {
 }
 
 install_mas_apps() {
-  readonly local mas_apps=('1password=443987910' 'affinity-designer=824171161' 'affinity-photo=824183456' 'colorsnapper2=969418666' 'dropshelf=540404405' 'haskell=841285201' 'ia-writer=775737590' 'quiver=866773894' 'reeder=880001334' 'spark=1176895641' 'tweetbot=557168941' 'xcode=497799835')
+  readonly local mas_apps=('apple_configurator_2=1037126344' 'hp_easy_scan=967004861' 'day_one=1055511498' 'xcode=497799835' 'cleanmydrive=523620159')
 
   mas signin "${mas_email}" "${mas_password}"
 

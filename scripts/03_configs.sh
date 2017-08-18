@@ -14,34 +14,7 @@ set_default_apps() {
     fi
   fi
 
-  # general extensions
-  for ext in {aac,avi,f4v,flac,m4a,m4b,mkv,mov,mp3,mp4,mpeg,mpg,part,wav,webm}; do duti -s io.mpv "${ext}" all; done # media
-  for ext in {7z,bz2,gz,rar,tar,tgz,zip}; do duti -s com.aone.keka "${ext}" all; done # archives
-  for ext in {cbr,cbz}; do duti -s com.richie.YACReader "${ext}" all; done # image archives
   for ext in {css,js,json,md,php,pug,py,rb,sh,txt}; do duti -s com.github.atom "${ext}" all; done # code
-
-  # Affinity apps (use beta versions when possible)
-  # Whenever a beta is older than the stable, the beta cannot be used, so we need to detect which is latest and always use that
-  readonly local afd_id='com.seriflabs.affinitydesigner'
-  readonly local afp_id='com.seriflabs.affinityphoto'
-  readonly local afdbeta_id='com.seriflabs.affinitydesigner.beta'
-  readonly local afpbeta_id='com.seriflabs.affinityphoto.beta'
-
-  readonly local afd_location="$(mdfind kMDItemCFBundleIdentifier = "${afd_id}")"
-  readonly local afp_location="$(mdfind kMDItemCFBundleIdentifier = "${afp_id}")"
-  readonly local afdbeta_location="$(mdfind kMDItemCFBundleIdentifier = "${afdbeta_id}")"
-  readonly local afpbeta_location="$(mdfind kMDItemCFBundleIdentifier = "${afpbeta_id}")"
-
-  readonly local afd_version="$(mdls -raw -name kMDItemVersion "${afd_location}")"
-  readonly local afp_version="$(mdls -raw -name kMDItemVersion "${afp_location}")"
-  readonly local afdbeta_version="$(mdls -raw -name kMDItemVersion "${afdbeta_location}" | sed -E 's/ \(.*//')"
-  readonly local afpbeta_version="$(mdls -raw -name kMDItemVersion "${afpbeta_location}" | sed -E 's/ \(.*//')"
-
-  [[ "${afd_version}" == "${afdbeta_version}" ]] && readonly local afd_latest="${afd_id}" || readonly local afd_latest="${afdbeta_id}"
-  [[ "${afp_version}" == "${afpbeta_version}" ]] && readonly local afp_latest="${afp_id}" || readonly local afp_latest="${afpbeta_id}"
-
-  for ext in {afdesign,eps}; do duti -s "${afd_latest}" "${ext}" all; done
-  duti -s "${afp_latest}" afphoto all
 }
 
 # set_keyboard_shortcuts() {
@@ -59,37 +32,11 @@ set_default_apps() {
   # }'
 # }
 
-install_commercial_fonts() {
-  readonly local tmp_fonts_dir="$(mktemp -d)"
 
-  for font_zip in "${HOME}/Library/Mobile Documents/com~apple~CloudDocs/fonts/"*; do
-    ditto -xk "${font_zip}" "${tmp_fonts_dir}"
-  done
-
-  find "${tmp_fonts_dir}" -iname '*otf' -exec mv '{}' "${HOME}/Library/Fonts" \;
-}
 
 configure_zsh() { # make zsh default shell
   sudo -S sh -c 'echo "/usr/local/bin/zsh" >> /etc/shells' <<< "${sudo_password}" 2> /dev/null
   sudo -S chsh -s '/usr/local/bin/zsh' "${USER}" <<< "${sudo_password}" 2> /dev/null
-}
-
-install_nvim_packages() {
-  # download and configure vim-plug
-  # there's a chance it won't be needed in the future (https://github.com/junegunn/vim-plug/issues/249)
-  curl --silent --location 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' --output "${HOME}/.config/nvim/autoload/plug.vim" --create-dirs
-  nvim +PlugInstall +qall
-}
-
-fix_initial_nvim_health() {
-  # save CheckHealth pre fixes so in future installs we can identify which are no longer needed
-  nvim +CheckHealth +'w ~/Desktop/Neovim_CheckHealth_before_fixes.txt' +qall
-
-  # fixes needed last time it was checked
-  infocmp "${TERM}" | sed 's/kbs=^[hH]/kbs=\\177/' > "/tmp/${TERM}.ti"
-  tic "/tmp/${TERM}.ti"
-
-  nvim +CheckHealth +'w ~/Desktop/Neovim_CheckHealth_after_fixes.txt' +qall
 }
 
 install_atom_packages() {
@@ -110,9 +57,7 @@ configure_git() {
   git config --global rerere.autoupdate true
 }
 
-configure_pinboard_scripts() {
-  pinboardlinkcheck --save-token --token "${pinboard_token}"
-}
+
 
 install_launchagents() {
   readonly local user_launchagents_dir="${HOME}/Library/LaunchAgents"

@@ -1,5 +1,5 @@
 run_install_dotfiles() {
-  curl --progress-bar --location 'https://github.com/vitorgalvao/dotfiles/archive/master.zip' | ditto -xk - '/tmp'
+  curl --progress-bar --location 'https://github.com/sconaway/dotfiles/archive/master.zip' | ditto -xk - '/tmp'
 
   # source all shell scripts
   for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do

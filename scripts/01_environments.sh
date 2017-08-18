@@ -6,15 +6,12 @@ install_brew() {
 
 install_python() {
   brew install python python3
-  # install some eggs
-  pip2 install neovim
-  pip3 install neovim
 }
 
 install_ruby() {
   brew install ruby
   # install some gems
-  gem install --no-document bundler maid neovim pry redcarpet ronn rubocop video_transcoding watir
+  gem install --no-document bundler rubocop rubocop-cask maid travis video_transcoding
   gem install --no-document pygments.rb # needed for installing ghi with brew
 }
 
