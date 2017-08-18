@@ -46,24 +46,28 @@ install_cask_apps() {
 
   # prefpanes, qlplugins, colorpickers
   brew cask install betterzipql epubquicklook qlcolorcode qlimagesize qlmarkdown qlplayground qlstephen quicklook-json quicklookase
-
+  renew_sudo
   # fonts
   brew tap caskroom/fonts
   # multiple
   brew cask install font-alegreya font-alegreya-sans font-alegreya-sans-sc font-alegreya-sc
   brew cask install font-fira-mono font-fira-sans
   brew cask install font-input
+  renew_sudo
   brew cask install font-merriweather font-merriweather-sans
   brew cask install font-pt-mono font-pt-sans font-pt-serif
   brew cask install font-source-code-pro font-source-sans-pro font-source-serif-pro
+  renew_sudo
   # sans
   brew cask install font-aileron font-bebas-neue font-exo2 font-montserrat font-lato font-open-sans font-open-sans-condensed font-signika
   # serif
   brew cask install font-abril-fatface font-butler font-gentium-book-basic font-playfair-display font-playfair-display-sc
+  renew_sudo
   # slab
   brew cask install font-bitter font-kreon
   # script
   brew cask install font-pecita
+  renew_sudo
 
   # games
   #brew cask install gridwars noiz2sa rootage torustrooper
