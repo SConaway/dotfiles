@@ -44,11 +44,7 @@ ask_details() {
   read -p 'Email address: ' email
   read -p 'Telephone number: ' telephone
   sudo -S defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Email: ${email}\nTel: ${telephone}" <<< "${sudo_password}" 2> /dev/null
-
-  clear
-  bold_echo 'Your Pinboard token for configuration of personal Pinboard scripts:'
-  read -p 'Pinboard token: ' pinboard_token
-
+  
   clear
 }
 

@@ -22,6 +22,7 @@ run_install_dotfiles() {
   install_cask_apps
   install_tinyscripts
   install_mas_apps
+  install_oh_my_zsh
 
   restore_settings
   set_default_apps

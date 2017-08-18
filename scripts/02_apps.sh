@@ -1,8 +1,14 @@
 install_brew_apps() {
   renew_sudo
   brew install zsh --without-etcdir
+  renew_sudo
+  brew install aria2 avrdude cask ccache cmake
+  brew install cowsay cpulimit curl dockutil duti ffmpeg
+  brew install fontconfig ghi git git-ftp handbrake hr
+  brew install imagemagick lame livestreamer m-cli mas
+  brew install mediainfo mp4v2 python python3 qemu ripgrep
+  brew install rmlint shellcheck trash tree wget youtube-dl z
 
-  brew install aria2 avrdude cask ccache cmake cowsay cpulimit dockutil duti ffmpeg fontconfig ghi git git-ftp handbrake hr imagemagick lame livestreamer m-cli mas mediainfo mp4v2 python python3 qemu ripgrep rmlint shellcheck trash tree wget youtube-dl z
   renew_sudo
 
   # install zsh_plugins
@@ -20,7 +26,12 @@ install_brew_apps() {
 
 install_cask_apps() {
   renew_sudo # to make the Caskroom on first install
-  brew cask install alfred amazon-music android-file-transfer android-studio applepi-baker anka-run apple-events arduino atom bartender bettertouchtool blockblock calibre dolphin dropbox electron-api-demos fog gifloopcoder gitup google-chrome imageoptim imitone iterm2 keka oversight processing shotcut spectacle steam torbrowser transmission veertu-desktop whale whatsyoursign wwdc yacreader
+  brew cask install alfred amazon-music android-file-transfer \
+    android-studio applepi-baker anka-run apple-events arduino \
+    atom bartender bettertouchtool blockblock calibre dolphin dropbox \
+    electron-api-demos fog gifloopcoder gitup google-chrome imageoptim \
+    imitone iterm2 keka oversight processing shotcut spectacle steam \
+    torbrowser transmission veertu-desktop whale whatsyoursign wwdc yacreader
 
   brew cask install pokerstars --language='PT'
 
@@ -72,4 +83,9 @@ install_mas_apps() {
     local app_id="${app#*=}"
     mas install "${app_id}"
   done
+}
+
+install_oh_my_zsh() {
+  sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
 }

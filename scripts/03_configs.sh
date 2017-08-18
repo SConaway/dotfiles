@@ -14,23 +14,9 @@ set_default_apps() {
     fi
   fi
 
-  for ext in {css,js,json,md,php,pug,py,rb,sh,txt}; do duti -s com.github.atom "${ext}" all; done # code
+  for ext in {css,js,json,md,php,pug,py,rb,sh,txt,yaml,yml}; do duti -s com.github.atom "${ext}" all; done # code
 }
 
-# set_keyboard_shortcuts() {
-  # Custom keyboard shortcuts for apps
-  # @ is ⌘; ~ is ⌥; $ is ⇧; ^ is ⌃
-  # read more at https://web.archive.org/web/20140810142907/http://hints.macworld.com/article.php?story=20131123074223584
-
-  # Global
-  # defaults write -g NSUserKeyEquivalents '{}'
-
-  # Tweetbot
-  # defaults write com.tapbots.TweetbotMac NSUserKeyEquivalents '{
-  #   "Open Links"="l";
-  #   "Send to Pinboard"="$l";
-  # }'
-# }
 
 
 
