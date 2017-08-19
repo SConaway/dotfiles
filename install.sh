@@ -7,11 +7,11 @@ run_install_dotfiles() {
   done
 
   clear
-  if ["$CI"=true] {}
+  if ["$CI"=true] {
+    echo "Skip Setup and Brew"
+  }
 
   else {
-
-
     initial_setup
     ask_details
     sync_icloud
