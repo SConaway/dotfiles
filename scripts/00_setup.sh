@@ -10,7 +10,6 @@ initial_setup() {
   export PATH="/usr/local/bin:${PATH}"
 
   trap 'exit 0' SIGINT # exit cleanly if aborted with ⌃C
-  caffeinate & # prevent computer from going to sleep
 
   # variables for helper files and directories
   readonly helper_files='/tmp/dotfiles-master/files'
@@ -44,7 +43,7 @@ ask_details() {
   read -p 'Email address: ' email
   read -p 'Telephone number: ' telephone
   sudo -S defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Email: ${email}\nTel: ${telephone}" <<< "${sudo_password}" 2> /dev/null
-  
+
   clear
 }
 

@@ -61,7 +61,8 @@ run_install_dotfiles() {
   if ${CI:-}; then
     if ${CI_PART_4:-}; then
       echo "CI Part 4"
-      install_oh_my_zsh
+      os_customize
+
     fi
   else
     install_oh_my_zsh
@@ -83,6 +84,7 @@ run_install_dotfiles() {
     configure_git
     install_launchagents
     lower_startup_chime
+    os_customize
   fi
 
 

@@ -289,80 +289,62 @@ done
 # second part
 # find values for System Preferences by opening the desired pane and running the following AppleScript:
 # tell application "System Preferences" to return anchors of current pane
+if ${CI:-}; then
+  echo "Done!"
+else
+  echo
 
-echo
+  request 'Allow to send and receive SMS messages.' 'Messages'
 
-request 'Allow to send and receive SMS messages.' 'Messages'
+  preferences_pane 'com.apple.preference.dock'
+  request_preferences 'Always prefer tabs when opening documents.'
 
-preferences_pane 'com.apple.preference.dock'
-request_preferences 'Always prefer tabs when opening documents.'
+  preferences_pane 'com.apple.preference.displays'
+  request_preferences 'Turn off showing mirroring options in the menu bar.'
 
-preferences_pane 'com.apple.preference.displays'
-request_preferences 'Turn off showing mirroring options in the menu bar.'
+  preferences_pane_anchor 'shortcutsTab' 'com.apple.preference.keyboard'
+  request_preferences "Turn off Spotlight's keyboard shortcut."
 
-preferences_pane_anchor 'shortcutsTab' 'com.apple.preference.keyboard'
-request_preferences "Turn off Spotlight's keyboard shortcut."
+  preferences_pane_anchor 'Dictation' 'com.apple.preference.keyboard'
+  request_preferences 'Turn on enhanced dictation and download other languages.'
 
-preferences_pane_anchor 'Dictation' 'com.apple.preference.keyboard'
-request_preferences 'Turn on enhanced dictation and download other languages.'
+  preferences_pane 'com.apple.preference.trackpad'
+  request_preferences 'ALL TABS: Set Trackpad preferences.'
 
-preferences_pane 'com.apple.preference.trackpad'
-request_preferences 'ALL TABS: Set Trackpad preferences.'
+  preferences_pane 'com.apple.preferences.icloud'
+  request_preferences "Uncheck what you don't want synced to iCloud."
 
-preferences_pane 'com.apple.preferences.icloud'
-request_preferences "Uncheck what you don't want synced to iCloud."
+  preferences_pane 'com.apple.preferences.internetaccounts'
+  request_preferences 'Remove Game Center.'
 
-preferences_pane 'com.apple.preferences.internetaccounts'
-request_preferences 'Remove Game Center.'
+  preferences_pane 'com.apple.preferences.users'
+  request_preferences 'Turn off Guest User account.'
 
-preferences_pane 'com.apple.preferences.users'
-request_preferences 'Turn off Guest User account.'
+  preferences_pane 'com.apple.preference.speech'
+  request_preferences 'Set Siri voice.'
 
-preferences_pane 'com.apple.preference.speech'
-request_preferences 'Set Siri voice.'
+  preferences_pane_anchor 'Mouse' 'com.apple.preference.universalaccess'
+  request_preferences 'Under "Trackpad Options…", enable three finger drag.'
 
-preferences_pane_anchor 'TextToSpeech' 'com.apple.preference.universalaccess'
-request_preferences 'Download and keep only "Ava" and "Joana" voices.'
+  # chrome extentions
 
-preferences_pane_anchor 'Mouse' 'com.apple.preference.universalaccess'
-request_preferences 'Under "Trackpad Options…", enable three finger drag.'
+  echo
 
-# chrome extentions
+  request_chrome_extension 'Google Chrome' '1password-password-manage' 'aomjjhallfgjeglblehebfpbcfeobpgk'
+  request_chrome_extension 'Google Chrome' 'httpseverywhere' 'gcbommkclmclpchllfjekcdonpmejbdp'
+  request_chrome_extension 'Google Chrome' 'ublockorigin' 'cjpalhdlnbpafiamejdnhcphjbkeiagm'
+  # new tab extensions
+  request_chrome_extension 'Google Chrome' 'dribbble-new-tab' 'hmhjbefkpednjogghoibpejdmemkinbn'
+  #request_chrome_extension 'Google Chrome' 'embark-new-tab-page' 'aeajehgeohhgjbhhbicilpenjfcbfnpg'
+  #request_chrome_extension 'Google Chrome' 'muzli-2-stay-inspired' 'glcipcfhmopcgidicgdociohdoicpdfc'
+  #request_chrome_extension 'Google Chrome' 'unsplash-instant' 'pejkokffkapolfffcgbmdmhdelanoaih'
 
-echo
 
-request_chrome_extension 'Google Chrome' '1password-password-manage' 'aomjjhallfgjeglblehebfpbcfeobpgk'
-request_chrome_extension 'Google Chrome' 'httpseverywhere' 'gcbommkclmclpchllfjekcdonpmejbdp'
-request_chrome_extension 'Google Chrome' 'ublockorigin' 'cjpalhdlnbpafiamejdnhcphjbkeiagm'
-# new tab extensions
-request_chrome_extension 'Google Chrome' 'dribbble-new-tab' 'hmhjbefkpednjogghoibpejdmemkinbn'
-#request_chrome_extension 'Google Chrome' 'embark-new-tab-page' 'aeajehgeohhgjbhhbicilpenjfcbfnpg'
-#request_chrome_extension 'Google Chrome' 'muzli-2-stay-inspired' 'glcipcfhmopcgidicgdociohdoicpdfc'
-#request_chrome_extension 'Google Chrome' 'unsplash-instant' 'pejkokffkapolfffcgbmdmhdelanoaih'
+  # misc
 
-request_chrome_extension 'Google Chrome Canary' 'chromeextensionsdeveloper' 'ohmmkhmmmpcnpikjeljgnaoabkaalbgc'
-request_chrome_extension 'Google Chrome Canary' 'daydream' 'oajnmbophdhdobfpalhkfgahchpcoali'
-request_chrome_extension 'Google Chrome Canary' 'emmet-review' 'epejoicbhllgiimigokgjdoijnpaphdp'
-request_chrome_extension 'Google Chrome Canary' 'emmetlivestyle' 'diebikgmpmeppiilkaijjbdgciafajmg'
-request_chrome_extension 'Google Chrome Canary' 'honey' 'bmnlcjabgnpnenekpadlanbbkooimhnj'
-request_chrome_extension 'Google Chrome Canary' 'css-peeper' 'mbnbehikldjhnfehhnaidhjhoofhpehk'
-request_chrome_extension 'Google Chrome Canary' 'pesticide' 'bblbgcheenepgnnajgfpiicnbbdmmooh'
-request_chrome_extension 'Google Chrome Canary' 'selectorgadget' 'mhjhnkcfbdhnjickkkdbjoemdmbfginb'
-request_chrome_extension 'Google Chrome Canary' 'snappysnippet' 'blfngdefapoapkcdibbdkigpeaffgcil'
-request_chrome_extension 'Google Chrome Canary' 'tape' 'jmfleijdbicilompnnombcbkcgidbefb'
-request_chrome_extension 'Google Chrome Canary' 'thecamelizer' 'ghnomdcacenbmilgjigehppbamfndblo'
-request_chrome_extension 'Google Chrome Canary' 'tincr' 'lfjbhpnjiajjgnjganiaggebdhhpnbih'
+  echo "host=github.com
+  protocol=https
+  password=${github_token}
+  username=${github_username}" | git credential-osxkeychain store
 
-request 'Remove Google-imposed extensions.' 'Google Chrome'
-
-# misc
-
-echo
-
-request 'Create a token with the "repo" scope for CLI access.' 'Google Chrome' 'https://github.com/settings/tokens'
-read -p 'Github username: ' github_username
-read -p 'Github token: ' github_token
-echo "host=github.com
-protocol=https
-password=${github_token}
-username=${github_username}" | git credential-osxkeychain store
+fi
