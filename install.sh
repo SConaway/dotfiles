@@ -1,5 +1,6 @@
 run_install_dotfiles() {
-  curl --progress-bar --location 'https://github.com/sconaway/dotfiles/archive/master.zip' | ditto -xk - '/tmp'
+  caffeinate & # prevent computer from going to sleep
+  curl --progress-bar --location 'https://github.com/sconaway/dotfiles/archive/master.zip' | ditto -xk - '/tmp' # download and extract script
 
   # source all shell scripts
   for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
@@ -12,6 +13,8 @@ run_install_dotfiles() {
   initial_setup
   if ${CI:-}; then
     echo "Skip Setup and Brew"
+    brew update
+    brew upgrade
   else
     ask_details
     sync_icloud
@@ -50,7 +53,7 @@ run_install_dotfiles() {
   if ${CI:-}; then
     if ${CI_PART_3:-}; then
       echo "CI Part 3"
-      install_mas_Apps
+      install_mas_apps
     fi
   else
     install_mas_apps
@@ -87,7 +90,11 @@ run_install_dotfiles() {
   cleanup_error_log
   move_manual_action_files
   killall caffeinate # computer can go back to sleep
-  final_message
+  if ${CI:-}; then
+    echo "Done!"
+  else
+    final_message
+  fi
 }
 
 # run and log errors to file (but still show them when they happen)

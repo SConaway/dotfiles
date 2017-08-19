@@ -67,22 +67,39 @@ fi
 
 # first part
 # more options on http://mths.be/macos
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'tell application "System Preferences" to quit'
 
 info 'Expand save panel by default.'
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 
-info 'Save to disk (not to iCloud) by default.'
-defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+info 'Expand print panel by default'
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
-info 'Disable Resume system-wide.'
-defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
+info 'Automatically quit printer app once the print jobs complete'
+defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+
+info 'Disable the “Are you sure you want to open this application?” dialog'
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+
+info 'Disable automatic capitalization as it’s annoying when typing code'
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+
+info 'Disable smart dashes as they’re annoying when typing code'
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+info 'Disable automatic period substitution as it’s annoying when typing code'
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+
+info 'Disable smart quotes as they’re annoying when typing code'
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
 info 'Enable full keyboard access for all controls.'
 # (e.g. enable Tab in modal dialogs)
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
-
-info 'Disable auto-correct.'
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 info 'Set Home as the default location for new Finder windows.'
 defaults write com.apple.finder NewWindowTarget -string 'PfLo'
@@ -90,6 +107,15 @@ defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
 
 info 'Show all filename extensions in Finder.'
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+info 'Show icons for hard drives, servers, and removable media on the desktop'
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+
+info 'Finder: show hidden files by default'
+defaults write com.apple.finder AppleShowAllFiles -bool true
 
 info 'Remove items from the Trash after 30 days.'
 defaults write com.apple.finder FXRemoveOldTrashItems -bool true
@@ -110,21 +136,116 @@ info 'Use columns view in all Finder windows by default.'
 # Four-letter codes for the other view modes: 'icnv', 'Nlsv', 'Flwv'
 defaults write com.apple.finder FXPreferredViewStyle -string 'clmv'
 
-info 'Disable the warning before emptying the Trash.'
-defaults write com.apple.finder WarnOnEmptyTrash -bool false
+info 'Always show scrollbars'
+defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 
-info 'Show the ~/Library folder, and hide Applications, Documents, Music, Pictures and Public.'
+info 'Increase sound quality for Bluetooth headphones/headsets'
+defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+
+info 'When performing a search, search the current folder by default'
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+info 'Disable the warning when changing a file extension'
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+info 'Enable spring loading for directories'
+defaults write NSGlobalDomain com.apple.springing.enabled -bool true
+
+info 'Remove the spring loading delay for directories'
+defaults write NSGlobalDomain com.apple.springing.delay -float 0
+
+info 'Avoid creating .DS_Store files on network or USB volumes'
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+
+info 'Display full POSIX path as Finder window title'
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+info 'Expand the following File Info panes: “General”, “Open with”, and “Sharing & Permissions”'
+defaults write com.apple.finder FXInfoPanesExpanded -dict \
+	General -bool true \
+	OpenWith -bool true \
+	Privileges -bool true
+
+info 'Add iOS & Watch Simulator to Launchpad'
+sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "/Applications/Simulator.app"
+sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator (Watch).app" "/Applications/Simulator (Watch).app"
+
+info 'Copy email addresses as "foo@example.com" instead of "Foo Bar <foo@example.com>" in Mail.app'
+defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
+
+
+info 'Prevent Time Machine from prompting to use new hard drives as backup volume'
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
+info 'Enable the debug menu in Address Book'
+defaults write com.apple.addressbook ABShowDebugMenu -bool true
+info 'Enable Dashboard dev mode (allows keeping widgets on the desktop)'
+defaults write com.apple.dashboard devmode -bool true
+
+
+info 'Use plain text mode for new TextEdit documents'
+defaults write com.apple.TextEdit RichText -int 0
+
+info 'Open and save files as UTF-8 in TextEdit'
+defaults write com.apple.TextEdit PlainTextEncoding -int 4
+defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
+
+info 'Enable the debug menu in Disk Utility'
+defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
+defaults write com.apple.DiskUtility advanced-image-options -bool true
+
+info 'Enable the WebKit Developer Tools in the Mac App Store'
+defaults write com.apple.appstore WebKitDeveloperExtras -bool true
+
+info 'Enable Debug Menu in the Mac App Store'
+defaults write com.apple.appstore ShowDebugMenu -bool true
+
+info 'Enable the automatic update check'
+defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
+
+info 'Check for software updates daily, not just once per week'
+defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+
+info 'Download newly available updates in background'
+defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
+
+info 'Install System data files & security updates'
+defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
+
+info 'Turn on app auto-update'
+defaults write com.apple.commerce AutoUpdate -bool true
+
+info 'Prevent Photos from opening automatically when devices are plugged in'
+defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
+
+info 'Show the main window when launching Activity Monitor'
+defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
+
+info 'Visualize CPU usage in the Activity Monitor Dock icon'
+defaults write com.apple.ActivityMonitor IconType -int 5
+
+info 'Show all processes in Activity Monitor'
+defaults write com.apple.ActivityMonitor ShowCategory -int 0
+
+info 'Sort Activity Monitor results by CPU usage'
+defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
+defaults write com.apple.ActivityMonitor SortDirection -int 0
+
+info 'Show the ~/Library folder and /Volumes, and hide Applications, Documents, Music, Pictures and Public.'
 chflags nohidden "${HOME}/Library"
 chflags hidden "${HOME}/Applications"
 chflags hidden "${HOME}/Documents"
 chflags hidden "${HOME}/Music"
 chflags hidden "${HOME}/Pictures"
 chflags hidden "${HOME}/Public"
+sudo chflags nohidden /Volumes
 
 info 'Allow scroll gesture with ⌃ to zoom.'
 defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
 defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
-# Follow the keyboard focus while zoomed in
+info 'Follow the keyboard focus while zoomed in'
 defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
 info 'Set hot corners.'
@@ -138,31 +259,32 @@ info 'Set hot corners.'
 #  7: Dashboard
 # 10: Put display to sleep
 # 11: Launchpad
-# Bottom left screen corner → Desktop
-defaults write com.apple.dock wvous-bl-corner -int 4
+# 12: Notification Center
+# Bottom left screen corner → Put display to sleep
+defaults write com.apple.dock wvous-bl-corner -int 10
 # Top right screen corner → Notification Center
 defaults write com.apple.dock wvous-tr-corner -int 12
-# Bottom right screen corner → Mission Control
-defaults write com.apple.dock wvous-br-corner -int 2
+# Bottom right screen corner → Desktop
+defaults write com.apple.dock wvous-br-corner -int 4
 
-info 'Disable Time Machine.'
-sudo tmutil disable
 
 info 'Use OpenDNS and Google Public DNS servers.'
-sudo networksetup -setdnsservers Wi-Fi 208.67.222.222 8.8.8.8 208.67.220.220 8.8.4.4
+sudo networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4 208.67.222.222 208.67.220.220
 
-info 'Stop iTunes from responding to keyboard media keys.'
-launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist
 
-for app in 'Dock' 'Finder'; do
-  killall "${app}" &> /dev/null
-done
 
 info 'Set dark menu bar and Dock.'
 osascript -e 'tell application "System Events" to tell appearance preferences to set properties to {dark mode:true}'
 
 info 'Set Dock size and screen edge.'
-osascript -e 'tell application "System Events" to tell dock preferences to set properties to {dock size:0.17, screen edge:left}'
+osascript -e 'tell application "System Events" to tell dock preferences to set properties to {dock size:0.17, screen edge:bottom}'
+
+info 'Set Dock to auto-hide.'
+osascript -e 'tell application "System Events" to set the autohide of the dock preferences to true'
+
+for app in 'Dock' 'Finder'; do
+  killall "${app}" &> /dev/null
+done
 
 # second part
 # find values for System Preferences by opening the desired pane and running the following AppleScript:
