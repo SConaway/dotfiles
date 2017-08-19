@@ -3,7 +3,7 @@ os: osx
 osx_image: xcode8.3
 
 script:
-    - curl -fsSL 'https://raw.github.com/sconaway/dotfiles/master/install.sh' | bash -c
+    - curl -fsSL 'https://raw.github.com/sconaway/dotfiles/master/install.sh' | bash
 #    - bash install.sh
 
 env:
