@@ -1,13 +1,22 @@
 install_brew_apps() {
   renew_sudo
+  brew tap alehouse/homebrew-unofficial
+  renew_sudo
   brew install zsh --without-etcdir
   renew_sudo
+  brew install boost
+
   brew install aria2 avrdude cask ccache cmake
+  renew_sudo
   brew install cowsay cpulimit curl dockutil duti ffmpeg
-  brew install fontconfig ghi git git-ftp handbrake hr
+  renew_sudo
+  brew install fontconfig ghi git git-ftp gradle handbrake hr
+  renew_sudo
   brew install imagemagick lame livestreamer m-cli mas
-  brew install mediainfo mp4v2 python python3 qemu ripgrep
-  brew install rmlint shellcheck trash tree wget youtube-dl z
+  renew_sudo
+  brew install mediainfo mp4v2 mpv openssl p7zip python python3 qemu ripgrep
+  renew_sudo
+  brew install rmlint shellcheck trash tree unrar wget youtube-dl z
 
   renew_sudo
 
@@ -20,29 +29,55 @@ install_brew_apps() {
 
   # install and configure tor
   brew install tor torsocks
+  renew_sudo
   cp "$(brew --prefix)/etc/tor/torrc.sample" "$(brew --prefix)/etc/tor/torrc"
   echo 'ExitNodes {us}' >> "$(brew --prefix)/etc/tor/torrc"
 }
 
 install_cask_apps() {
   renew_sudo # to make the Caskroom on first install
-  brew cask install alfred amazon-music android-file-transfer \
-    android-studio applepi-baker anka-run apple-events arduino \
-    atom bartender bettertouchtool blockblock calibre dolphin dropbox \
-    electron-api-demos fog gifloopcoder gitup google-chrome imageoptim \
-    imitone iterm2 keka oversight processing shotcut spectacle steam \
-    torbrowser transmission veertu-desktop whale whatsyoursign wwdc yacreader
-
-  brew cask install pokerstars --language='PT'
-
-  # install alternative versionss
+  brew cask install amazon-music
   brew tap caskroom/versions
-  brew cask install dash3 google-chrome-canary openemu-experimental screenflow5
-
-  # drivers
   brew tap caskroom/drivers
   renew_sudo
-  brew cask install xbox360-controller-driver
+  brew cask install android-file-transfer android-studio
+  renew_sudo
+  brew cask install applepi-baker anka-run arduino atom
+  renew_sudo
+  brew cask install bartender bettertouchtool blockblock
+  renew_sudo
+  brew cask install caffine calibre cheatsheet coconutbattery
+  renew_sudo
+  brew cask install dash3 disk-inventory-x docker dropbox
+  renew_sudo
+  brew cask install eclipse-java electron-api-demos etcher
+  renew_sudo
+  brew cask install flux free-download-manager fritzing
+  renew_sudo
+  brew cask install garmin-express gfxcardstatus gimp gitup google-chrome
+  renew_sudo
+  brew cask install keka kid3 knockknock lastpass liclipse
+  renew_sudo
+  brew cask install lockdown mediainfo minecraft namechanger
+  renew_sudo
+  brew cask install openemu-experimental osxfuse
+  renew_sudo
+  brew cask install oversight &
+  sleep 120
+  killall "OversightXPC"
+  killall "OverSight Helper"
+  brew cask install processing ransomwhere real-vnc
+  renew_sudo
+  brew cask install silicon-labs-vcp-driver sketchup
+  renew_sudo
+  brew cask install taskexplorer spectacle steam
+  renew_sudo
+  brew cask install torbrowser transmission virtualbox
+  renew_sudo
+  brew cask install wch-ch34x-usb-serial-driver
+  renew_sudo
+  brew cask install wdfirmwareupdater whatsyoursign wwdc yacreader
+  renew_sudo
 
   # prefpanes, qlplugins, colorpickers
   brew cask install betterzipql epubquicklook qlcolorcode qlimagesize qlmarkdown qlplayground qlstephen quicklook-json quicklookase
@@ -51,20 +86,27 @@ install_cask_apps() {
   brew tap caskroom/fonts
   # multiple
   brew cask install font-alegreya font-alegreya-sans font-alegreya-sans-sc font-alegreya-sc
+  renew_sudo
   brew cask install font-fira-mono font-fira-sans
+  renew_sudo
   brew cask install font-input
   renew_sudo
+  renew_sudo
   brew cask install font-merriweather font-merriweather-sans
+  renew_sudo
   brew cask install font-pt-mono font-pt-sans font-pt-serif
+  renew_sudo
   brew cask install font-source-code-pro font-source-sans-pro font-source-serif-pro
   renew_sudo
   # sans
   brew cask install font-aileron font-bebas-neue font-exo2 font-montserrat font-lato font-open-sans font-open-sans-condensed font-signika
+  renew_sudo
   # serif
   brew cask install font-abril-fatface font-butler font-gentium-book-basic font-playfair-display font-playfair-display-sc
   renew_sudo
   # slab
   brew cask install font-bitter font-kreon
+  renew_sudo
   # script
   brew cask install font-pecita
   renew_sudo
@@ -74,6 +116,7 @@ install_cask_apps() {
 }
 
 install_tinyscripts() {
+  renew_sudo
   brew tap vitorgalvao/tinyscripts
   brew install annotmd cask-repair contagem-edp customise-terminal-notifier fastmerge gfv gifmaker human-media-time labelcolor lovecolor pedir-gas pinboardbackup pinboardlinkcheck pinboardwaybackmachine podbook prfixmaster progressbar ringtonemaker seren trello-purge-archives
 }
@@ -82,14 +125,16 @@ install_mas_apps() {
   readonly local mas_apps=('apple_configurator_2=1037126344' 'hp_easy_scan=967004861' 'day_one=1055511498' 'xcode=497799835' 'cleanmydrive=523620159')
 
   mas signin "${mas_email}" "${mas_password}"
+  renew_sudo
 
   for app in "${mas_apps[@]}"; do
     local app_id="${app#*=}"
     mas install "${app_id}"
+    renew_sudo
   done
 }
 
 install_oh_my_zsh() {
+  renew_sudo
   sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
 }

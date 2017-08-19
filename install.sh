@@ -7,10 +7,12 @@ run_install_dotfiles() {
   done
 
   clear
+
+
+  initial_setup
   if ${CI:-}; then
     echo "Skip Setup and Brew"
   else
-    initial_setup
     ask_details
     sync_icloud
     update_system
@@ -25,7 +27,11 @@ run_install_dotfiles() {
   install_brew_apps
   install_cask_apps
   install_tinyscripts
-  install_mas_apps
+  if ${CI:-}; then
+    echo "Skip Mac App Store App Installation"
+  else
+    install_mas_apps
+  fi
   install_oh_my_zsh
 
   restore_settings
