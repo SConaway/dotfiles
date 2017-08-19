@@ -2,8 +2,6 @@ install_brew_apps() {
   renew_sudo
   brew tap alehouse/homebrew-unofficial
   renew_sudo
-  brew install zsh --without-etcdir
-  renew_sudo
   brew install boost
 
   brew install aria2 avrdude cask ccache cmake

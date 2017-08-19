@@ -2,7 +2,7 @@ restore_settings() {
   ruby "${HOME}/Library/Mobile Documents/com~apple~CloudDocs/darkhouse/_run_house/quick_restore.rb"
 }
 
-set_default_apps() {
+set_brew_default_apps() {
   # open the mpv app bundle, so the system actually sees it (since it's not in a standard location)
   readonly local mpv_location="$(readlink "$(brew --prefix)/bin/mpv" | sed "s:^\.\.:$(brew --prefix):;s:bin/mpv$:mpv.app:")"
   if [[ -n "${mpv_location}" ]]; then
@@ -13,7 +13,9 @@ set_default_apps() {
       killall mpv
     fi
   fi
+}
 
+set_cask_default_apps() {
   for ext in {css,js,json,md,php,pug,py,rb,sh,txt,yaml,yml}; do duti -s com.github.atom "${ext}" all; done # code
 }
 

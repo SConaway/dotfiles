@@ -3,5 +3,14 @@ os: osx
 osx_image: xcode8.3
 
 script:
-    - curl -o install.sh -fsSL 'https://raw.github.com/sconaway/dotfiles/master/install.sh'
-    - bash install.sh
+    - curl -fsSL 'https://raw.github.com/sconaway/dotfiles/master/install.sh' | bash -c
+#    - bash install.sh
+
+env:
+  - CI_PART_0=true CI_PART_1=false CI_PART_2=false CI_PART_3=false CI_PART_4=false CI_PART_5=false CI_PART_6=false
+  - CI_PART_0=false CI_PART_1=true CI_PART_2=false CI_PART_3=false CI_PART_4=false CI_PART_5=false CI_PART_6=false
+  - CI_PART_0=false CI_PART_1=false CI_PART_2=true CI_PART_3=false CI_PART_4=false CI_PART_5=false CI_PART_6=false
+  - CI_PART_0=false CI_PART_1=false CI_PART_2=false CI_PART_3=true CI_PART_4=false CI_PART_5=false CI_PART_6=false
+  - CI_PART_0=false CI_PART_1=false CI_PART_2=false CI_PART_3=false CI_PART_4=true CI_PART_5=false CI_PART_6=false
+  - CI_PART_0=false CI_PART_1=false CI_PART_2=false CI_PART_3=false CI_PART_4=false CI_PART_5=true CI_PART_6=false
+  - CI_PART_0=false CI_PART_1=false CI_PART_2=false CI_PART_3=false CI_PART_4=false CI_PART_5=false CI_PART_6=true

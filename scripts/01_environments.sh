@@ -11,7 +11,7 @@ install_python() {
 install_ruby() {
   brew install ruby
   # install some gems
-  gem install --no-document bundler rubocop rubocop-cask maid travis video_transcoding
+  gem install --no-document bundler rubocop rubocop-cask maid travis video_transcoding watir
   gem install --no-document pygments.rb # needed for installing ghi with brew
 }
 
@@ -21,4 +21,9 @@ install_node() {
   yarn config set ignore-engines
   # install some packages
   yarn global add eslint eslint-plugin-immutable eslint-plugin-shopify jsonlint nightmare pageres-cli prettier
+}
+
+install_zsh() {
+  renew_sudo
+  brew install zsh --without-etcdir
 }
