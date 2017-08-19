@@ -7,7 +7,7 @@ run_install_dotfiles() {
   done
 
   clear
-  if ["$CI"=true] then
+  if ${CI:-}; then
     echo "Skip Setup and Brew"
   else
     initial_setup
