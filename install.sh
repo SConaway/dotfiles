@@ -7,13 +7,18 @@ run_install_dotfiles() {
   done
 
   clear
+  if ["$CI"=true] {}
 
-  initial_setup
-  ask_details
-  sync_icloud
-  update_system
+  else {
 
-  install_brew
+
+    initial_setup
+    ask_details
+    sync_icloud
+    update_system
+
+    install_brew
+  }
   install_python
   install_ruby
   install_node
