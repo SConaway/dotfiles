@@ -71,6 +71,7 @@ run_install_dotfiles() {
   if ${CI:-}; then
     if ${CI_PART_5:-}; then
       echo "CI Part 5"
+      shellcheck install.sh
     fi
     if ${CI_PART_6:-}; then
       echo "CI Part 6"
