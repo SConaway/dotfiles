@@ -45,6 +45,10 @@ ask_details() {
   sudo -S defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Email: ${email}\nTel: ${telephone}" <<< "${sudo_password}" 2> /dev/null
 
   clear
+  bold_echo 'Where are the Apps you would like to copy Located'
+  read -p 'App Location' app_locations
+
+  clear
 }
 
 sync_icloud() {
