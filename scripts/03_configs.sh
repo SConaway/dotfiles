@@ -75,3 +75,8 @@ lower_startup_chime() {
   chmod +x '/tmp/lowchime'
   sudo -S /tmp/lowchime install <<< "${sudo_password}" 2> /dev/null
 }
+
+copy_dotfiles() {
+  cp -LR '/Volumes/Data/dotfiles/home' '~'
+  sudo cp -LR '/Volumes/Data/dotfiles/root' '/'
+}

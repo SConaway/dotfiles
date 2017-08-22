@@ -44,7 +44,7 @@ install_cask_apps() {
   renew_sudo
   brew cask install bartender bettertouchtool blockblock
   renew_sudo
-  brew cask install caffine calibre cheatsheet coconutbattery
+  brew cask install caffeine calibre cheatsheet coconutbattery
   renew_sudo
   brew cask install dash3 disk-inventory-x docker dropbox
   renew_sudo

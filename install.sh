@@ -57,7 +57,8 @@ run_install_dotfiles() {
     fi
   else
     install_mas_apps
-    copy_apps
+    #copy_apps
+    copy_dotfiles
   fi
   if ${CI:-}; then
     if ${CI_PART_4:-}; then
