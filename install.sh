@@ -36,17 +36,19 @@ run_install_dotfiles() {
     fi
     if ${CI_PART_1:-}; then
       echo "CI Part 1"
-      install_cask_apps
+      install_cask_apps_part_1
       install_atom_packages
       set_cask_default_apps
     fi
     if ${CI_PART_2:-}; then
       echo "CI Part 2"
+      install_cask_apps_part_2
       install_tinyscripts
     fi
   else
     install_brew_apps
-    install_cask_apps
+    install_cask_apps_part_1
+    install_cask_apps_part_2
     install_tinyscripts
   fi
 

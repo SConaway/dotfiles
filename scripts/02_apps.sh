@@ -32,7 +32,7 @@ install_brew_apps() {
   echo 'ExitNodes {us}' >> "$(brew --prefix)/etc/tor/torrc"
 }
 
-install_cask_apps() {
+install_cask_apps_part_1() {
   renew_sudo # to make the Caskroom on first install
   brew cask install amazon-music
   brew tap caskroom/versions
@@ -64,6 +64,15 @@ install_cask_apps() {
   sleep 120
   killall "OversightXPC"
   killall "OverSight Helper"
+
+}
+
+install_cask_apps_part_2() {}
+  renew_sudo # to make the Caskroom on first install
+  brew cask install amazon-music
+  brew tap caskroom/versions
+  brew tap caskroom/drivers
+  renew_sudo
   brew cask install processing ransomwhere real-vnc
   renew_sudo
   brew cask install silicon-labs-vcp-driver sketchup
