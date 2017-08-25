@@ -1,3 +1,4 @@
+#! /bin/bash
 restore_settings() {
   ruby "${HOME}/Library/Mobile Documents/com~apple~CloudDocs/darkhouse/_run_house/quick_restore.rb"
 }
@@ -29,7 +30,7 @@ configure_zsh() { # make zsh default shell
 
 install_atom_packages() {
   # packages
-  apm install highlight-line language-haskell language-pug language-swift linter linter-eslint linter-jsonlint linter-rubocop linter-shellcheck linter-write-good relative-numbers vim-mode-plus vim-mode-plus-keymaps-for-surround
+  apm install busy-signal highlight-line intentions language-haskell language-pug language-swift linter linter-eslint linter-jsonlint linter-rubocop linter-shellcheck linter-ui-default  linter-write-good
 
   # themes and syntaxes
   apm install peacock-syntax
@@ -77,6 +78,6 @@ lower_startup_chime() {
 }
 
 copy_dotfiles() {
-  cp -LR '/Volumes/Data/dotfiles/home' '~'
-  sudo cp -LR '/Volumes/Data/dotfiles/root' '/'
+  cp -LR /Volumes/Data/dotfiles/home/ ~
+  sudo cp -LR /Volumes/Data/dotfiles/root/ /
 }

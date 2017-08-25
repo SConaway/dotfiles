@@ -1,3 +1,4 @@
+#! /bin/bash
 cleanup_brew() {
   rm -rf "$(brew --cache)"
 }
@@ -67,17 +68,17 @@ os_customize() {
 
   # ask for 'sudo' authentication
   if sudo -n true 2> /dev/null; then
-    read -s -n0 -p "$(tput bold)Some commands require 'sudo', but it seems you have already authenticated. When you’re ready to continue, press ↵.$(tput sgr0)"
+    read -s -n0 -p "$(tput bold)Some commands require 'sudo', but it seems you have already authenticated. When you're ready to continue, press ↵.$(tput sgr0)"
     echo
   else
-    echo -n "$(tput bold)When you’re ready to continue, insert your password. This is done upfront for the commands that require 'sudo'.$(tput sgr0) "
+    echo -n "$(tput bold)When you're ready to continue, insert your password. This is done upfront for the commands that require 'sudo'.$(tput sgr0) "
     sudo -v
   fi
 
   # first part
   # more options on http://mths.be/macos
   # Close any open System Preferences panes, to prevent them from overriding
-  # settings we’re about to change
+  # settings we're about to change
   osascript -e 'tell application "System Preferences" to quit'
 
   info 'Expand save panel by default.'
@@ -94,16 +95,16 @@ os_customize() {
   info 'Disable the “Are you sure you want to open this application?” dialog'
   defaults write com.apple.LaunchServices LSQuarantine -bool false
 
-  info 'Disable automatic capitalization as it’s annoying when typing code'
+  info "Disable automatic capitalization as it's annoying when typing code"
   defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 
-  info 'Disable smart dashes as they’re annoying when typing code'
+  info "Disable smart dashes as they're annoying when typing code"
   defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
-  info 'Disable automatic period substitution as it’s annoying when typing code'
+  info "Disable automatic period substitution as it's annoying when typing code"
   defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 
-  info 'Disable smart quotes as they’re annoying when typing code'
+  info "Disable smart quotes as they're annoying when typing code"
   defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
   info 'Enable full keyboard access for all controls.'
@@ -286,7 +287,7 @@ os_customize() {
   osascript -e 'tell application "System Events" to tell appearance preferences to set properties to {dark mode:true}'
 
   info 'Set Dock size and screen edge.'
-  osascript -e 'tell application "System Events" to tell dock preferences to set properties to {dock size:0.17, screen edge:bottom}'
+  osascript -e 'tell application "System Events" to tell dock preferences to set properties to {dock size:1, screen edge:bottom}'
 
   info 'Set Dock to auto-hide.'
   osascript -e 'tell application "System Events" to set the autohide of the dock preferences to true'

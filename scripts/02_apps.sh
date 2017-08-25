@@ -1,14 +1,19 @@
+#! /bin/bash
 install_brew_apps() {
   renew_sudo
   brew tap alehouse/homebrew-unofficial
   renew_sudo
-  brew install boost
+  if ${CI:-}; then
+    travis_wait 30 brew install boost
+  else
+    brew install boost
+  fi
 
   brew install aria2 avrdude cask ccache cmake
   renew_sudo
   brew install cowsay cpulimit curl dockutil duti ffmpeg
   renew_sudo
-  brew install fontconfig ghi git git-ftp gradle handbrake hr
+  brew install fontconfig ghi git git-ftp git-lfs gradle handbrake hr
   renew_sudo
   brew install imagemagick lame livestreamer m-cli mas
   renew_sudo
@@ -67,7 +72,7 @@ install_cask_apps_part_1() {
 
 }
 
-install_cask_apps_part_2() {}
+install_cask_apps_part_2() {
   renew_sudo # to make the Caskroom on first install
   brew cask install amazon-music
   brew tap caskroom/versions
@@ -129,13 +134,14 @@ install_tinyscripts() {
 }
 
 install_mas_apps() {
-  readonly local mas_apps=('apple_configurator_2=1037126344' 'hp_easy_scan=967004861' 'day_one=1055511498' 'xcode=497799835' 'cleanmydrive=523620159')
+  readonly local mas_apps=('apple_configurator_2=1037126344' 'hp_easy_scan=967004861' 'day_one=1055511498' 'cleanmydrive=523620159')# 'xcode=497799835')
 
-  mas signin "${mas_email}" "${mas_password}"
+  #mas signin "${mas_email}" "${mas_password}"
   renew_sudo
 
   for app in "${mas_apps[@]}"; do
     local app_id="${app#*=}"
+    renew_sudo
     mas install "${app_id}"
     renew_sudo
   done
