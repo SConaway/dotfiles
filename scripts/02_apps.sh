@@ -45,7 +45,7 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install android-file-transfer android-studio
   renew_sudo
-  brew cask install applepi-baker anka-run arduino atom
+  brew cask install applepi-baker anka-flow arduino atom
   renew_sudo
   brew cask install bartender bettertouchtool blockblock
   renew_sudo
