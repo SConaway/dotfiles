@@ -5,6 +5,7 @@ run_install_dotfiles() {
 
   clear
   if [[ $# -eq 0 ]] ; then
+    on_ci=false
 
     curl --progress-bar --location 'https://github.com/sconaway/dotfiles/archive/master.zip' | ditto -xk - '/tmp' # download and extract script
 
@@ -48,6 +49,7 @@ run_install_dotfiles() {
     final_message
   else
     echo "Running on CI"
+    on_ci=true
 
     # source all shell scripts
     for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
