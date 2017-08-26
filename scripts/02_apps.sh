@@ -42,6 +42,7 @@ install_cask_apps_part_1() {
   brew cask install amazon-music
   brew tap caskroom/versions
   brew tap caskroom/drivers
+  brew tap alehouse/homebrew-unofficial
   renew_sudo
   brew cask install android-file-transfer android-studio
   renew_sudo
