@@ -29,11 +29,8 @@ run_install_dotfiles() {
     install_cask_apps_part_2
     install_tinyscripts
     install_mas_apps
-
-    copy_apps
-    copy_dotfiles
     install_oh_my_zsh
-    restore_settings
+
     set_brew_default_apps
     set_cask_default_apps
     configure_zsh
@@ -41,13 +38,14 @@ run_install_dotfiles() {
     configure_git
     install_launchagents
     lower_startup_chime
+    copy_dotfiles
     os_customize
 
+    cleanup_brew
     cleanup_error_log
     move_manual_action_files
     killall caffeinate # computer can go back to sleep
     final_message
-    cleanup_brew
   else
     echo "Running on CI"
 
@@ -67,21 +65,30 @@ run_install_dotfiles() {
     case $1 in
      '0')
         echo "CI Part 0"
+        install_brew_apps
+        set_brew_default_apps
         ;;
       '1')
         echo "CI Part 1"
+        brew install duti
+        install_cask_apps_part_1
+        set_cask_default_apps
         ;;
 
       '2')
         echo "CI Part 2"
+        install_cask_apps_part_2
         ;;
 
       '3')
         echo "CI Part 3"
+        install_tinyscripts
+        install_oh_my_zsh
         ;;
 
       '4')
         echo "CI Part 4"
+        install_oh_my_zsh
         ;;
 
       '5')
@@ -94,6 +101,7 @@ run_install_dotfiles() {
 
       *)
         echo "CI Part not recognized"
+        exit 1
         ;;
         esac
 

@@ -151,7 +151,3 @@ install_oh_my_zsh() {
   renew_sudo
   sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 }
-
-copy_apps() {
-  cp -R app_locations /Applications
-}
