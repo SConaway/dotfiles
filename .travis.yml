@@ -2,7 +2,10 @@ language: bash
 os: osx
 osx_image: xcode8.3
 
-install: brew update && brew install shellcheck
+install:
+- brew update && brew install shellcheck
+- mkdir /tmp/dotfiles-master/
+- cp -R . /tmp/dotfiles-master/
 
 script:
  - bash install.sh $CI_PART

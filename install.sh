@@ -1,15 +1,18 @@
 #! /bin/bash
 run_install_dotfiles() {
   caffeinate & # prevent computer from going to sleep
-  curl --progress-bar --location 'https://github.com/sconaway/dotfiles/archive/master.zip' | ditto -xk - '/tmp' # download and extract script
 
-  # source all shell scripts
-  for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
-    source "${shell_script}"
-  done
 
   clear
   if [[ $# -eq 0 ]] ; then
+
+    curl --progress-bar --location 'https://github.com/sconaway/dotfiles/archive/master.zip' | ditto -xk - '/tmp' # download and extract script
+
+    # source all shell scripts
+    for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
+      source "${shell_script}"
+    done
+
     initial_setup
     ask_details
     sync_icloud
@@ -47,6 +50,12 @@ run_install_dotfiles() {
     cleanup_brew
   else
     echo "Running on CI"
+
+    # source all shell scripts
+    for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
+      source "${shell_script}"
+    done
+
     initial_setup
     brew upgrade
 
