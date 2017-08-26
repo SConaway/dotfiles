@@ -110,7 +110,11 @@ install_launchagents() {
 lower_startup_chime() {
   curl -fsSL 'https://raw.githubusercontent.com/vitorgalvao/lowchime/master/lowchime' --output '/tmp/lowchime'
   chmod +x '/tmp/lowchime'
-  sudo -S /tmp/lowchime install <<< "${sudo_password}" 2> /dev/null
+  if [ $on_ci = true ]; then
+    sudo -S /tmp/lowchime install 2> /dev/null
+  else
+    sudo -S /tmp/lowchime install <<< "${sudo_password}" 2> /dev/null
+  fi
 }
 
 copy_dotfiles() {

@@ -57,6 +57,7 @@ run_install_dotfiles() {
     done
 
     initial_setup
+    brew update
     brew upgrade
 
     install_python
@@ -68,7 +69,6 @@ run_install_dotfiles() {
      '0')
         echo "CI Part 0"
         install_brew_apps
-        set_brew_default_apps
         ;;
       '1')
         echo "CI Part 1"
@@ -90,6 +90,7 @@ run_install_dotfiles() {
 
       '4')
         echo "CI Part 4"
+        lower_startup_chime
         os_customize
         ;;
 
