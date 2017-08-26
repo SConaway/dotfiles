@@ -367,7 +367,7 @@ os_customize() {
   # second part
   # find values for System Preferences by opening the desired pane and running the following AppleScript:
   # tell application "System Preferences" to return anchors of current pane
-  if ${CI:-}; then
+  if [ $on_ci = true ]; then
     echo "Done!"
   else
     echo

@@ -90,15 +90,19 @@ run_install_dotfiles() {
 
       '4')
         echo "CI Part 4"
-        install_oh_my_zsh
+        os_customize
         ;;
 
       '5')
         echo "CI Part 5"
+        cleanup_brew
+        cleanup_error_log
         ;;
 
       '6')
         echo "CI Part 6"
+        killall caffeinate # computer can go back to sleep
+        final_message
         ;;
 
       *)
