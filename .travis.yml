@@ -5,14 +5,13 @@ osx_image: xcode8.3
 install: brew update && brew install shellcheck
 
 script:
-    - curl -fsSL 'https://raw.github.com/sconaway/dotfiles/master/install.sh' | bash
-#    - bash install.sh
+ - bash install.sh $CI_PART
 
 env:
-  - CI_PART_0=true CI_PART_1=false CI_PART_2=false CI_PART_3=false CI_PART_4=false CI_PART_5=false CI_PART_6=false
-  - CI_PART_0=false CI_PART_1=true CI_PART_2=false CI_PART_3=false CI_PART_4=false CI_PART_5=false CI_PART_6=false
-  - CI_PART_0=false CI_PART_1=false CI_PART_2=true CI_PART_3=false CI_PART_4=false CI_PART_5=false CI_PART_6=false
-  - CI_PART_0=false CI_PART_1=false CI_PART_2=false CI_PART_3=true CI_PART_4=false CI_PART_5=false CI_PART_6=false
-  - CI_PART_0=false CI_PART_1=false CI_PART_2=false CI_PART_3=false CI_PART_4=true CI_PART_5=false CI_PART_6=false
-  - CI_PART_0=false CI_PART_1=false CI_PART_2=false CI_PART_3=false CI_PART_4=false CI_PART_5=true CI_PART_6=false
-  - CI_PART_0=false CI_PART_1=false CI_PART_2=false CI_PART_3=false CI_PART_4=false CI_PART_5=false CI_PART_6=true
+  - CI_PART=0
+  - CI_PART=1
+  - CI_PART=2
+  - CI_PART=3
+  - CI_PART=4
+  - CI_PART=5
+  - CI_PART=6

@@ -48,13 +48,46 @@ run_install_dotfiles() {
   else
     echo "Running on CI"
     initial_setup
-    brew update
     brew upgrade
 
     install_python
     install_ruby
     install_node
     install_zsh
+
+    case $1 in
+     '0')
+        echo "CI Part 0"
+        ;;
+      '1')
+        echo "CI Part 1"
+        ;;
+
+      '2')
+        echo "CI Part 2"
+        ;;
+
+      '3')
+        echo "CI Part 3"
+        ;;
+
+      '4')
+        echo "CI Part 4"
+        ;;
+
+      '5')
+        echo "CI Part 5"
+        ;;
+
+      '6')
+        echo "CI Part 6"
+        ;;
+
+      *)
+        echo "CI Part not recognized"
+        ;;
+        esac
+
 
   fi
 
@@ -63,4 +96,4 @@ run_install_dotfiles() {
 
 # run and log errors to file (but still show them when they happen)
 readonly error_log="${HOME}/Desktop/install_errors.log"
-run_install_dotfiles 2> >(tee "${error_log}")
+run_install_dotfiles "$1" 2> >(tee "${error_log}")
