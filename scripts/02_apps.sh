@@ -134,7 +134,7 @@ install_tinyscripts() {
 }
 
 install_mas_apps() {
-  readonly local mas_apps=('apple_configurator_2=1037126344' 'hp_easy_scan=967004861' 'day_one=1055511498' 'cleanmydrive=523620159')# 'xcode=497799835')
+  readonly local mas_apps=('apple_configurator_2=1037126344' 'hp_easy_scan=967004861' 'day_one=1055511498' 'cleanmydrive=523620159' 'xcode=497799835')
 
   #mas signin "${mas_email}" "${mas_password}"
   renew_sudo
