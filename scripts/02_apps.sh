@@ -128,6 +128,7 @@ install_cask_apps_part_2() {
 install_tinyscripts() {
   renew_sudo
   brew tap vitorgalvao/tinyscripts
+  gem install --no-document watir
   brew install annotmd cask-repair contagem-edp customise-terminal-notifier fastmerge gfv gifmaker human-media-time labelcolor lovecolor pedir-gas pinboardbackup pinboardlinkcheck pinboardwaybackmachine podbook prfixmaster progressbar ringtonemaker seren trello-purge-archives
 }
 

@@ -12,7 +12,7 @@ install_python() {
 install_ruby() {
   brew install ruby
   # install some gems
-  gem install --no-document bundler rubocop rubocop-cask maid travis video_transcoding watir
+  gem install --no-document bundler rubocop rubocop-cask maid travis video_transcoding
   gem install --no-document pygments.rb # needed for installing ghi with brew
 }
 
