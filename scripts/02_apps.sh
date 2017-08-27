@@ -135,7 +135,7 @@ install_tinyscripts() {
   renew_sudo
   brew tap vitorgalvao/tinyscripts
   gem install --no-document watir
-  brew install annotmd cask-repair contagem-edp customise-terminal-notifier fastmerge gfv gifmaker human-media-time labelcolor lovecolor pedir-gas pinboardbackup pinboardlinkcheck pinboardwaybackmachine podbook prfixmaster progressbar ringtonemaker seren trello-purge-archives
+  brew install annotmd cask-repair crafts customise-terminal-notifier fastmerge gfv gifmaker human-media-time labelcolor podbook prfixmaster progressbar ringtonemaker seren ubuntu-usb
   echo "Tiny Scripts Installed"
 }
 
