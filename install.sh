@@ -85,7 +85,6 @@ run_install_dotfiles() {
       '3')
         echo "CI Part 3"
         install_tinyscripts
-        install_oh_my_zsh
         ;;
 
       '4')

@@ -120,9 +120,6 @@ install_cask_apps_part_2() {
   # slab
   brew cask install font-bitter font-kreon
   renew_sudo
-  # script
-  brew cask install font-pecita
-  renew_sudo
 
   # games
   #brew cask install gridwars noiz2sa rootage torustrooper
