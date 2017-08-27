@@ -4,7 +4,7 @@ install_brew_apps() {
   brew tap alehouse/homebrew-unofficial
   renew_sudo
   if [ $on_ci = true ]; then
-    travis_wait 30 brew install boost
+    echo 
   else
     brew install boost
   fi

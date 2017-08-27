@@ -8,6 +8,7 @@ install:
 - cp -R . /tmp/dotfiles-master/
 
 script:
+ - travis_wait 30 brew install boost
  - bash install.sh $CI_PART
 
 env:
