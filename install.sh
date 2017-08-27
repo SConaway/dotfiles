@@ -58,7 +58,7 @@ run_install_dotfiles() {
 
     initial_setup
     brew update
-    brew upgrade
+    travis_wait 120 brew upgrade
 
     install_python
     install_ruby

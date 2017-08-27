@@ -35,6 +35,8 @@ install_brew_apps() {
   renew_sudo
   cp "$(brew --prefix)/etc/tor/torrc.sample" "$(brew --prefix)/etc/tor/torrc"
   echo 'ExitNodes {us}' >> "$(brew --prefix)/etc/tor/torrc"
+
+  echo "Brew Apps Installed"
 }
 
 install_cask_apps_part_1() {
@@ -70,6 +72,8 @@ install_cask_apps_part_1() {
   sleep 120
   killall "OversightXPC"
   killall "OverSight Helper"
+
+  echo "Cask Apps Part 1 Installed"
 
 }
 
@@ -119,6 +123,8 @@ install_cask_apps_part_2() {
   renew_sudo
   # slab
   brew cask install font-bitter font-kreon
+  echo "Cask Apps Part 2 Installed"
+  echo "All Cask Apps Installed"
   renew_sudo
 
   # games
@@ -130,6 +136,7 @@ install_tinyscripts() {
   brew tap vitorgalvao/tinyscripts
   gem install --no-document watir
   brew install annotmd cask-repair contagem-edp customise-terminal-notifier fastmerge gfv gifmaker human-media-time labelcolor lovecolor pedir-gas pinboardbackup pinboardlinkcheck pinboardwaybackmachine podbook prfixmaster progressbar ringtonemaker seren trello-purge-archives
+  echo "Tiny Scripts Installed"
 }
 
 install_mas_apps() {
@@ -144,9 +151,12 @@ install_mas_apps() {
     mas install "${app_id}"
     renew_sudo
   done
+
+  echo "Mac App Store Apps Installed"
 }
 
 install_oh_my_zsh() {
   renew_sudo
   sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  echo "Oh My ZSH Installed"
 }
