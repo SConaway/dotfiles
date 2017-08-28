@@ -57,8 +57,6 @@ run_install_dotfiles() {
     done
 
     initial_setup
-    brew update
-    travis_wait 120 brew upgrade
 
     install_python
     install_ruby
@@ -107,7 +105,7 @@ run_install_dotfiles() {
 
       *)
         echo "CI Part not recognized"
-        exit 1
+        #exit 1
         ;;
         esac
 

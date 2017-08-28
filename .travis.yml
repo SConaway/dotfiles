@@ -3,13 +3,13 @@ os: osx
 osx_image: xcode8.3
 
 install:
-- brew update && brew install shellcheck
+- brew update
+- travis_wait 30 brew upgrade
+- brew install shellcheck
 - mkdir /tmp/dotfiles-master/
 - cp -R . /tmp/dotfiles-master/
 
-script:
- - travis_wait 30 brew upgrade boost
- - bash install.sh $CI_PART
+script: bash install.sh $CI_PART
 
 env:
   - CI_PART=0
