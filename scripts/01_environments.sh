@@ -13,7 +13,11 @@ install_python() {
 }
 
 install_ruby() {
-  brew install ruby
+  if [ $on_ci = true ]; then
+    brew install --force-bottle ruby
+  else
+    brew install ruby
+  fi
   # install some gems
   gem install --no-document bundler rubocop rubocop-cask maid travis video_transcoding
   gem install --no-document pygments.rb # needed for installing ghi with brew
@@ -21,7 +25,11 @@ install_ruby() {
 }
 
 install_node() {
-  brew install node yarn
+  if [ $on_ci = true ]; then
+    brew install --force-bottle node yarn
+  else
+    brew install node yarn
+  fi
   yarn config set prefix "$(brew --prefix)"
   yarn config set ignore-engines
   # install some packages
@@ -31,6 +39,10 @@ install_node() {
 
 install_zsh() {
   renew_sudo
-  brew install zsh --without-etcdir
+  if [ $on_ci = true ]; then
+    brew install --force-bottle zsh --without-etcdir
+  else
+    brew install zsh --without-etcdir
+  fi
   echo "ZSH Installed"
 }

@@ -4,7 +4,7 @@ install_brew_apps() {
   brew tap alehouse/homebrew-unofficial
   renew_sudo
   if [ $on_ci = true ]; then
-    echo 
+    echo
   else
     brew install boost
   fi
@@ -58,9 +58,14 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install eclipse-java electron-api-demos etcher
   renew_sudo
-  brew cask install flux free-download-manager fritzing
+  brew cask install flux free-download-manager
+  if [ $on_ci = true ]; then
+    echo
+  else
+    brew cask install fritzing
+  fi
   renew_sudo
-  brew cask install garmin-express gfxcardstatus gimp gitup google-chrome
+  brew cask install garmin-express gfxcardstatus gimp gitup google-chrome-canary
   renew_sudo
   brew cask install keka kid3 knockknock lastpass liclipse
   renew_sudo
@@ -102,7 +107,7 @@ install_cask_apps_part_2() {
   # fonts
   brew tap caskroom/fonts
   # multiple
-  brew cask install font-alegreya font-alegreya-sans font-alegreya-sans-sc font-alegreya-sc
+  brew cask install font-alegreya font-alegreya-sans font-alegreya-sans-sc font-alegreya-sc # font-alegreya-sc seems to error
   renew_sudo
   brew cask install font-fira-mono font-fira-sans
   renew_sudo
@@ -119,7 +124,7 @@ install_cask_apps_part_2() {
   brew cask install font-aileron font-bebas-neue font-exo2 font-montserrat font-lato font-open-sans font-open-sans-condensed font-signika
   renew_sudo
   # serif
-  brew cask install font-abril-fatface font-butler font-gentium-book-basic font-playfair-display font-playfair-display-sc
+  brew cask install font-abril-fatface font-butler font-gentium-book-basic font-playfair-display font-playfair-display-sc # font-playfair-display seems to error
   renew_sudo
   # slab
   brew cask install font-bitter font-kreon
