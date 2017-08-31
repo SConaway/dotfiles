@@ -169,6 +169,9 @@ os_customize() {
   info 'Disable the “Are you sure you want to open this application?” dialog'
   defaults write com.apple.LaunchServices LSQuarantine -bool false
 
+  info 'Minimize windows into their application’s icon'
+  defaults write com.apple.dock minimize-to-application -bool true
+
   info "Disable automatic capitalization as it's annoying when typing code"
   defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 
