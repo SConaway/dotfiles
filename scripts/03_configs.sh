@@ -317,9 +317,13 @@ os_customize() {
   defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
   defaults write com.apple.ActivityMonitor SortDirection -int 0
 
-  info 'Show the ~/Library folder and /Volumes, and hide Applications, Documents, Music, Pictures and Public.'
+  if [ $on_ci = true ]; then
+    info 'Show the ~/Library folder and /Volumes, and hide  Documents, Music, Pictures and Public.'
+  else
+    info 'Show the ~/Library folder and /Volumes, and hide Applications, Documents, Music, Pictures and Public.'
+    chflags hidden "${HOME}/Applications"
+  fi
   chflags nohidden "${HOME}/Library"
-  chflags hidden "${HOME}/Applications"
   chflags hidden "${HOME}/Documents"
   chflags hidden "${HOME}/Music"
   chflags hidden "${HOME}/Pictures"
@@ -351,9 +355,14 @@ os_customize() {
   # Bottom right screen corner → Desktop
   defaults write com.apple.dock wvous-br-corner -int 4
 
+  if [ $on_ci = true ]; then
+    echo
+  else
+    info 'Use OpenDNS and Google Public DNS servers.'
+    sudo networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4 208.67.222.222 208.67.220.220
+    sudo networksetup -setdnsservers "Thunderbolt Ethernet" 8.8.8.8 8.8.4.4 208.67.222.222 208.67.220.220
+  fi
 
-  info 'Use OpenDNS and Google Public DNS servers.'
-  sudo networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4 208.67.222.222 208.67.220.220
 
 
 
