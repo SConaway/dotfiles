@@ -118,8 +118,8 @@ lower_startup_chime() {
 }
 
 copy_dotfiles() {
-  cp -LR /Volumes/Data/dotfiles/home/ ~
-  sudo cp -LR /Volumes/Data/dotfiles/root/ /
+  cp -LR home_dotfiles ~
+  sudo cp -LR root_dotfiles /
 }
 
 
