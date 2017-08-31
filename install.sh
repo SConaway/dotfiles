@@ -38,6 +38,7 @@ run_install_dotfiles() {
     install_atom_packages
     configure_git
     configure_lastpass
+    configure_whatsyoursign
     install_launchagents
     lower_startup_chime
     copy_dotfiles

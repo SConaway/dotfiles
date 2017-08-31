@@ -86,6 +86,10 @@ configure_lastpass() {
   open '/usr/local/Caskroom/lastpass/latest/LastPass Installer.app'
 }
 
+configure_whatsyoursign() {
+  /usr/local/Caskroom/whatsyoursign/1.2.3/WhatsYourSign_Installer.app
+}
+
 install_launchagents() {
   readonly local user_launchagents_dir="${HOME}/Library/LaunchAgents"
   readonly local global_launchdaemons_dir='/Library/LaunchDaemons/'
