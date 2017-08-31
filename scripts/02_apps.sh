@@ -87,6 +87,7 @@ install_cask_apps_part_2() {
   brew cask install amazon-music
   brew tap caskroom/versions
   brew tap caskroom/drivers
+  brew tap alehouse/homebrew-unofficial
   renew_sudo
   brew cask install processing ransomwhere real-vnc
   renew_sudo
