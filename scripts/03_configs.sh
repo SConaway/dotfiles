@@ -82,7 +82,9 @@ configure_git() {
   git config --global rerere.autoupdate true
 }
 
-
+configure_lastpass() {
+  open '/usr/local/Caskroom/lastpass/latest/LastPass Installer.app'
+}
 
 install_launchagents() {
   readonly local user_launchagents_dir="${HOME}/Library/LaunchAgents"

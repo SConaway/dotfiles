@@ -37,6 +37,7 @@ run_install_dotfiles() {
     configure_zsh
     install_atom_packages
     configure_git
+    configure_lastpass
     install_launchagents
     lower_startup_chime
     copy_dotfiles
