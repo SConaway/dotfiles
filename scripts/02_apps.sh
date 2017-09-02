@@ -97,7 +97,7 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install torbrowser transmission virtualbox
   renew_sudo
-  brew cask install wch-ch34x-usb-serial-driver || true
+  ! brew cask install wch-ch34x-usb-serial-driver
   renew_sudo
   brew cask install wdfirmwareupdater whatsyoursign wwdc yacreader
   renew_sudo
@@ -108,7 +108,7 @@ install_cask_apps_part_2() {
   # fonts
   brew tap caskroom/fonts
   # multiple
-  brew cask install font-alegreya font-alegreya-sans font-alegreya-sans-sc font-alegreya-sc # font-alegreya-sc seems to error
+  ! brew cask install font-alegreya font-alegreya-sans font-alegreya-sans-sc font-alegreya-sc # font-alegreya-sc seems to error
   renew_sudo
   brew cask install font-fira-mono font-fira-sans
   renew_sudo

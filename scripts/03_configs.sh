@@ -80,6 +80,7 @@ configure_git() {
   git config --global push.default simple
   git config --global rerere.enabled true
   git config --global rerere.autoupdate true
+  git lfs install --system
 }
 
 configure_lastpass() {
