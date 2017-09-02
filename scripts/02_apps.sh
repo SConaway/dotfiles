@@ -95,7 +95,7 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install taskexplorer spectacle steam
   renew_sudo
-  brew cask install torbrowser transmission virtualbox
+  brew cask install torbrowser transmission virtualbox vlc
   renew_sudo
   ! brew cask install wch-ch34x-usb-serial-driver
   renew_sudo
