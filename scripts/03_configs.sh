@@ -155,7 +155,7 @@ os_customize() {
   fi
 
   # first part
-  # more options on http://mths.be/macos
+  # more options on
   # Close any open System Preferences panes, to prevent them from overriding
   # settings we're about to change
   osascript -e 'tell application "System Preferences" to quit'
@@ -189,6 +189,21 @@ os_customize() {
   info "Disable smart quotes as they're annoying when typing code"
   defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
+  info 'Set highlight color to green'
+  defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
+
+  info 'Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window'
+  sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+
+  info 'Restart automatically if the computer freezes'
+  sudo systemsetup -setrestartfreeze on
+
+  info 'Set language and text formats'
+  defaults write NSGlobalDomain AppleLanguages -array "en"
+  defaults write NSGlobalDomain AppleLocale -string "en_US@currency=USD"
+  defaults write NSGlobalDomain AppleMeasurementUnits -string "Inches"
+  defaults write NSGlobalDomain AppleMetricUnits -bool false
+
   info 'Enable full keyboard access for all controls.'
   # (e.g. enable Tab in modal dialogs)
   defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
@@ -196,6 +211,9 @@ os_customize() {
   info 'Set Home as the default location for new Finder windows.'
   defaults write com.apple.finder NewWindowTarget -string 'PfLo'
   defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
+
+  info 'Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons'
+  defaults write com.apple.finder QuitMenuItem -bool true
 
   info 'Show all filename extensions in Finder.'
   defaults write NSGlobalDomain AppleShowAllExtensions -bool true
@@ -250,7 +268,6 @@ os_customize() {
   defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
   defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
-
   info 'Display full POSIX path as Finder window title'
   defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
@@ -260,22 +277,17 @@ os_customize() {
   	OpenWith -bool true \
   	Privileges -bool true
 
-  info 'Add iOS & Watch Simulator to Launchpad'
-  sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "/Applications/Simulator.app"
-  sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator (Watch).app" "/Applications/Simulator (Watch).app"
-
   info 'Copy email addresses as "foo@example.com" instead of "Foo Bar <foo@example.com>" in Mail.app'
   defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
-
 
   info 'Prevent Time Machine from prompting to use new hard drives as backup volume'
   defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
   info 'Enable the debug menu in Address Book'
   defaults write com.apple.addressbook ABShowDebugMenu -bool true
+
   info 'Enable Dashboard dev mode (allows keeping widgets on the desktop)'
   defaults write com.apple.dashboard devmode -bool true
-
 
   info 'Use plain text mode for new TextEdit documents'
   defaults write com.apple.TextEdit RichText -int 0
@@ -341,6 +353,7 @@ os_customize() {
   info 'Allow scroll gesture with ⌃ to zoom.'
   defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
   defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
+
   info 'Follow the keyboard focus while zoomed in'
   defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
