@@ -71,7 +71,7 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install lockdown mediainfo minecraft namechanger # mounty 
   renew_sudo
-  brew cask install openemu-experimental osxfuse
+  brew cask install openemu-experimental openscad osxfuse
   renew_sudo
   brew cask install oversight &
   sleep 120
