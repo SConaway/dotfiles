@@ -49,11 +49,11 @@ ask_details() {
 
   clear
   bold_echo 'Where are the home dofiles you would like to copy Located'
-  read -p 'Home Dotfiles' home_dotfiles
+  read -p 'Home Dotfiles ' home_dotfiles
 
   clear
   bold_echo 'Where are the root dofiles you would like to copy Located'
-  read -p 'Root Dotfiles' root_dotfiles
+  read -p 'Root Dotfiles ' root_dotfiles
 
   clear
 }
