@@ -22,7 +22,7 @@ Everything is modular. The most important parts of the repo’s file structure a
 
 All the script functions are organised in logical sequence. Operations range from support to the installation as a whole (asking for details beforehand for future functions, moving `files` to a more visible location) to useful on their own. The latter is where the modularity shines.
 
-If, say, we wish to [repeat the python setup process](https://github.com/sconaway/dotfiles/blob/c353f8019e77b00ca9e3f26a18a5bb421e524b93/scripts/01_environments.sh#L6), [update homebrew head apps](https://github.com/sconaway/dotfiles/blob/c353f8019e77b00ca9e3f26a18a5bb421e524b93/scripts/02_apps.sh#L20), or [reset default apps in a particular manner](https://github.com/sconaway/dotfiles/blob/c353f8019e77b00ca9e3f26a18a5bb421e524b93/scripts/03_configs.sh#L5), we need only source the appropriate scripts and run the respective functions.
+If, say, we wish to [repeat the python setup process](https://github.com/sconaway/dotfiles/blob/1342ea4d368192783cb8507c331a9263fc901144/scripts/01_environments.sh#L10), [update homebrew head apps](https://github.com/sconaway/dotfiles/blob/1342ea4d368192783cb8507c331a9263fc901144/scripts/03_configs.sh#L42), or [reset default apps in a particular manner](https://github.com/sconaway/dotfiles/blob/1342ea4d368192783cb8507c331a9263fc901144/scripts/03_configs.sh#L5), we need only source the appropriate scripts and run the respective functions.
 
 This allows for a flexible arrangement where we need only make sure the functions are up to date. Those we want to run outside the system setup can be built around the scripts, loading and executing the appropriate commands.
 
