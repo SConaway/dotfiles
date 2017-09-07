@@ -1,4 +1,4 @@
-# Stevens’s dotfiles
+# Steven’s dotfiles
 
 ### Install everything
 ```
