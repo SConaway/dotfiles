@@ -413,12 +413,6 @@ os_customize() {
     preferences_pane 'com.apple.preference.dock'
     request_preferences 'Always prefer tabs when opening documents.'
 
-    preferences_pane 'com.apple.preference.displays'
-    request_preferences 'Turn off showing mirroring options in the menu bar.'
-
-    preferences_pane_anchor 'shortcutsTab' 'com.apple.preference.keyboard'
-    request_preferences "Turn off Spotlight's keyboard shortcut."
-
     preferences_pane_anchor 'Dictation' 'com.apple.preference.keyboard'
     request_preferences 'Turn on enhanced dictation and download other languages.'
 
