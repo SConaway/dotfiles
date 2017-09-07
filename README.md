@@ -15,8 +15,6 @@ Everything is modular. The most important parts of the repo’s file structure a
 .
 ├── install.sh
 ├── scripts
-└── files
-    └── post_install_script.sh
 ```
 
 `scripts` is a directory that contains various shell scripts. However, none of them will actually do anything if ran on their own: they consist of structured functions to perform various tasks. `files` contains configurations that must be applied manually, files to support the installation scripts, and a special `post_install_script.sh` to call after system setup. Finally, `install.sh` is what brings it all together in an automated fashion. It loads up all the script functions and runs them in sequence.
