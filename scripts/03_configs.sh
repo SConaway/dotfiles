@@ -420,32 +420,13 @@ os_customize() {
     request_preferences 'ALL TABS: Set Trackpad preferences.'
 
     preferences_pane 'com.apple.preferences.icloud'
-    request_preferences "Uncheck what you don't want synced to iCloud."
-
-    preferences_pane 'com.apple.preferences.internetaccounts'
-    request_preferences 'Remove Game Center.'
-
-    preferences_pane 'com.apple.preferences.users'
-    request_preferences 'Turn off Guest User account.'
-
-    preferences_pane 'com.apple.preference.speech'
-    request_preferences 'Set Siri voice.'
-
-    preferences_pane_anchor 'Mouse' 'com.apple.preference.universalaccess'
-    request_preferences 'Under "Trackpad Options…", enable three finger drag.'
+    request_preferences "Review iCloud syncing settings."
 
     # chrome extentions
 
     echo
 
-    request_chrome_extension 'Google Chrome' '1password-password-manage' 'aomjjhallfgjeglblehebfpbcfeobpgk'
-    request_chrome_extension 'Google Chrome' 'httpseverywhere' 'gcbommkclmclpchllfjekcdonpmejbdp'
-    request_chrome_extension 'Google Chrome' 'ublockorigin' 'cjpalhdlnbpafiamejdnhcphjbkeiagm'
-    # new tab extensions
-    request_chrome_extension 'Google Chrome' 'dribbble-new-tab' 'hmhjbefkpednjogghoibpejdmemkinbn'
-    #request_chrome_extension 'Google Chrome' 'embark-new-tab-page' 'aeajehgeohhgjbhhbicilpenjfcbfnpg'
-    #request_chrome_extension 'Google Chrome' 'muzli-2-stay-inspired' 'glcipcfhmopcgidicgdociohdoicpdfc'
-    #request_chrome_extension 'Google Chrome' 'unsplash-instant' 'pejkokffkapolfffcgbmdmhdelanoaih'
+    #request_chrome_extension 'Google Chrome' '1password-password-manage' 'aomjjhallfgjeglblehebfpbcfeobpgk'
 
 
     # misc
