@@ -46,6 +46,8 @@ install_cask_apps_part_1() {
   brew tap caskroom/drivers
   brew tap alehouse/homebrew-unofficial
   renew_sudo
+  brew cask install java
+  renew_sudo
   brew cask install android-file-transfer android-studio
   renew_sudo
   brew cask install applepi-baker anka-flow arduino atom
@@ -88,6 +90,8 @@ install_cask_apps_part_2() {
   brew tap caskroom/versions
   brew tap caskroom/drivers
   brew tap alehouse/homebrew-unofficial
+  renew_sudo
+  brew cask install java
   renew_sudo
   brew cask install processing ransomwhere real-vnc
   renew_sudo
