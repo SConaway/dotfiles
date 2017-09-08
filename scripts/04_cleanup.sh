@@ -10,7 +10,6 @@ cleanup_error_log() {
 move_manual_action_files() {
   mv "${command_files}" "${command_files_dest}"
   mv "${helper_files}" "${post_install_files}"
-  mv "${post_install_files}/post_install_script.sh" "${post_install_script}"
 }
 
 final_message() {
