@@ -56,7 +56,7 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install caffeine calibre cheatsheet coconutbattery
   renew_sudo
-  brew cask install dash3 disk-inventory-x docker dropbox
+  brew cask install disk-inventory-x docker dropbox
   renew_sudo
   brew cask install eclipse-java electron-api-demos etcher
   renew_sudo
