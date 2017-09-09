@@ -114,6 +114,14 @@ install_launchagents() {
   rmdir -p "${helper_files}/launchd_plists"/* 2> /dev/null
 }
 
+copy_commands() {
+  cp -LR command_files command_files_dest
+}
+
+link_airport() {
+  ln -s /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport command_files_dest/airport
+}
+
 lower_startup_chime() {
   curl -fsSL 'https://raw.githubusercontent.com/vitorgalvao/lowchime/master/lowchime' --output '/tmp/lowchime'
   chmod +x '/tmp/lowchime'

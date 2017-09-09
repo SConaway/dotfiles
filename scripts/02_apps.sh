@@ -71,7 +71,7 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install keka kid3 knockknock lastpass liclipse
   renew_sudo
-  brew cask install lockdown mediainfo minecraft namechanger # mounty 
+  brew cask install lockdown mediainfo minecraft namechanger # mounty
   renew_sudo
   brew cask install openemu-experimental openscad osxfuse
   renew_sudo

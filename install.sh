@@ -40,6 +40,8 @@ run_install_dotfiles() {
     configure_lastpass
     configure_whatsyoursign
     install_launchagents
+    copy_commands
+    link_airport
     lower_startup_chime
     copy_dotfiles
     os_customize
@@ -75,6 +77,7 @@ run_install_dotfiles() {
         brew install duti
         install_cask_apps_part_1
         set_cask_default_apps
+        install_atom_packages
         ;;
 
       '2')
@@ -85,6 +88,8 @@ run_install_dotfiles() {
       '3')
         echo "CI Part 3"
         install_tinyscripts
+        copy_commands
+        link_airport
         ;;
 
       '4')
