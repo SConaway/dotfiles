@@ -101,7 +101,11 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install torbrowser transmission virtualbox vlc
   renew_sudo
-  brew cask install caskroom/drivers/wch-ch34x-usb-serial-driver
+  if [ $on_ci = true ]; then
+    echo
+  else
+    brew cask install caskroom/drivers/wch-ch34x-usb-serial-driver
+  fi
   renew_sudo
   brew cask install wdfirmwareupdater whatsyoursign wwdc yacreader
   renew_sudo

@@ -119,7 +119,7 @@ copy_commands() {
 }
 
 link_airport() {
-  ln -s /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport command_files_dest/airport
+  ln -s /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport "$command_files_dest/airport"
 }
 
 lower_startup_chime() {
