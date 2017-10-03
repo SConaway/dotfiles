@@ -93,7 +93,7 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install java
   renew_sudo
-  brew cask install processing ransomwhere real-vnc
+  brew cask install processing ransomwhere real-vnc rocket
   renew_sudo
   brew cask install silicon-labs-vcp-driver sketchup
   renew_sudo
