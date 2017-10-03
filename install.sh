@@ -48,17 +48,9 @@ run_install_dotfiles() {
         echo "CI Part 4"
         lower_startup_chime
         os_customize
-        ;;
-
-      '5')
-        echo "CI Part 5"
         configure_dock
         cleanup_brew
         cleanup_error_log
-        ;;
-
-      '6')
-        echo "CI Part 6"
         killall caffeinate # computer can go back to sleep
         final_message
         ;;
