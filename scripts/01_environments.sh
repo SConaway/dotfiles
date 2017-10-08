@@ -18,9 +18,13 @@ install_ruby() {
   else
     brew install ruby
   fi
-  # install some gems
-  gem install --no-document bundler rubocop rubocop-cask maid travis video_transcoding
-  gem install --no-document pygments.rb # needed for installing ghi with brew
+  if [ $on_ci = true ]; then
+    echo "Skip gems"
+  else
+    # install some gems
+    gem install --no-document bundler rubocop rubocop-cask maid travis video_transcoding
+    gem install --no-document pygments.rb # needed for installing ghi with brew
+  fi
   echo "Ruby Installed"
 }
 
