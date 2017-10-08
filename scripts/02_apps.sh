@@ -91,7 +91,11 @@ install_cask_apps_part_1() {
 
 install_cask_apps_part_2() {
   renew_sudo # to make the Caskroom on first install
-  brew cask install amazon-music
+  if [ $on_ci = true ]; then
+    echo "Skip Amazon Music"
+  else
+    brew cask install amazon-music
+  fi
   brew tap caskroom/versions
   brew tap caskroom/drivers
   brew tap alehouse/homebrew-unofficial
