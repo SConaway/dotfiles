@@ -1,8 +1,6 @@
 language: bash
 os: osx
-osx_image:
-- xcode8.3
-- xcode9
+osx_image: xcode9.1
 
 install:
 - brew update
@@ -19,5 +17,3 @@ env:
   - CI_PART=2
   - CI_PART=3
   - CI_PART=4
-  - CI_PART=5
-  - CI_PART=6

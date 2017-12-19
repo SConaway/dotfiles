@@ -41,7 +41,12 @@ install_brew_apps() {
 
 install_cask_apps_part_1() {
   renew_sudo # to make the Caskroom on first install
-  brew cask install amazon-music
+  if [ $on_ci = true ]; then
+    echo "Skip Amazon Music"
+  else
+    brew cask install amazon-music
+  fi
+  
   brew tap caskroom/versions
   brew tap caskroom/drivers
   brew tap alehouse/homebrew-unofficial
@@ -86,14 +91,18 @@ install_cask_apps_part_1() {
 
 install_cask_apps_part_2() {
   renew_sudo # to make the Caskroom on first install
-  brew cask install amazon-music
+  if [ $on_ci = true ]; then
+    echo "Skip Amazon Music"
+  else
+    brew cask install amazon-music
+  fi
   brew tap caskroom/versions
   brew tap caskroom/drivers
   brew tap alehouse/homebrew-unofficial
   renew_sudo
   brew cask install java
   renew_sudo
-  brew cask install processing ransomwhere real-vnc
+  brew cask install processing ransomwhere real-vnc rocket
   renew_sudo
   brew cask install silicon-labs-vcp-driver sketchup
   renew_sudo
