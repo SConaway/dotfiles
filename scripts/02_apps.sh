@@ -46,7 +46,7 @@ install_cask_apps_part_1() {
   else
     brew cask install amazon-music
   fi
-  
+
   brew tap caskroom/versions
   brew tap caskroom/drivers
   brew tap alehouse/homebrew-unofficial
@@ -120,7 +120,7 @@ install_cask_apps_part_2() {
   renew_sudo
 
   # prefpanes, qlplugins, colorpickers
-  brew cask install betterzipql epubquicklook qlcolorcode qlimagesize qlmarkdown qlplayground qlstephen quicklook-json quicklookase
+  brew cask install epubquicklook qlcolorcode qlimagesize qlmarkdown qlplayground qlstephen quicklook-json quicklookase
   renew_sudo
   # fonts
   brew tap caskroom/fonts
