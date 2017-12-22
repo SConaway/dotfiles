@@ -56,9 +56,6 @@ set_cask_default_apps() {
   for ext in {css,js,json,md,php,pug,py,rb,sh,txt,yaml,yml}; do duti -s com.github.atom "${ext}" all; done # code
 }
 
-
-
-
 configure_zsh() { # make zsh default shell
   sudo -S sh -c 'echo "/usr/local/bin/zsh" >> /etc/shells' <<< "${sudo_password}" 2> /dev/null
   sudo -S chsh -s '/usr/local/bin/zsh' "${USER}" <<< "${sudo_password}" 2> /dev/null
@@ -136,8 +133,6 @@ copy_dotfiles() {
   cp -LR home_dotfiles ~
   sudo cp -LR root_dotfiles /
 }
-
-
 
 os_customize() {
   # intial message
@@ -393,9 +388,6 @@ os_customize() {
     m dns flush
   fi
 
-
-
-
   info 'Set dark menu bar and Dock.'
   osascript -e 'tell application "System Events" to tell appearance preferences to set properties to {dark mode:true}'
 
@@ -436,7 +428,6 @@ os_customize() {
     echo
 
     #request_chrome_extension 'Google Chrome' '1password-password-manage' 'aomjjhallfgjeglblehebfpbcfeobpgk'
-
 
     # misc
 
