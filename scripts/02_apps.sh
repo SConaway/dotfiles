@@ -65,7 +65,7 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install eclipse-java electron-api-demos etcher
   renew_sudo
-  brew cask install flux free-download-manager
+  brew cask install flux free-download-manager firefox
   if [ $on_ci = true ]; then
     echo
   else
