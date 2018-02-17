@@ -23,7 +23,7 @@ caffeinate & # prevent computer from going to sleep
    #      echo "CI Part 0"
     #     install_brew_apps
     #     ;;
-      '1')
+     # '1')
     #     echo "CI Part 1"
     #     brew install duti
     #     install_cask_apps_part_1
