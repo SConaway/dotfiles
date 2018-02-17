@@ -1,6 +1,5 @@
 #! /bin/bash
-run_install_dotfiles() {
-  caffeinate & # prevent computer from going to sleep
+caffeinate & # prevent computer from going to sleep
 
   clear
   if [[ $# -eq 2 ]] ; then
@@ -110,9 +109,3 @@ run_install_dotfiles() {
         final_message
   fi
 
-
-}
-
-# run and log errors to file (but still show them when they happen)
-readonly error_log="${HOME}/Desktop/install_errors.log"
-run_install_dotfiles "$1" 2> >(tee "${error_log}")
