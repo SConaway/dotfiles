@@ -2,7 +2,7 @@
 
 ### Install everything
 ```
-bash -c "$(curl -fsSL 'https://raw.github.com/sconaway/dotfiles/master/install.sh')"
+curl -fsSL -o /tmp/dotfiles-install.sh 'https://raw.github.com/sconaway/dotfiles/master/install.sh' && bash /tmp/dotfiles-install.sh
 ```
 
 ### Organisation
