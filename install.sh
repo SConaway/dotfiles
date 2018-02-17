@@ -3,7 +3,7 @@ run_install_dotfiles() {
   caffeinate & # prevent computer from going to sleep
 
   clear
-  if [[ $# -eq 1 ]] ; then
+  if [[ $# -eq 2 ]] ; then
     echo "Running on CI"
     on_ci=true
 
