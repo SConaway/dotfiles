@@ -2,64 +2,64 @@
 caffeinate & # prevent computer from going to sleep
 
   clear
-  if [[ $# -eq 5 ]] ; then
-    echo "Running on CI"
-    on_ci=true
+ # if [[ $# -eq 5 ]] ; then
+ #   echo "Running on CI"
+ #   on_ci=true
 
-    # source all shell scripts
-    for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
-      source "${shell_script}"
-    done
+ #   # source all shell scripts
+  #  for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
+  #    source "${shell_script}"
+  #  done
 
-    initial_setup
+  #   initial_setup
 
-    install_python
-    install_ruby
-    install_node
-    install_zsh
+   #  install_python
+   #  install_ruby
+   #  install_node
+   #  install_zsh
 
-    case $1 in
-     '0')
-        echo "CI Part 0"
-        install_brew_apps
-        ;;
+   #  case $1 in
+   #   '0')
+   #      echo "CI Part 0"
+    #     install_brew_apps
+    #     ;;
       '1')
-        echo "CI Part 1"
-        brew install duti
-        install_cask_apps_part_1
-        set_cask_default_apps
-        install_atom_packages
-        ;;
+    #     echo "CI Part 1"
+    #     brew install duti
+    #     install_cask_apps_part_1
+    #     set_cask_default_apps
+     #    install_atom_packages
+     #    ;;
 
-      '2')
-        echo "CI Part 2"
-        install_cask_apps_part_2
-        ;;
+     #  '2')
+      #   echo "CI Part 2"
+      #   install_cask_apps_part_2
+      #   ;;
 
       '3')
-        echo "CI Part 3"
-        install_tinyscripts
-        copy_commands
-        link_airport
-        ;;
+     #    echo "CI Part 3"
+    #     install_tinyscripts
+     #    copy_commands
+     #    link_airport
+     #    ;;
 
-      '4')
-        echo "CI Part 4"
-        lower_startup_chime
-        os_customize
-        configure_dock
-        cleanup_brew
-        cleanup_error_log
-        killall caffeinate # computer can go back to sleep
-        final_message
-        ;;
+     #  '4')
+      #   echo "CI Part 4"
+      # #   lower_startup_chime
+      #   os_customize
+      #   configure_dock
+      #   cleanup_brew
+      #   cleanup_error_log
+      #   killall caffeinate # computer can go back to sleep
+      #   final_message
+      #   ;;
 
-      *)
-        echo "CI Part not recognized"
-        #exit 1
-        ;;
-        esac
-  else
+     #  *)
+     #    echo "CI Part not recognized"
+     #    #exit 1
+     #    ;;
+     #    esac
+ #  else
         on_ci=false
 
         curl --progress-bar --location 'https://github.com/sconaway/dotfiles/archive/master.zip' | ditto -xk - '/tmp' # download and extract script
@@ -107,5 +107,5 @@ caffeinate & # prevent computer from going to sleep
         move_manual_action_files
         killall caffeinate # computer can go back to sleep
         final_message
-  fi
+  # fi
 
