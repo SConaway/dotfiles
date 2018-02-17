@@ -2,7 +2,7 @@
 caffeinate & # prevent computer from going to sleep
 
   clear
-  if [[ $# -eq 2 ]] ; then
+  if [[ $# -eq 5 ]] ; then
     echo "Running on CI"
     on_ci=true
 
