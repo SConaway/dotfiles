@@ -1,9 +1,9 @@
 #! /bin/bash
-caffeinate & prevent computer from going to sleep
+caffeinate & # prevent computer from going to sleep
 
 clear
 echo $on_ci
-if [[ $-eq 1 ]] ; then
+if [[ $# -eq 1 ]] ; then
 #if [[ $on_ci -eq "yes" ]]; then
   echo "Running on CI"
   on_ci=true
@@ -47,7 +47,7 @@ if [[ $-eq 1 ]] ; then
     configure_dock
     cleanup_brew
     cleanup_error_log
-    killall caffeinate computer can go back to sleep
+    killall caffeinate # computer can go back to sleep
     final_message
     ;;
 
@@ -100,7 +100,7 @@ else
   cleanup_brew
   cleanup_error_log
   move_manual_action_files
-  killall caffeinate computer can go back to sleep
+  killall caffeinate # computer can go back to sleep
   final_message
 
   echo "I'm not on CI"
