@@ -36,7 +36,7 @@ caffeinate & # prevent computer from going to sleep
       #   install_cask_apps_part_2
       #   ;;
 
-      '3')
+    #  '3')
      #    echo "CI Part 3"
     #     install_tinyscripts
      #    copy_commands
