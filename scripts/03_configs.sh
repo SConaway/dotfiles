@@ -63,7 +63,7 @@ configure_zsh() { # make zsh default shell
 
 install_atom_packages() {
   # packages
-  apm install dash highlight-line intentions linter-alex language-haskell language-pug language-swift linter linter-eslint linter-jsonlint linter-rubocop linter-shellcheck linter-ui-default linter-tidy linter-write-good
+  apm install busy-signal dash highlight-line intentions linter-alex language-haskell language-pug language-swift linter linter-eslint linter-jsonlint linter-rubocop linter-shellcheck linter-ui-default linter-tidy linter-write-good
 
   # themes and syntaxes
   apm install peacock-syntax
@@ -419,6 +419,9 @@ os_customize() {
 
     preferences_pane 'com.apple.preference.trackpad'
     request_preferences 'ALL TABS: Set Trackpad preferences.'
+
+    preferences_pane 'com.apple.preference.mouse'
+    request_preferences 'ALL TABS: Set Mouse preferences.'
 
     preferences_pane 'com.apple.preferences.icloud'
     request_preferences "Review iCloud syncing settings."

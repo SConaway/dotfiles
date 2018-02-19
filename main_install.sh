@@ -66,17 +66,17 @@ else
 
   initial_setup
   ask_details
-  sync_icloud
-  update_system
-  #
-  install_brew
-  install_python
-  install_ruby
-  install_node
-  install_zsh
-  #
-  install_brew_apps
-  install_cask_apps_part_1
+  # sync_icloud
+  # update_system
+  # #
+  # install_brew
+  # install_python
+  # install_ruby
+  # install_node
+  # install_zsh
+  # #
+  # install_brew_apps
+  # install_cask_apps_part_1
   install_cask_apps_part_2
   install_tinyscripts
   install_mas_apps

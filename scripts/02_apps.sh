@@ -72,7 +72,7 @@ install_cask_apps_part_1() {
     brew cask install fritzing
   fi
   renew_sudo
-  brew cask install garmin-express gfxcardstatus gimp gitup google-chrome-canary
+  brew cask install garmin-express gfxcardstatus gimp gitup google-chrome-canary iterm2
   renew_sudo
   brew cask install keka kid3 knockknock lastpass liclipse
   renew_sudo
@@ -102,7 +102,7 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install java
   renew_sudo
-  brew cask install processing ransomwhere real-vnc rocket
+  brew cask install processing ransomwhere razer-synapse real-vnc rocket
   renew_sudo
   brew cask install silicon-labs-vcp-driver sketchup
   renew_sudo
@@ -116,7 +116,7 @@ install_cask_apps_part_2() {
     brew cask install caskroom/drivers/wch-ch34x-usb-serial-driver
   fi
   renew_sudo
-  brew cask install wdfirmwareupdater whatsyoursign wwdc yacreader
+  brew cask install wd-firmware-updater whatsyoursign wwdc yacreader
   renew_sudo
 
   # prefpanes, qlplugins, colorpickers
@@ -158,7 +158,7 @@ install_tinyscripts() {
   renew_sudo
   brew tap vitorgalvao/tinyscripts
   gem install --no-document watir
-  brew install annotmd cask-repair crafts customise-terminal-notifier fastmerge gfv gifmaker human-media-time labelcolor podbook prfixmaster progressbar ringtonemaker seren ubuntu-usb
+  brew install annotmd cask-repair crafts fastmerge gfv gifmaker human-media-time labelcolor podbook prfixmaster progressbar ringtonemaker seren ubuntu-usb
   echo "Tiny Scripts Installed"
 }
 
