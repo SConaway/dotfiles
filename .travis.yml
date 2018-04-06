@@ -7,10 +7,9 @@ install:
    - brew install shellcheck
    - mkdir /tmp/dotfiles-master/
    - cp -R . /tmp/dotfiles-master/
-script: 
+script:
    - bash install.sh "ci" "0"
    - bash install.sh "ci" "1"
    - bash install.sh "ci" "2"
    - bash install.sh "ci" "3"
    - bash install.sh "ci" "4"
-

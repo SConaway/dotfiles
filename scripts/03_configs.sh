@@ -63,7 +63,7 @@ configure_zsh() { # make zsh default shell
 
 install_atom_packages() {
   # packages
-  apm install busy-signal dash highlight-line intentions linter-alex language-haskell language-pug language-swift linter linter-eslint linter-jsonlint linter-rubocop linter-shellcheck linter-ui-default linter-tidy linter-write-good
+  apm install atom-idle-autosave atom-make atom-save-all build build-make build-tools-make busy-signal dash gist glist  highlight-line intentions linter-alex language-arduino language-haskell language-pug language-swift linter linter-eslint linter-jsonlint linter-rubocop linter-shellcheck linter-ui-default linter-tidy linter-travis-lint linter-write-good rulerz
 
   # themes and syntaxes
   apm install peacock-syntax

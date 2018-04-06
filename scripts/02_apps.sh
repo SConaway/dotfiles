@@ -53,9 +53,7 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install java
   renew_sudo
-  brew cask install android-file-transfer android-studio
-  renew_sudo
-  brew cask install applepi-baker anka-flow arduino atom
+  brew cask install applepi-baker arduino atom
   renew_sudo
   brew cask install bartender bettertouchtool blockblock
   renew_sudo
@@ -63,7 +61,7 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install disk-inventory-x docker dropbox
   renew_sudo
-  brew cask install eclipse-java electron-api-demos etcher
+  brew cask install eclipse-java etcher filezilla
   renew_sudo
   brew cask install flux free-download-manager firefox
   if [ $on_ci = true ]; then
@@ -72,9 +70,9 @@ install_cask_apps_part_1() {
     brew cask install fritzing
   fi
   renew_sudo
-  brew cask install garmin-express gfxcardstatus gimp gitup google-chrome-canary iterm2
+  brew cask install garmin-express gfxcardstatus gimp gitup google-chrome iterm2
   renew_sudo
-  brew cask install keka kid3 knockknock lastpass liclipse
+  brew cask install keka kid3 knockknock lastpass
   renew_sudo
   brew cask install lockdown mediainfo minecraft namechanger # mounty
   renew_sudo
@@ -108,7 +106,7 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install taskexplorer spectacle steam
   renew_sudo
-  brew cask install torbrowser transmission virtualbox vlc
+  brew cask install torbrowser transmission ultimaker-cura virtualbox vlc
   renew_sudo
   if [ $on_ci = true ]; then
     echo
@@ -116,8 +114,9 @@ install_cask_apps_part_2() {
     brew cask install caskroom/drivers/wch-ch34x-usb-serial-driver
   fi
   renew_sudo
-  brew cask install wd-firmware-updater whatsyoursign wwdc yacreader
+  brew cask install wd-firmware-updater whatsyoursign yacreader
   renew_sudo
+  brew cask install xquartz
 
   # prefpanes, qlplugins, colorpickers
   brew cask install epubquicklook qlcolorcode qlimagesize qlmarkdown qlplayground qlstephen quicklook-json quicklookase
