@@ -5,6 +5,9 @@ clear
 echo $on_ci
 if [[ $# -eq 1 ]] ; then
 #if [[ $on_ci -eq "yes" ]]; then
+  for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
+    source "${shell_script}"
+  done
   echo "Running on CI"
   on_ci=true
 
