@@ -2,7 +2,7 @@
 
 if [[ $# -eq 2 ]] ; then
   echo "Running on CI"
-  for shell_script in './scripts/'*.sh; do
+  for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
     source "${shell_script}"
   done
 
