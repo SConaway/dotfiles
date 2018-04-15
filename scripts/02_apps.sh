@@ -70,7 +70,12 @@ install_cask_apps_part_1() {
     brew cask install fritzing
   fi
   renew_sudo
-  brew cask install garmin-express gfxcardstatus gimp gitup google-chrome iterm2
+  if [ $on_ci = true ]; then
+    echo "Skip Garmin Express"
+  else
+    brew cask install garmin-express
+  fi
+  brew cask install gfxcardstatus gimp gitup google-chrome iterm2
   renew_sudo
   brew cask install keka kid3 knockknock lastpass
   renew_sudo
@@ -102,8 +107,13 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install processing ransomwhere razer-synapse real-vnc rocket
   renew_sudo
-  brew cask install silicon-labs-vcp-driver sketchup
+  brew cask install silicon-labs-vcp-driver 
   renew_sudo
+  if [ $on_ci = true ]; then
+    echo "Skip Sketchup"
+  else
+    brew cask install sketchup
+  fi
   brew cask install taskexplorer spectacle steam
   renew_sudo
   brew cask install torbrowser transmission ultimaker-cura virtualbox vlc
