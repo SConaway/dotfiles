@@ -134,7 +134,11 @@ install_cask_apps_part_2() {
   # fonts
   brew tap caskroom/fonts
   # multiple
-  ! brew cask install font-alegreya font-alegreya-sans # font-alegreya-sc # font-alegreya-sc seems to error
+  if [ $on_ci = true ]; then
+    echo
+  else
+    brew cask install font-alegreya font-alegreya-sans
+  fi
   renew_sudo
   brew cask install font-fira-mono
   renew_sudo
