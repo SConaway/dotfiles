@@ -55,7 +55,7 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install applepi-baker arduino atom
   renew_sudo
-  brew cask install bartender bettertouchtool blockblock
+  brew cask install blockblock
   renew_sudo
   brew cask install caffeine calibre cheatsheet coconutbattery
   renew_sudo
@@ -81,7 +81,7 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install lockdown mediainfo minecraft namechanger # mounty
   renew_sudo
-  brew cask install openemu-experimental openscad osxfuse
+  brew cask install  openscad osxfuse
   renew_sudo
   brew cask install oversight &
   sleep 120
@@ -114,7 +114,7 @@ install_cask_apps_part_2() {
   else
     brew cask install sketchup
   fi
-  brew cask install taskexplorer spectacle steam
+  brew cask install taskexplorer steam
   renew_sudo
   brew cask install torbrowser transmission ultimaker-cura virtualbox vlc
   renew_sudo
