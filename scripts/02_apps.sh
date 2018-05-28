@@ -3,7 +3,7 @@ install_brew_apps() {
   renew_sudo
   brew tap alehouse/homebrew-unofficial
   renew_sudo
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     echo
   else
     brew install boost
@@ -41,7 +41,7 @@ install_brew_apps() {
 
 install_cask_apps_part_1() {
   renew_sudo # to make the Caskroom on first install
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     echo "Skip Amazon Music"
   else
     brew cask install amazon-music
@@ -64,13 +64,13 @@ install_cask_apps_part_1() {
   brew cask install eclipse-java etcher filezilla
   renew_sudo
   brew cask install flux free-download-manager firefox
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     echo
   else
     brew cask install fritzing
   fi
   renew_sudo
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     echo "Skip Garmin Express"
   else
     brew cask install garmin-express
@@ -94,7 +94,7 @@ install_cask_apps_part_1() {
 
 install_cask_apps_part_2() {
   renew_sudo # to make the Caskroom on first install
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     echo "Skip Amazon Music"
   else
     brew cask install amazon-music
@@ -109,7 +109,7 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install silicon-labs-vcp-driver 
   renew_sudo
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     echo "Skip Sketchup"
   else
     brew cask install sketchup
@@ -118,7 +118,7 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install torbrowser transmission ultimaker-cura virtualbox vlc
   renew_sudo
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     echo
   else
     brew cask install caskroom/drivers/wch-ch34x-usb-serial-driver
@@ -134,7 +134,7 @@ install_cask_apps_part_2() {
   # fonts
   brew tap caskroom/fonts
   # multiple
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     echo
   else
     brew cask install font-alegreya font-alegreya-sans
@@ -142,7 +142,7 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install font-fira-mono
   renew_sudo
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     echo "Skip font-fira-sans"
   else
     brew cask install font-fira-sans

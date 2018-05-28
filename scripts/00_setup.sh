@@ -25,37 +25,39 @@ ask_details() {
   clear
   bold_echo 'Insert the "sudo" password now (will not be echoed).'
   until sudo -n true 2> /dev/null; do # if password is wrong, keep asking
-    read -s -p 'Password: ' sudo_password
+    read -r -s -p 'Password: ' sudo_password
     echo
     sudo -S -v <<< "${sudo_password}" 2> /dev/null
   done
 
   clear
   bold_echo 'Your Mac App Store details to install apps:'
-  read -p 'MAS email: ' mas_email
-  read -s -p 'MAS password (will not be echoed): ' mas_password
+  read -r -p 'MAS email: ' mas_email
+  read -r -s -p 'MAS password (will not be echoed): ' mas_password
 
   clear
   bold_echo 'Some details to be used when configuring git:'
-  read -p 'First and last names: ' name
-  read -p 'Github username: ' github_username
-  read -p 'Github email: ' github_email
+  read -r -p 'First and last names: ' name
+  read -r -p 'Github username: ' github_username
+  read -r -p 'Github email: ' github_email
 
   clear
   bold_echo 'Some contact information to be set in the lock screen:'
-  read -p 'Email address: ' email
-  read -p 'Telephone number: ' telephone
-  sudo -S defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Email: ${email}\nTel: ${telephone}" <<< "${sudo_password}" 2> /dev/null
+  read -r -p 'Email address: ' email
+  read -r -p 'Telephone number: ' telephone
+  sudo -S defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Email: ${email}\\nTel: ${telephone}" <<< "${sudo_password}" 2> /dev/null
 
   clear
   bold_echo 'Where are the home dofiles you would like to copy Located'
-  read -p 'Home Dotfiles ' home_dotfiles
+  read -r -p 'Home Dotfiles ' home_dotfiles
 
   clear
   bold_echo 'Where are the root dofiles you would like to copy Located'
-  read -p 'Root Dotfiles ' root_dotfiles
+  read -r -p 'Root Dotfiles ' root_dotfiles
 
   clear
+
+  verify 
 }
 
 sync_icloud() {

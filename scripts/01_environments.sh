@@ -13,12 +13,12 @@ install_python() {
 }
 
 install_ruby() {
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     brew install --force-bottle ruby
   else
     brew install ruby
   fi
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     echo "Skip gems"
   else
     # install some gems
@@ -29,7 +29,7 @@ install_ruby() {
 }
 
 install_node() {
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     brew install --force-bottle node yarn
   else
     brew install node yarn
@@ -43,7 +43,7 @@ install_node() {
 
 install_zsh() {
   renew_sudo
-  if [ $on_ci = true ]; then
+  if [ "$on_ci" -n true ]; then
     brew install --force-bottle zsh --without-etcdir
   else
     brew install zsh --without-etcdir
