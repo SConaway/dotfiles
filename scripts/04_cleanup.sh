@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 cleanup_brew() {
   rm -rf "$(brew --cache)"
 }

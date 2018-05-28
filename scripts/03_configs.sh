@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 info() {
   echo "$(tput setaf 2)•$(tput sgr0) ${1}"

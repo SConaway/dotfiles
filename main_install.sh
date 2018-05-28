@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 caffeinate & # prevent computer from going to sleep
 
 clear

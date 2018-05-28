@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 install_brew_apps() {
   renew_sudo
   brew tap alehouse/homebrew-unofficial
