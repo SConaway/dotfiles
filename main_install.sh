@@ -2,7 +2,7 @@
 caffeinate & # prevent computer from going to sleep
 
 clear
-echo $on_ci
+echo "$on_ci"
 if [[ $# -eq 1 ]] ; then
 #if [[ $on_ci -eq "yes" ]]; then
   for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
