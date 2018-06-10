@@ -27,7 +27,7 @@ install_brew_apps() {
   brew install zsh-autosuggestions zsh-completions zsh-history-substring-search zsh-syntax-highlighting
   renew_sudo
   # install apps from other taps
-  brew install laurent22/massren/massren
+  #brew install laurent22/massren/massren
   renew_sudo
 
   # install and configure tor
@@ -55,8 +55,6 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install applepi-baker arduino atom
   renew_sudo
-  brew cask install blockblock
-  renew_sudo
   brew cask install caffeine calibre cheatsheet coconutbattery
   renew_sudo
   brew cask install disk-inventory-x docker dropbox
@@ -79,7 +77,7 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install keka kid3 knockknock lastpass
   renew_sudo
-  brew cask install lockdown mediainfo minecraft namechanger # mounty
+  brew cask install lockdown mediainfo minecraft namechanger
   renew_sudo
   brew cask install  openscad osxfuse
   renew_sudo
@@ -105,7 +103,7 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install java
   renew_sudo
-  brew cask install processing ransomwhere razer-synapse real-vnc rocket
+  brew cask install razer-synapse real-vnc rocket
   renew_sudo
   brew cask install silicon-labs-vcp-driver 
   renew_sudo
@@ -129,7 +127,7 @@ install_cask_apps_part_2() {
   brew cask install xquartz
 
   # prefpanes, qlplugins, colorpickers
-  brew cask install epubquicklook qlcolorcode qlimagesize qlmarkdown qlplayground qlstephen quicklook-json quicklookase
+  brew cask install epubquicklook qlcolorcode qlimagesize qlmarkdown qlstephen
   renew_sudo
   # fonts
   brew tap caskroom/fonts
@@ -199,5 +197,6 @@ install_mas_apps() {
 install_oh_my_zsh() {
   renew_sudo
   sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
   echo "Oh My ZSH Installed"
 }

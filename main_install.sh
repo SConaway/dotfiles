@@ -65,6 +65,11 @@ if [[ $# -eq 1 ]] ; then
   esac
 
 else
+
+  for shell_script in './scripts/'*.sh; do
+  #for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
+    source "${shell_script}"
+  done
   on_ci=false
 
   initial_setup
@@ -85,7 +90,7 @@ else
   install_mas_apps
   install_oh_my_zsh
   #
-  set_brew_default_apps
+  #set_brew_default_apps
   set_cask_default_apps
   configure_zsh
   install_atom_packages
@@ -96,7 +101,7 @@ else
   copy_commands
   link_airport
   lower_startup_chime
-  copy_dotfiles
+  #copy_dotfiles
   configure_dock
   os_customize
   #
@@ -105,6 +110,4 @@ else
   move_manual_action_files
   killall caffeinate # computer can go back to sleep
   final_message
-
-  echo "I'm not on CI"
 fi

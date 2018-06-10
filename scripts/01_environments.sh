@@ -3,12 +3,13 @@ install_brew() {
   renew_sudo
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null
   brew analytics off
+  git -C "$(brew --repo homebrew/core)" fetch --unshallow
 
   echo "Brew Installed"
 }
 
 install_python() {
-  brew install python python3
+  brew install python pip2 python3 pip3
   echo "Python Installed"
 }
 
