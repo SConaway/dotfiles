@@ -375,7 +375,7 @@ os_customize() {
   # Bottom left screen corner → Put display to sleep
   defaults write com.apple.dock wvous-tl-corner -int 10
   # Top right screen corner → Notification Center
-  defaults write com.apple.dock wvous-tr-corner -int 12
+  defaults write com.apple.dock wvous-tr-corner -int 10
   # Bottom right screen corner → Desktop
   defaults write com.apple.dock wvous-br-corner -int 4
 
