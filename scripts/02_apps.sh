@@ -124,7 +124,7 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install wd-firmware-updater whatsyoursign yacreader
   renew_sudo
-  brew cask install xquartz
+  brew cask install vnc-viewer vnc-server xquartz
 
   # prefpanes, qlplugins, colorpickers
   brew cask install epubquicklook qlcolorcode qlimagesize qlmarkdown qlstephen
