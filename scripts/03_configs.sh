@@ -109,7 +109,7 @@ link_airport() {
 lower_startup_chime() {
   curl -fsSL 'https://raw.githubusercontent.com/vitorgalvao/lowchime/master/lowchime' --output '/tmp/lowchime'
   chmod +x '/tmp/lowchime'
-  if [ "$on_ci" -n true ]; then
+  if [[ -v CI ]]; then
     sudo -S /tmp/lowchime install 2> /dev/null
   else
     sudo -S /tmp/lowchime install <<< "${sudo_password}" 2> /dev/null
@@ -327,7 +327,7 @@ os_customize() {
   defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
   defaults write com.apple.ActivityMonitor SortDirection -int 0
 
-  if [ "$on_ci" -n true ]; then
+  if [[ -v CI ]]; then
     info 'Show the ~/Library folder, /Library, and /Volumes, and hide  Documents, Music, Pictures, and Public.'
   else
     info 'Show the ~/Library folder, /Library, and /Volumes, and hide Applications, Documents, Music, Pictures, and Public.'
@@ -367,7 +367,7 @@ os_customize() {
   # Bottom right screen corner → Desktop
   defaults write com.apple.dock wvous-br-corner -int 4
 
-  if [ "$on_ci" -n true ]; then
+  if [[ -v CI ]]; then
     echo
   else
     info 'Use Cloudflare DNS servers.'
@@ -391,7 +391,7 @@ os_customize() {
   # second part
   # find values for System Preferences by opening the desired pane and running the following AppleScript:
   # tell application "System Preferences" to return anchors of current pane
-  if [ "$on_ci" -n true ]; then
+  if [[ -v CI ]]; then
     echo "Done!"
   else
     echo

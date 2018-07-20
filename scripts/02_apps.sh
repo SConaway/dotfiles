@@ -20,7 +20,7 @@ install_brew_apps() {
 
 install_cask_apps_part_1() {
   renew_sudo # to make the Caskroom on first install
-  if [ "$on_ci" -n true ]; then
+  if [[ -v CI ]]; then
     echo "Skip Amazon Music"
   else
     brew cask install amazon-music
@@ -52,7 +52,7 @@ install_cask_apps_part_1() {
 
 install_cask_apps_part_2() {
   renew_sudo # to make the Caskroom on first install
-  if [ "$on_ci" -n true ]; then
+  if [[ -v CI ]]; then
     echo "Skip Amazon Music"
   else
     brew cask install amazon-music
