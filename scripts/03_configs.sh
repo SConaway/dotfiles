@@ -416,7 +416,7 @@ os_customize() {
 
     # chrome extentions
 
-    echo
+    echo "Done!"
 
     #request_chrome_extension 'Google Chrome' '1password-password-manage' 'aomjjhallfgjeglblehebfpbcfeobpgk'
 
