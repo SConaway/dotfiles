@@ -384,6 +384,9 @@ os_customize() {
   info 'Set Dock to auto-hide.'
   osascript -e 'tell application "System Events" to set the autohide of the dock preferences to true'
 
+  info "Add /usr/local/bin to GUI Apps' Path"
+  sudo launchctl config user path "/usr/local/bin:$PATH"
+
   for app in 'Dock' 'Finder'; do
     killall "${app}" &> /dev/null
   done

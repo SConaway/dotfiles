@@ -34,7 +34,7 @@ install_cask_apps_part_1() {
 
   renew_sudo
 
-  readonly local cask_apps_1=('java' 'arduino' 'atom' 'caffeine' 'cheatsheet' 'coconutbattery' 'disk-inventory-x' 'docker' 'dropbox' 'eclipse-java' 'etcher' 'filezilla' 'flux' 'free-download-manager' 'firefox' 'fritzing' 'garmin-express' 'gfxcardstatus' 'gimp' 'gitup' 'google-chrome' 'iterm2' 'keka' 'kid3' 'knockknock' 'lastpass' 'lockdown' 'mediainfo' 'meld' 'minecraft' 'namechanger' 'openscad' 'osxfuse')
+  readonly local cask_apps_1=('java' 'arduino' 'atom' 'caffeine' 'cheatsheet' 'coconutbattery' 'disk-inventory-x' 'docker' 'dropbox' 'eclipse-java' 'etcher' 'filezilla' 'flux' 'free-download-manager' 'firefox' 'fritzing' 'garmin-express' 'gfxcardstatus' 'gimp' 'gitup' 'google-chrome' 'iterm2' 'keka' 'kid3' 'knockknock' 'lastpass' 'lockdown' 'mediainfo' 'meld' 'minecraft' 'namechanger' 'openscad' 'osxfuse' 'razer-synapse' 'real-vnc' 'rocket' 'silicon-labs-vcp-driver' 'sketchup' 'steam')
 
   for app in "${cask_apps_1[@]}"; do
     echo "Installing $app"
