@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-# shellcheck disable=SC2034SC2154,SC2155
+# shellcheck disable=SC1090,SC2034,SC2154,SC2155
 bold_echo() { # helper function for bold text
   echo "$(tput bold)${1}$(tput sgr0)"
 }
@@ -40,6 +40,7 @@ ask_details() {
   bold_echo 'Some details to be used when configuring git:'
   read -r -p 'First and last names: ' name
   read -r -p 'Github username: ' github_username
+  read -r -p 'Github token (Create a token with the "repo" scope for CLI access from https://github.com/settings/tokens): ' github_token
   read -r -p 'Github email: ' github_email
 
   clear
@@ -58,7 +59,7 @@ ask_details() {
 
   clear
 
-  verify
+#  verify
 }
 
 sync_icloud() {

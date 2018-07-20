@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-# shellcheck disable=SC2034,SC2154,SC2155
+# shellcheck disable=SC1090,SC2034,SC2154,SC2155
 cleanup_brew() {
   rm -rf "$(brew --cache)"
 }

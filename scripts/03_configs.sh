@@ -1,55 +1,42 @@
 #! /usr/bin/env bash
-# shellcheck disable=SC2034,SC2154,SC2155
+# shellcheck disable=SC1090,SC2034,SC2154,SC2155
 info() {
   echo "$(tput setaf 2)•$(tput sgr0) ${1}"
 }
 
 request() { # output a message and open an app
-  local message="${1}"
-  local app="${2}"
-  shift 2
+local message="${1}"
+local app="${2}"
+shift 2
 
-  echo "$(tput setaf 5)•$(tput sgr0) ${message}"
-  open -Wa "${app}" --args "$@" # don't continue until app closes
+echo "$(tput setaf 5)•$(tput sgr0) ${message}"
+open -Wa "${app}" --args "$@" # don't continue until app closes
 }
 
 request_preferences() { # 'request' for System Preferences
-  request "${1}" 'System Preferences'
+request "${1}" 'System Preferences'
 }
 
 request_chrome_extension() { # 'request' for Google Chrome extensions
-  local chrome_or_canary="${1}"
-  local extension_short_name="${2}"
-  local extension_code="${3}"
+local chrome_or_canary="${1}"
+local extension_short_name="${2}"
+local extension_code="${3}"
 
-  request "Install '${extension_short_name}' extension." "${chrome_or_canary}" --no-first-run "https://chrome.google.com/webstore/detail/${extension_short_name}/${extension_code}"
+request "Install '${extension_short_name}' extension." "${chrome_or_canary}" --no-first-run "https://chrome.google.com/webstore/detail/${extension_short_name}/${extension_code}"
 }
 
 preferences_pane() { # open 'System Preferences' is specified pane
-  osascript -e "tell application \"System Preferences\"
-    reveal pane \"${1}\"
-    activate
-  end tell" &> /dev/null
+osascript -e "tell application \"System Preferences\"
+reveal pane \"${1}\"
+activate
+end tell" &> /dev/null
 }
 
 preferences_pane_anchor() { # open 'System Preferences' is specified pane and tab
-  osascript -e "tell application \"System Preferences\"
-    reveal anchor \"${1}\" of pane \"${2}\"
-    activate
-  end tell" &> /dev/null
-}
-
-set_brew_default_apps() {
-  # open the mpv app bundle, so the system actually sees it (since it's not in a standard location)
-  readonly local mpv_location="$(readlink "$(brew --prefix)/bin/mpv" | sed "s:^\.\.:$(brew --prefix):;s:bin/mpv$:mpv.app:")"
-  if [[ -n "${mpv_location}" ]]; then
-    readonly local mpv_process="$(pgrep -f 'mpv.app')"
-    if [[ -z "${mpv_process}" ]]; then
-      open "${mpv_location}"
-      sleep 2
-      killall mpv
-    fi
-  fi
+osascript -e "tell application \"System Preferences\"
+reveal anchor \"${1}\" of pane \"${2}\"
+activate
+end tell" &> /dev/null
 }
 
 set_cask_default_apps() {
@@ -57,13 +44,13 @@ set_cask_default_apps() {
 }
 
 configure_zsh() { # make zsh default shell
-  sudo -S sh -c 'echo "/usr/local/bin/zsh" >> /etc/shells' <<< "${sudo_password}" 2> /dev/null
-  sudo -S chsh -s '/usr/local/bin/zsh' "${USER}" <<< "${sudo_password}" 2> /dev/null
+sudo -S sh -c 'echo "/usr/local/bin/zsh" >> /etc/shells' <<< "${sudo_password}" 2> /dev/null
+sudo -S chsh -s '/usr/local/bin/zsh' "${USER}" <<< "${sudo_password}" 2> /dev/null
 }
 
 install_atom_packages() {
   # packages
-  apm install atom-beautify atom-idle-autosave atom-make atom-save-all build build-make build-tools-make busy-signal dash gist git-plus git-plus-toolbar glist highlight-line intentions linter linter-alex language-arduino language-diff language-docker linter-eslint linter-jsonlint linter-rubocop linter-shellchec linter-tidy linter-travis-lint linter-ui-default linter-write-good language-haskell language-homebrew-formula language-pug language-swift peacock-syntax rulerz tool-bar
+  apm install atom-beautify atom-idle-autosave atom-make atom-save-all build build-make build-tools-make busy-signal dash gist  glist highlight-line intentions linter linter-alex language-arduino language-diff language-docker linter-eslint linter-jsonlint linter-rubocop linter-shellchec linter-tidy linter-travis-lint linter-ui-default linter-write-good language-haskell language-homebrew-formula language-pug language-swift peacock-syntax rulerz tool-bar
 
   # themes and syntaxes
   apm install peacock-syntax
@@ -93,14 +80,14 @@ install_launchagents() {
   readonly local global_launchdaemons_dir='/Library/LaunchDaemons/'
   mkdir -p "${user_launchagents_dir}"
 
-  for plist_file in "${helper_files}/launchd_plists/user_plists"/*; do
+  for plist_file in "${helper_files}/launchd_plists/user_plists"/*.plist; do
     local plist_name=$(basename "${plist_file}")
 
     mv "${plist_file}" "${user_launchagents_dir}"
     launchctl load -w "${user_launchagents_dir}/${plist_name}"
   done
 
-  for plist_file in "${helper_files}/launchd_plists/global_plists"/*; do
+  for plist_file in "${helper_files}/launchd_plists/global_plists"/*.plist; do
     local plist_name=$(basename "${plist_file}")
 
     sudo mv "${plist_file}" "${global_launchdaemons_dir}" <<< "${sudo_password}" 2> /dev/null
@@ -140,13 +127,13 @@ os_customize() {
 
   echo "This script will help configure the rest of macOS. It is divided in two parts:
 
-    $(tput setaf 2)•$(tput sgr0) Commands that will change settings without needing intervetion.
-    $(tput setaf 5)•$(tput sgr0) Commands that will require manual interaction.
+  $(tput setaf 2)•$(tput sgr0) Commands that will change settings without needing intervetion.
+  $(tput setaf 5)•$(tput sgr0) Commands that will require manual interaction.
 
-    The first part will simply output what it is doing (the action itself, not the commands).
+  The first part will simply output what it is doing (the action itself, not the commands).
 
-    The second part will open the appropriate panels/apps, inform what needs to be done, and pause. Unless prefixed with the message 'ALL TABS', all changes can be performed in the opened tab.
-    After the changes are done, close the app and the script will continue.
+  The second part will open the appropriate panels/apps, inform what needs to be done, and pause. Unless prefixed with the message 'ALL TABS', all changes can be performed in the opened tab.
+  After the changes are done, close the app and the script will continue.
   " | sed -E 's/ {2}//'
 
   # ask for 'sudo' authentication
@@ -198,8 +185,8 @@ os_customize() {
   info 'Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window'
   sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
-  info 'Restart automatically if the computer freezes'
-  sudo systemsetup -setrestartfreeze on
+  # info 'Restart automatically if the computer freezes'
+  # sudo systemsetup -setrestartfreeze on
 
   info 'Set language and text formats'
   defaults write NSGlobalDomain AppleLanguages -array "en"
@@ -276,9 +263,9 @@ os_customize() {
 
   info 'Expand the following File Info panes: “General”, “Open with”, and “Sharing & Permissions”'
   defaults write com.apple.finder FXInfoPanesExpanded -dict \
-  	General -bool true \
-  	OpenWith -bool true \
-  	Privileges -bool true
+  General -bool true \
+  OpenWith -bool true \
+  Privileges -bool true
 
   info 'Copy email addresses as "foo@example.com" instead of "Foo Bar <foo@example.com>" in Mail.app'
   defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
@@ -312,17 +299,17 @@ os_customize() {
   info 'Enable the automatic update check'
   defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
 
-  info 'Check for software updates daily, not just once per week'
-  defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+  # info 'Check for software updates daily, not just once per week'
+  # defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
   info 'Download newly available updates in background'
   defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
 
-  info 'Install System data files & security updates'
-  defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
-
-  info 'Turn on app auto-update'
-  defaults write com.apple.commerce AutoUpdate -bool true
+  # info 'Install System data files & security updates'
+  # defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
+  #
+  # info 'Turn on app auto-update'
+  # defaults write com.apple.commerce AutoUpdate -bool true
 
   info 'Prevent Photos from opening automatically when devices are plugged in'
   defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
@@ -341,9 +328,9 @@ os_customize() {
   defaults write com.apple.ActivityMonitor SortDirection -int 0
 
   if [ "$on_ci" -n true ]; then
-    info 'Show the ~/Library folder and /Volumes, and hide  Documents, Music, Pictures and Public.'
+    info 'Show the ~/Library folder, /Library, and /Volumes, and hide  Documents, Music, Pictures, and Public.'
   else
-    info 'Show the ~/Library folder and /Volumes, and hide Applications, Documents, Music, Pictures and Public.'
+    info 'Show the ~/Library folder, /Library, and /Volumes, and hide Applications, Documents, Music, Pictures, and Public.'
     chflags hidden "${HOME}/Applications"
   fi
   chflags nohidden "${HOME}/Library"
@@ -352,6 +339,7 @@ os_customize() {
   chflags hidden "${HOME}/Pictures"
   chflags hidden "${HOME}/Public"
   sudo chflags nohidden /Volumes
+  sudo chflags nohidden /Library
 
   info 'Allow scroll gesture with ⌃ to zoom.'
   defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
@@ -374,22 +362,22 @@ os_customize() {
   # 12: Notification Center
   # Bottom left screen corner → Put display to sleep
   defaults write com.apple.dock wvous-tl-corner -int 10
-  # Top right screen corner → Notification Center
+  # Top right screen corner → Put display to sleep
   defaults write com.apple.dock wvous-tr-corner -int 10
   # Bottom right screen corner → Desktop
   defaults write com.apple.dock wvous-br-corner -int 4
 
-  if [ "$on_ci" -n true ]; then
-    echo
-  else
-    info 'Use OpenDNS and Google Public DNS servers.'
-    sudo networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4 208.67.222.222 208.67.220.220
-    sudo networksetup -setdnsservers "Thunderbolt Ethernet" 8.8.8.8 8.8.4.4 208.67.222.222 208.67.220.220
-    m dns flush
-  fi
+  # if [ "$on_ci" -n true ]; then
+  #   echo
+  # else
+  #   info 'Use OpenDNS and Google Public DNS servers.'
+  #   sudo networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4 208.67.222.222 208.67.220.220
+  #   sudo networksetup -setdnsservers "Thunderbolt Ethernet" 8.8.8.8 8.8.4.4 208.67.222.222 208.67.220.220
+  #   m dns flush
+  # fi
 
-  info 'Set dark menu bar and Dock.'
-  osascript -e 'tell application "System Events" to tell appearance preferences to set properties to {dark mode:true}'
+  # info 'Set dark menu bar and Dock.'
+  # osascript -e 'tell application "System Events" to tell appearance preferences to set properties to {dark mode:true}'
 
   info 'Set Dock size and screen edge.'
   osascript -e 'tell application "System Events" to tell dock preferences to set properties to {dock size:1, screen edge:bottom}'
@@ -434,6 +422,9 @@ os_customize() {
 
     # misc
 
+
+    request 'Create a token with the "repo" scope for CLI access.' 'Google Chrome' 'https://github.com/settings/tokens'
+    read -p 'Github token: ' github_token
     echo "host=github.com
     protocol=https
     password=${github_token}

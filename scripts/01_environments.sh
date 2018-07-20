@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-# shellcheck disable=SC2034,SC2154,SC2155
+# shellcheck disable=SC1090,SC2034,SC2154,SC2155
 install_brew() {
   renew_sudo
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null
@@ -24,10 +24,9 @@ install_ruby() {
     echo "Skip gems"
   else
     # install some gems
-    gem install --no-document bundler rubocop rubocop-cask maid travis video_transcoding
-    gem install --no-document pygments.rb # needed for installing ghi with brew
+    gem install --no-document bundler pygments.rb rubocop rubocop-cask maid travis
   fi
-  echo "Ruby Installed"
+  echo "Ruby and gems Installed"
 }
 
 install_node() {
@@ -39,16 +38,16 @@ install_node() {
   yarn config set prefix "$(brew --prefix)"
   yarn config set ignore-engines
   # install some packages
-  yarn global add eslint eslint-plugin-immutable eslint-plugin-shopify jsonlint nightmare pageres-cli prettier
-  echo "Node Installed"
+  yarn global add jsonlint nightmare pageres-cli
+  echo "Node and Packages Installed"
 }
 
 install_zsh() {
   renew_sudo
   if [ "$on_ci" -n true ]; then
-    brew install --force-bottle zsh --without-etcdir
+    brew install --force-bottle zsh
   else
-    brew install zsh --without-etcdir
+    brew install zsh
   fi
   echo "ZSH Installed"
 }

@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-# shellcheck disable=SC2034,SC2154,SC2155
+# shellcheck disable=SC1090,SC2034,SC2154,SC2155
 install_brew_apps() {
   renew_sudo
   brew tap alehouse/homebrew-unofficial
@@ -10,32 +10,24 @@ install_brew_apps() {
     brew install boost
   fi
 
-  brew install aria2 avrdude cask ccache cmake
+  brew install aria2 avrdude cask cmake
   renew_sudo
-  brew install cowsay cpulimit curl dockutil duti ffmpeg
+  brew install cowsay curl dockutil duti
   renew_sudo
-  brew install fontconfig ghi git git-ftp git-lfs gradle handbrake hr
+  brew install git git-ftp git-lfs gradle handbrake hr
   renew_sudo
-  brew install imagemagick lame livestreamer m-cli mas
+  brew install m-cli mas
   renew_sudo
-  brew install mediainfo mp4v2 mpv openssl p7zip python python3 qemu ripgrep
+  brew install mediainfo openssl p7zip python python3 qemu ripgrep
   renew_sudo
-  brew install rmlint shellcheck trash tree unrar wget youtube-dl z
+  brew install rmlint shellcheck sshrc trash tree unrar wget youtube-dl z
 
   renew_sudo
 
   # install zsh_plugins
   brew install zsh-autosuggestions zsh-completions zsh-history-substring-search zsh-syntax-highlighting
   renew_sudo
-  # install apps from other taps
-  #brew install laurent22/massren/massren
   renew_sudo
-
-  # install and configure tor
-  brew install tor torsocks
-  renew_sudo
-  cp "$(brew --prefix)/etc/tor/torrc.sample" "$(brew --prefix)/etc/tor/torrc"
-  echo 'ExitNodes {us}' >> "$(brew --prefix)/etc/tor/torrc"
 
   echo "Brew Apps Installed"
 }
@@ -54,9 +46,9 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install java
   renew_sudo
-  brew cask install applepi-baker arduino atom
+  brew cask install arduino atom
   renew_sudo
-  brew cask install caffeine calibre cheatsheet coconutbattery
+  brew cask install caffeine cheatsheet coconutbattery
   renew_sudo
   brew cask install disk-inventory-x docker dropbox
   renew_sudo
@@ -80,7 +72,7 @@ install_cask_apps_part_1() {
   renew_sudo
   brew cask install lockdown mediainfo minecraft namechanger
   renew_sudo
-  brew cask install  openscad osxfuse
+  brew cask install openscad osxfuse
   renew_sudo
   brew cask install oversight &
   sleep 120
@@ -113,7 +105,7 @@ install_cask_apps_part_2() {
   else
     brew cask install sketchup
   fi
-  brew cask install taskexplorer steam
+  brew cask install steam taskexplorer
   renew_sudo
   brew cask install torbrowser transmission ultimaker-cura virtualbox vlc
   renew_sudo
@@ -123,7 +115,7 @@ install_cask_apps_part_2() {
     brew cask install caskroom/drivers/wch-ch34x-usb-serial-driver
   fi
   renew_sudo
-  brew cask install wd-firmware-updater whatsyoursign yacreader
+  brew cask install wd-firmware-updater whatsyoursign
   renew_sudo
   brew cask install vnc-viewer vnc-server xquartz
 
@@ -163,20 +155,10 @@ install_cask_apps_part_2() {
   renew_sudo
   # slab
   brew cask install font-bitter font-kreon
-  echo "Cask Apps Part 2 Installed"
-  echo "All Cask Apps Installed"
   renew_sudo
 
   # games
   #brew cask install gridwars noiz2sa rootage torustrooper
-}
-
-install_tinyscripts() {
-  renew_sudo
-  brew tap vitorgalvao/tinyscripts
-  gem install --no-document watir
-  brew install annotmd cask-repair crafts fastmerge gfv gifmaker human-media-time labelcolor podbook prfixmaster progressbar ringtonemaker seren ubuntu-usb
-  echo "Tiny Scripts Installed"
 }
 
 install_mas_apps() {

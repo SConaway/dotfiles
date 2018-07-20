@@ -1,4 +1,5 @@
 #! /usr/bin/env bash
+# shellcheck disable=SC1090,SC2034,SC2154,SC2155
 caffeinate & # prevent computer from going to sleep
 
 clear
@@ -38,7 +39,6 @@ if [[ $# -eq 1 ]] ; then
 
     '3')
     echo "CI Part 3"
-    install_tinyscripts
     copy_commands
     link_airport
     ;;
@@ -86,7 +86,7 @@ else
   install_brew_apps
   install_cask_apps_part_1
   install_cask_apps_part_2
-  install_tinyscripts
+  echo "Cask Apps Part 2 Installed"
   install_mas_apps
   install_oh_my_zsh
   #
