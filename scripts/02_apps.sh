@@ -11,6 +11,7 @@ install_brew_apps() {
   renew_sudo
 
   for app in "${brew_apps[@]}"; do
+    echo "Installing $app"
     brew install "${app}"
     renew_sudo
   done
@@ -37,6 +38,7 @@ install_cask_apps_part_1() {
   readonly local cask_apps_1=('java' 'arduino' 'atom' 'caffeine' 'cheatsheet' 'coconutbattery' 'disk-inventory-x' 'docker' 'dropbox' 'eclipse-java' 'etcher' 'filezilla' 'flux' 'free-download-manager' 'firefox' 'fritzing' 'garmin-express' 'gfxcardstatus' 'gimp' 'gitup' 'google-chrome' 'iterm2' 'keka' 'kid3' 'knockknock' 'lastpass' 'lockdown' 'mediainfo' 'meld' 'minecraft' 'namechanger' 'openscad' 'osxfuse')
 
   for app in "${cask_apps_1[@]}"; do
+    echo "Installing $app"
     brew cask install "${app}"
     renew_sudo
   done
@@ -69,6 +71,7 @@ install_cask_apps_part_2() {
   readonly local cask_apps_2=('java' 'razer-synapse' 'real-vnc' 'rocket' 'silicon-labs-vcp-driver' 'sketchup' 'steam' 'taskexplorer' 'torbrowser' 'transmission' 'ultimaker-cura' 'virtualbox' 'vlc' 'caskroom/drivers/wch-ch34x-usb-serial-driver' 'wd-firmware-updater' 'whatsyoursign' 'vnc-viewer' 'vnc-server' 'xquartz' 'epubquicklook' 'qlcolorcode' 'qlimagesize' 'qlmarkdown' 'qlstephen' 'font-alegreya' 'font-alegreya-sans' 'font-fira-mono' 'font-fira-sans' 'font-input' 'font-merriweather' 'font-merriweather-sans' 'font-pt-mono' 'font-pt-sans' 'font-pt-serif' 'font-source-code-pro' 'font-source-sans-pro' 'font-source-serif-pro' 'font-aileron' 'font-bebas-neue' 'font-exo2' 'font-montserrat' 'font-lato' 'font-open-sans' 'font-open-sans-condensed' 'font-signika' 'font-abril-fatface' 'font-butler' 'font-gentium-book-basic' 'font-playfair-display' 'font-playfair-display-sc' 'font-bitter' 'font-kreon')
 
   for app in "${cask_apps_1[@]}"; do
+    echo "Installing $app"
     brew cask install "${app}"
     renew_sudo
   done
