@@ -1,6 +1,8 @@
 #! /usr/bin/env bash
 # shellcheck disable=SC1090,SC2034,SC2154,SC2155
 
+echo "Running on $(bash --version | grep bash)"
+
 if [[ $# -eq 1 ]] ; then
   echo "Running on CI"
   travis-pls brew upgrade --force-bottle

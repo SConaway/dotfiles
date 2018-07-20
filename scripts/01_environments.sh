@@ -10,7 +10,7 @@ install_brew() {
 }
 
 install_python() {
-  brew install python pip2 python3 pip3
+  brew install python@2 python@3
   echo "Python Installed"
 }
 
