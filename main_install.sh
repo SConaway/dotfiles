@@ -5,7 +5,7 @@ caffeinate & # prevent computer from going to sleep
 clear
 echo "$on_ci"
 if [[ $# -eq 1 ]] ; then
-#if [[ $on_ci -eq "yes" ]]; then
+  #if [[ $on_ci -eq "yes" ]]; then
   for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
     source "${shell_script}"
   done
@@ -43,7 +43,7 @@ if [[ $# -eq 1 ]] ; then
     link_airport
     lower_startup_chime
     os_customize
-    configure_dock
+    #configure_dock
     cleanup_brew
     cleanup_error_log
     killall caffeinate # computer can go back to sleep
@@ -59,7 +59,7 @@ if [[ $# -eq 1 ]] ; then
 else
 
   for shell_script in './scripts/'*.sh; do
-  #for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
+    #for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
     source "${shell_script}"
   done
   on_ci=false
@@ -94,7 +94,7 @@ else
   link_airport
   lower_startup_chime
   #copy_dotfiles
-  configure_dock
+  #configure_dock
   os_customize
   #
   cleanup_brew

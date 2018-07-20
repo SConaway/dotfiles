@@ -14,8 +14,8 @@ initial_setup() {
   trap 'exit 0' SIGINT # exit cleanly if aborted with ⌃C
 
   # variables for helper files and directories
-  readonly helper_files='/tmp/dotfiles-master/files'
-  readonly command_files='/tmp/dotfiles-master/command'
+  readonly helper_files='./files' # /tmp/dotfiles-master/files'
+  readonly command_files='./commands' # /tmp/dotfiles-master/commands'
   readonly command_files_dest='/usr/local/bin'
   readonly post_install_files="${HOME}/Desktop/post_install_files"
   readonly post_install_script="${HOME}/Desktop/post_install_script.sh"

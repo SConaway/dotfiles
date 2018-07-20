@@ -8,6 +8,7 @@ install:
    - brew install bash
    - brew install shellcheck
    - sudo -H pip3 install travispls
+   - travis-pls brew upgrade --force-bottle
    - mkdir /tmp/dotfiles-master/
    - cp -R . /tmp/dotfiles-master/
 script: bash install.sh $CI_PART
