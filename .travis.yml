@@ -4,7 +4,7 @@ osx_image: xcode9.4
 install:
    - brew unlink python
    - brew update
-   - brew upgrade bash
+   - brew install bash
    - brew install shellcheck
    - mkdir /tmp/dotfiles-master/
    - cp -R . /tmp/dotfiles-master/
