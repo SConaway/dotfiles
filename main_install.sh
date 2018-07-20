@@ -41,10 +41,6 @@ if [[ $# -eq 1 ]] ; then
     echo "CI Part 3"
     copy_commands
     link_airport
-    ;;
-
-    '4')
-    echo "CI Part 4"
     lower_startup_chime
     os_customize
     configure_dock
@@ -54,13 +50,9 @@ if [[ $# -eq 1 ]] ; then
     final_message
     ;;
 
-    '5')
-    echo "CI Part 5"
-    ;;
-
     *)
     echo "CI Part not recognized"
-    #exit 1
+    exit 1
     ;;
   esac
 
