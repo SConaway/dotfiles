@@ -367,14 +367,13 @@ os_customize() {
   # Bottom right screen corner → Desktop
   defaults write com.apple.dock wvous-br-corner -int 4
 
-  # if [ "$on_ci" -n true ]; then
-  #   echo
-  # else
-  #   info 'Use OpenDNS and Google Public DNS servers.'
-  #   sudo networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4 208.67.222.222 208.67.220.220
-  #   sudo networksetup -setdnsservers "Thunderbolt Ethernet" 8.8.8.8 8.8.4.4 208.67.222.222 208.67.220.220
-  #   m dns flush
-  # fi
+  if [ "$on_ci" -n true ]; then
+    echo
+  else
+    info 'Use Cloudflare DNS servers.'
+    sudo networksetup -setdnsservers Wi-Fi 1.1.1.1 1.0.0.1
+    m dns flush
+  fi
 
   # info 'Set dark menu bar and Dock.'
   # osascript -e 'tell application "System Events" to tell appearance preferences to set properties to {dark mode:true}'
