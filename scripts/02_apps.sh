@@ -47,6 +47,8 @@ install_cask_apps_part_1() {
   killall "OversightXPC"
   killall "OverSight Helper"
 
+  nohup open /Applications/Fritzing.app &
+
   echo "Cask Apps Part 1 Installed"
 
 }
