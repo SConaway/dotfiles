@@ -4,30 +4,16 @@ install_brew_apps() {
   renew_sudo
   brew tap alehouse/homebrew-unofficial
   renew_sudo
-  if [ "$on_ci" -n true ]; then
-    echo
-  else
-    brew install boost
-  fi
 
-  brew install aria2 avrdude cask cmake
-  renew_sudo
-  brew install cowsay curl dockutil duti
-  renew_sudo
-  brew install git git-ftp git-lfs gradle handbrake hr
-  renew_sudo
-  brew install m-cli mas
-  renew_sudo
-  brew install mediainfo openssl p7zip python python3 qemu ripgrep
-  renew_sudo
-  brew install rmlint shellcheck sshrc trash tree unrar wget youtube-dl z
+  readonly local brew_apps=('aria2' 'avrdude' 'boost' 'cask' 'cmake' 'cowsay' 'curl' 'dockutil' 'duti' 'git' 'git-ftp' 'git-lfs' 'gradle' 'handbrake' 'hr' 'm-cli' 'mas' 'mediainfo' 'openssl' 'p7zip' 'python' 'python3' 'qemu' 'ripgrep' 'rmlint' 'shellcheck' 'sshrc' 'trash' 'tree' 'unrar' 'wget' 'youtube-dl' 'z' 'zsh-autosuggestions' 'zsh-completionsa' 'zsh-history-substring-search' 'zsh-syntax-highlighting')
 
+  #mas signin "${mas_email}" "${mas_password}"
   renew_sudo
 
-  # install zsh_plugins
-  brew install zsh-autosuggestions zsh-completions zsh-history-substring-search zsh-syntax-highlighting
-  renew_sudo
-  renew_sudo
+  for app in "${brew_apps[@]}"; do
+    brew install "${app}"
+    renew_sudo
+  done
 
   echo "Brew Apps Installed"
 }
@@ -43,37 +29,18 @@ install_cask_apps_part_1() {
   brew tap caskroom/versions
   brew tap caskroom/drivers
   brew tap alehouse/homebrew-unofficial
+  brew tap caskroom/fonts
+
   renew_sudo
-  brew cask install java
-  renew_sudo
-  brew cask install arduino atom
-  renew_sudo
-  brew cask install caffeine cheatsheet coconutbattery
-  renew_sudo
-  brew cask install disk-inventory-x docker dropbox
-  renew_sudo
-  brew cask install eclipse-java etcher filezilla
-  renew_sudo
-  brew cask install flux free-download-manager firefox
-  if [ "$on_ci" -n true ]; then
-    echo
-  else
-    brew cask install fritzing
-  fi
-  renew_sudo
-  if [ "$on_ci" -n true ]; then
-    echo "Skip Garmin Express"
-  else
-    brew cask install garmin-express
-  fi
-  brew cask install gfxcardstatus gimp gitup google-chrome iterm2
-  renew_sudo
-  brew cask install keka kid3 knockknock lastpass
-  renew_sudo
-  brew cask install lockdown mediainfo minecraft namechanger
-  renew_sudo
-  brew cask install openscad osxfuse
-  renew_sudo
+
+
+  readonly local cask_apps_1=('java' 'arduino' 'atom' 'caffeine' 'cheatsheet' 'coconutbattery' 'disk-inventory-x' 'docker' 'dropbox' 'eclipse-java' 'etcher' 'filezilla' 'flux' 'free-download-manager' 'firefox' 'fritzing' 'garmin-express' 'gfxcardstatus' 'gimp' 'gitup' 'google-chrome' 'iterm2' 'keka' 'kid3' 'knockknock' 'lastpass' 'lockdown' 'mediainfo' 'minecraft' 'namechanger' 'openscad' 'osxfuse')
+
+  for app in "${cask_apps_1[@]}"; do
+    brew cask install "${app}"
+    renew_sudo
+  done
+
   brew cask install oversight &
   sleep 120
   killall "OversightXPC"
@@ -93,72 +60,20 @@ install_cask_apps_part_2() {
   brew tap caskroom/versions
   brew tap caskroom/drivers
   brew tap alehouse/homebrew-unofficial
-  renew_sudo
-  brew cask install java
-  renew_sudo
-  brew cask install razer-synapse real-vnc rocket
-  renew_sudo
-  brew cask install silicon-labs-vcp-driver
-  renew_sudo
-  if [ "$on_ci" -n true ]; then
-    echo "Skip Sketchup"
-  else
-    brew cask install sketchup
-  fi
-  brew cask install steam taskexplorer
-  renew_sudo
-  brew cask install torbrowser transmission ultimaker-cura virtualbox vlc
-  renew_sudo
-  if [ "$on_ci" -n true ]; then
-    echo
-  else
-    brew cask install caskroom/drivers/wch-ch34x-usb-serial-driver
-  fi
-  renew_sudo
-  brew cask install wd-firmware-updater whatsyoursign
-  renew_sudo
-  brew cask install vnc-viewer vnc-server xquartz
-
-  # prefpanes, qlplugins, colorpickers
-  brew cask install epubquicklook qlcolorcode qlimagesize qlmarkdown qlstephen
-  renew_sudo
-  # fonts
   brew tap caskroom/fonts
-  # multiple
-  if [ "$on_ci" -n true ]; then
-    echo
-  else
-    brew cask install font-alegreya font-alegreya-sans
-  fi
-  renew_sudo
-  brew cask install font-fira-mono
-  renew_sudo
-  if [ "$on_ci" -n true ]; then
-    echo "Skip font-fira-sans"
-  else
-    brew cask install font-fira-sans
-  fi
-  brew cask install font-input
-  renew_sudo
-  renew_sudo
-  brew cask install font-merriweather font-merriweather-sans
-  renew_sudo
-  brew cask install font-pt-mono font-pt-sans font-pt-serif
-  renew_sudo
-  brew cask install font-source-code-pro font-source-sans-pro font-source-serif-pro
-  renew_sudo
-  # sans
-  brew cask install font-aileron font-bebas-neue font-exo2 font-montserrat font-lato font-open-sans font-open-sans-condensed font-signika
-  renew_sudo
-  # serif
-  brew cask install font-abril-fatface font-butler font-gentium-book-basic font-playfair-display font-playfair-display-sc # font-playfair-display seems to error
-  renew_sudo
-  # slab
-  brew cask install font-bitter font-kreon
+
+
   renew_sudo
 
-  # games
-  #brew cask install gridwars noiz2sa rootage torustrooper
+
+  readonly local cask_apps_2=('java' 'razer-synapse' 'real-vnc' 'rocket' 'silicon-labs-vcp-driver' 'sketchup' 'steam' 'taskexplorer' 'torbrowser' 'transmission' 'ultimaker-cura' 'virtualbox' 'vlc' 'caskroom/drivers/wch-ch34x-usb-serial-driver' 'wd-firmware-updater' 'whatsyoursign' 'vnc-viewer' 'vnc-server' 'xquartz' 'epubquicklook' 'qlcolorcode' 'qlimagesize' 'qlmarkdown' 'qlstephen' 'font-alegreya' 'font-alegreya-sans' 'font-fira-mono' 'font-fira-sans' 'font-input' 'font-merriweather' 'font-merriweather-sans' 'font-pt-mono' 'font-pt-sans' 'font-pt-serif' 'font-source-code-pro' 'font-source-sans-pro' 'font-source-serif-pro' 'font-aileron' 'font-bebas-neue' 'font-exo2' 'font-montserrat' 'font-lato' 'font-open-sans' 'font-open-sans-condensed' 'font-signika' 'font-abril-fatface' 'font-butler' 'font-gentium-book-basic' 'font-playfair-display' 'font-playfair-display-sc' 'font-bitter' 'font-kreon')
+
+  for app in "${cask_apps_1[@]}"; do
+    brew cask install "${app}"
+    renew_sudo
+  done
+
+
 }
 
 install_mas_apps() {
