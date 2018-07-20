@@ -3,7 +3,7 @@
 
 if [[ $# -eq 1 ]] ; then
   echo "Running on CI"
-  travis-pls 30 brew upgrade --force-bottle
+  travis-pls brew upgrade --force-bottle
   for shell_script in '/tmp/dotfiles-master/scripts/'*.sh; do
     source "${shell_script}"
   done
