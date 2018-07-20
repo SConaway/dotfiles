@@ -17,4 +17,4 @@ env:
   - CI_PART="0"
   - CI_PART="1"
   - CI_PART="2"
-  - CI_PART="3
+  - CI_PART="3"
