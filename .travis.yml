@@ -4,7 +4,7 @@ osx_image: xcode9.4
 install:
    - brew unlink python
    - brew update
-   - brew install python3 pip3
+   - brew install python3 
    - brew install bash
    - brew install shellcheck
    - sudo -H pip3 install travis-pls
