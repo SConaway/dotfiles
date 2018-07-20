@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-
+# shellcheck disable=SC2034,SC2154,SC2155
 info() {
   echo "$(tput setaf 2)•$(tput sgr0) ${1}"
 }
@@ -63,7 +63,7 @@ configure_zsh() { # make zsh default shell
 
 install_atom_packages() {
   # packages
-  apm install atom-idle-autosave atom-make atom-save-all build build-make build-tools-make busy-signal dash gist glist highlight-line intentions linter-alex language-arduino language-diff language-docker language-haskell language-homebrew-formula language-pug language-swift linter linter-eslint linter-jsonlint linter-rubocop linter-shellcheck linter-ui-default linter-tidy linter-travis-lint linter-write-good rulerz
+  apm install atom-beautify atom-idle-autosave atom-make atom-save-all build build-make build-tools-make busy-signal dash gist git-plus git-plus-toolbar glist highlight-line intentions linter linter-alex language-arduino language-diff language-docker linter-eslint linter-jsonlint linter-rubocop linter-shellchec linter-tidy linter-travis-lint linter-ui-default linter-write-good language-haskell language-homebrew-formula language-pug language-swift peacock-syntax rulerz tool-bar
 
   # themes and syntaxes
   apm install peacock-syntax

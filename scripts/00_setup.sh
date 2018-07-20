@@ -1,4 +1,5 @@
 #! /usr/bin/env bash
+# shellcheck disable=SC2034SC2154,SC2155
 bold_echo() { # helper function for bold text
   echo "$(tput bold)${1}$(tput sgr0)"
 }
@@ -57,7 +58,7 @@ ask_details() {
 
   clear
 
-  verify 
+  verify
 }
 
 sync_icloud() {

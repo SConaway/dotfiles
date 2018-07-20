@@ -1,4 +1,5 @@
 #! /usr/bin/env bash
+# shellcheck disable=SC2034,SC2154,SC2155
 install_brew_apps() {
   renew_sudo
   brew tap alehouse/homebrew-unofficial
@@ -105,7 +106,7 @@ install_cask_apps_part_2() {
   renew_sudo
   brew cask install razer-synapse real-vnc rocket
   renew_sudo
-  brew cask install silicon-labs-vcp-driver 
+  brew cask install silicon-labs-vcp-driver
   renew_sudo
   if [ "$on_ci" -n true ]; then
     echo "Skip Sketchup"
