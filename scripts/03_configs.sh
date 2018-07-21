@@ -49,6 +49,11 @@ sudo -S chsh -s '/usr/local/bin/zsh' "${USER}" <<< "${sudo_password}" 2> /dev/nu
 }
 
 install_atom_packages() {
+  if [ -x "$(command -v atom-beta)" ]; then
+    alias atom='atom-beta'
+    alias apm='apm-beta'
+  fi
+
   # packages
   apm install atom-beautify atom-idle-autosave atom-make atom-save-all build build-make build-tools-make busy-signal dash gist  glist highlight-line intentions linter linter-alex language-arduino language-diff language-docker linter-eslint linter-jsonlint linter-rubocop linter-shellcheck linter-tidy linter-travis-lint linter-ui-default linter-write-good language-haskell language-homebrew-formula language-pug language-swift peacock-syntax rulerz tool-bar
 
