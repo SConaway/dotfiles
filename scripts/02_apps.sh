@@ -204,12 +204,11 @@ install_cask_apps_part_2() {
 install_mas_apps() {
   readonly local mas_apps=('apple_configurator_2=1037126344' 'hp_easy_scan=967004861' 'day_one=1055511498' 'cleanmydrive=523620159' 'xcode=497799835')
 
-  #mas signin "${mas_email}" "${mas_password}"
+  mas signin "${mas_email}" "${mas_password}"
   renew_sudo
 
   for app in "${mas_apps[@]}"; do
     local app_id="${app#*=}"
-    renew_sudo
     mas install "${app_id}"
     renew_sudo
   done
