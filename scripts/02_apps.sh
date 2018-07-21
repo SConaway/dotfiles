@@ -49,7 +49,7 @@ install_brew_apps() {
 
   for app in "${brew_apps[@]}"; do
     echo "Installing $app"
-    brew install "${app}"
+    brew install "${app}" || echo "Failed to install '${app}'" >> $HOME/Desktop/failed_apps.txt
     renew_sudo
   done
 
@@ -108,13 +108,12 @@ install_cask_apps_part_1() {
     'razer-synapse'
     'real-vnc'
     'rocket'
-    'silicon-labs-vcp-driver'
     'sketchup'
     'steam')
 
   for app in "${cask_apps_1[@]}"; do
     echo "Installing $app"
-    brew cask install "${app}"
+    brew cask install "${app}" || echo "Failed to install '${app}'" >> $HOME/Desktop/failed_apps.txt
     renew_sudo
   done
 
@@ -193,7 +192,7 @@ install_cask_apps_part_2() {
 
   for app in "${cask_apps_2[@]}"; do
     echo "Installing $app"
-    brew cask install "${app}"
+    brew cask install "${app}" || echo "Failed to install '${app}'" >> $HOME/Desktop/failed_apps.txt
     renew_sudo
   done
 
