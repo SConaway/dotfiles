@@ -264,6 +264,9 @@ os_customize() {
   defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
   defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
+  info "Use AirDrop over every interface"
+  defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
+
   info 'Display full POSIX path as Finder window title'
   defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
