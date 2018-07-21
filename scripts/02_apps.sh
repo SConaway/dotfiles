@@ -11,6 +11,7 @@ install_brew_apps() {
     'boost'
     'cask'
     'cmake'
+    'coreutils'
     'cowsay'
     'curl'
     'dockutil'
