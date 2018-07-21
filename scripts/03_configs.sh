@@ -51,8 +51,8 @@ sudo -S chsh -s '/usr/local/bin/zsh' "${USER}" <<< "${sudo_password}" 2> /dev/nu
 install_atom_packages() {
   if [ -x "$(command -v atom-beta)" ]; then
     echo atom-beta
-    alias atom='atom-beta'
-    alias apm='apm-beta'
+    alias atom="atom-beta"
+    alias apm="apm-beta"
   fi
 
   # packages
