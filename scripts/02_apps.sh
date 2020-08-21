@@ -3,7 +3,7 @@
 install_brew_stuff() {
   renew_sudo
 
-  sudo chown -R $(whoami) /usr/local/include /usr/local/lib /usr/local/lib/pkgconfig
+  sudo chown -R "$(whoami)" /usr/local/include /usr/local/lib /usr/local/lib/pkgconfig
 
   brew bundle
 
