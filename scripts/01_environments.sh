@@ -22,7 +22,7 @@ install_ruby() {
   brew install ruby
 
   # install some gems
-  gem install --no-document bundler maid travis
+  gem install --no-document bundler cocoapods maid travis
 
   echo "Ruby and gems Installed"
 
