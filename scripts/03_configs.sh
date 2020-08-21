@@ -147,7 +147,7 @@ os_customize() {
   /usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:gridSpacing 100' "${HOME}/Library/Preferences/com.apple.finder.plist"
 
   info 'Increase the size of icons on the desktop.'
-  /usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:iconSize 128' "${HOME}/Library/Preferences/com.apple.finder.plist"
+  /usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:iconSize 64' "${HOME}/Library/Preferences/com.apple.finder.plist"
 
   info 'Use list view in all Finder windows by default.'
   # Four-letter codes for the other view modes: 'icnv', 'Nlsv', 'Flwv'
@@ -264,7 +264,7 @@ os_customize() {
   defaults write com.apple.dock wvous-br-corner -int 4
 
   info 'Set Dock size and screen edge.'
-  osascript -e 'tell application "System Events" to tell dock preferences to set properties to {dock size:1, screen edge:bottom}'
+  osascript -e 'tell application "System Events" to tell dock preferences to set properties to {dock size:0.4, screen edge:bottom}'
 
   info 'Set Dock to auto-hide.'
   osascript -e 'tell application "System Events" to set the autohide of the dock preferences to true'
@@ -293,9 +293,6 @@ os_customize() {
 
   preferences_pane 'com.apple.preference.mouse'
   request_preferences 'ALL TABS: Set Mouse preferences.'
-
-  preferences_pane 'com.apple.preferences.icloud'
-  request_preferences "Review iCloud syncing settings."
 
   echo "Done!"
 
