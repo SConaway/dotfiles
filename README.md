@@ -1,13 +1,14 @@
 # Steven’s dotfiles
 
 ### Install everything
+
 ```
-curl -fsSL -o /tmp/dotfiles-install.sh 'https://raw.github.com/sconaway/dotfiles/master/install.sh' && bash /tmp/dotfiles-install.sh
+/bin/bash -c "$(curl -fsSL https://raw.github.com/sconaway/dotfiles/master/install.sh)"
 ```
 
-### Organisation
+### Organization
+
 Although this repo’s name is `dotfiles`, it doesn’t contain any. They are stored on an external drive and conpied when run. This repo consists of a series of commands and files to automate setting up a new machine.
-
 
 Everything is modular. The most important parts of the repo’s file structure are:
 
@@ -26,4 +27,5 @@ If, say, we wish to [repeat the python setup process](https://github.com/sconawa
 This allows for a flexible arrangement where we need only make sure the functions are up to date. Those we want to run outside the system setup can be built around the scripts, loading and executing the appropriate commands.
 
 #### License
+
 The Unlicense (Public Domain, essentially)

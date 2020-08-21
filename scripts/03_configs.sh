@@ -39,27 +39,9 @@ activate
 end tell" &>/dev/null
 }
 
-set_cask_default_apps() {
-  for ext in {css,js,json,md,php,pug,py,rb,sh,txt,yaml,yml}; do duti -s com.github.atom "${ext}" all; done # code
-}
-
 configure_zsh() { # make zsh default shell
   sudo -S sh -c 'echo "/usr/local/bin/zsh" >> /etc/shells' <<<"${sudo_password}" 2>/dev/null
   sudo -S chsh -s '/usr/local/bin/zsh' "${USER}" <<<"${sudo_password}" 2>/dev/null
-}
-
-install_atom_packages() {
-  if [ -x "$(command -v atom-beta)" ]; then
-    echo atom-beta
-    alias atom="atom-beta"
-    alias apm="apm-beta"
-  fi
-
-  # packages
-  apm install atom-beautify atom-idle-autosave atom-make atom-save-all build build-make build-tools-make busy-signal dash gist glist highlight-line intentions linter linter-alex language-arduino language-diff language-docker linter-eslint linter-jsonlint linter-rubocop linter-shellcheck linter-tidy linter-travis-lint linter-ui-default linter-write-good language-haskell language-homebrew-formula language-pug language-swift peacock-syntax rulerz tool-bar
-
-  # themes and syntaxes
-  apm install peacock-syntax
 }
 
 configure_git() {
@@ -73,58 +55,8 @@ configure_git() {
   git lfs install --system
 }
 
-configure_lastpass() {
-  open '/usr/local/Caskroom/lastpass/latest/LastPass Installer/LastPass Installer.app'
-}
-
-configure_whatsyoursign() {
-  /usr/local/Caskroom/whatsyoursign/1.5.0/WhatsYourSign_Installer.app
-}
-
-install_launchagents() {
-  readonly local user_launchagents_dir="${HOME}/Library/LaunchAgents"
-  readonly local global_launchdaemons_dir='/Library/LaunchDaemons/'
-  mkdir -p "${user_launchagents_dir}"
-
-  for plist_file in "${helper_files}/launchd_plists/user_plists"/*.plist; do
-    local plist_name=$(basename "${plist_file}")
-
-    mv "${plist_file}" "${user_launchagents_dir}"
-    launchctl load -w "${user_launchagents_dir}/${plist_name}"
-  done
-
-  for plist_file in "${helper_files}/launchd_plists/global_plists"/*.plist; do
-    local plist_name=$(basename "${plist_file}")
-
-    sudo mv "${plist_file}" "${global_launchdaemons_dir}" <<<"${sudo_password}" 2>/dev/null
-    sudo chown root "${global_launchdaemons_dir}/${plist_name}" <<<"${sudo_password}" 2>/dev/null
-    sudo launchctl load -w "${global_launchdaemons_dir}/${plist_name}" <<<"${sudo_password}" 2>/dev/null
-  done
-
-  rmdir -p "${helper_files}/launchd_plists"/* 2>/dev/null
-}
-
-copy_commands() {
-  cp -LR command_files command_files_dest
-}
-
 link_airport() {
   ln -s /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport "$command_files_dest/airport"
-}
-
-lower_startup_chime() {
-  curl -fsSL 'https://raw.githubusercontent.com/vitorgalvao/lowchime/master/lowchime' --output '/tmp/lowchime'
-  chmod +x '/tmp/lowchime'
-  if [[ -v CI ]]; then
-    sudo -S /tmp/lowchime install 2>/dev/null
-  else
-    sudo -S /tmp/lowchime install <<<"${sudo_password}" 2>/dev/null
-  fi
-}
-
-copy_dotfiles() {
-  cp -LR home_dotfiles ~
-  sudo cp -LR root_dotfiles /
 }
 
 os_customize() {
@@ -176,26 +108,8 @@ os_customize() {
   info "Minimize windows into their application’s icon"
   defaults write com.apple.dock minimize-to-application -bool true
 
-  info "Disable automatic capitalization as it's annoying when typing code"
-  defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
-
-  info "Disable smart dashes as they're annoying when typing code"
-  defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
-
-  info "Disable automatic period substitution as it's annoying when typing code"
-  defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
-
-  info "Disable smart quotes as they're annoying when typing code"
-  defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-
-  info 'Set highlight color to green'
-  defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
-
   info 'Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window'
   sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
-
-  # info 'Restart automatically if the computer freezes'
-  # sudo systemsetup -setrestartfreeze on
 
   info 'Set language and text formats'
   defaults write NSGlobalDomain AppleLanguages -array "en"
@@ -226,12 +140,6 @@ os_customize() {
   info 'Finder: show hidden files by default'
   defaults write com.apple.finder AppleShowAllFiles -bool true
 
-  info 'Remove items from the Trash after 30 days.'
-  defaults write com.apple.finder FXRemoveOldTrashItems -bool true
-
-  info 'Disable the warning when changing a file extension.'
-  defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-
   info 'Show item info near icons on the desktop.'
   /usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:showItemInfo true' "${HOME}/Library/Preferences/com.apple.finder.plist"
 
@@ -241,15 +149,15 @@ os_customize() {
   info 'Increase the size of icons on the desktop.'
   /usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:iconSize 128' "${HOME}/Library/Preferences/com.apple.finder.plist"
 
-  info 'Use columns view in all Finder windows by default.'
+  info 'Use list view in all Finder windows by default.'
   # Four-letter codes for the other view modes: 'icnv', 'Nlsv', 'Flwv'
-  defaults write com.apple.finder FXPreferredViewStyle -string 'clmv'
+  defaults write com.apple.finder FXPreferredViewStyle -string 'Nlsv'
 
   info 'Always show scrollbars'
   defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 
   info 'Increase sound quality for Bluetooth headphones/headsets'
-  defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+  defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 255
 
   info 'When performing a search, search the current folder by default'
   defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
@@ -279,17 +187,8 @@ os_customize() {
     OpenWith -bool true \
     Privileges -bool true
 
-  info 'Copy email addresses as "foo@example.com" instead of "Foo Bar <foo@example.com>" in Mail.app'
-  defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
-
   info 'Prevent Time Machine from prompting to use new hard drives as backup volume'
   defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
-
-  info 'Enable the debug menu in Address Book'
-  defaults write com.apple.addressbook ABShowDebugMenu -bool true
-
-  info 'Enable Dashboard dev mode (allows keeping widgets on the desktop)'
-  defaults write com.apple.dashboard devmode -bool true
 
   info 'Use plain text mode for new TextEdit documents'
   defaults write com.apple.TextEdit RichText -int 0
@@ -298,30 +197,17 @@ os_customize() {
   defaults write com.apple.TextEdit PlainTextEncoding -int 4
   defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 
-  info 'Enable the debug menu in Disk Utility'
-  defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
-  defaults write com.apple.DiskUtility advanced-image-options -bool true
-
-  info 'Enable the WebKit Developer Tools in the Mac App Store'
-  defaults write com.apple.appstore WebKitDeveloperExtras -bool true
-
-  info 'Enable Debug Menu in the Mac App Store'
-  defaults write com.apple.appstore ShowDebugMenu -bool true
-
-  info 'Enable the automatic update check'
-  defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
-
-  # info 'Check for software updates daily, not just once per week'
-  # defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+  info 'Check for software updates daily, not just once per week'
+  defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
   info 'Download newly available updates in background'
   defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
 
-  # info 'Install System data files & security updates'
-  # defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
-  #
-  # info 'Turn on app auto-update'
-  # defaults write com.apple.commerce AutoUpdate -bool true
+  info 'Install System data files & security updates'
+  defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
+
+  info 'Turn on app auto-update'
+  defaults write com.apple.commerce AutoUpdate -bool true
 
   info 'Prevent Photos from opening automatically when devices are plugged in'
   defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
@@ -339,12 +225,8 @@ os_customize() {
   defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
   defaults write com.apple.ActivityMonitor SortDirection -int 0
 
-  if [[ -v CI ]]; then
-    info 'Show the ~/Library folder, /Library, and /Volumes, and hide  Documents, Music, Pictures, and Public.'
-  else
-    info 'Show the ~/Library folder, /Library, and /Volumes, and hide Applications, Documents, Music, Pictures, and Public.'
-    chflags hidden "${HOME}/Applications"
-  fi
+  info 'Show the ~/Library folder, /Library, and /Volumes, and hide Applications, Documents, Music, Pictures, and Public.'
+  chflags hidden "${HOME}/Applications"
   chflags nohidden "${HOME}/Library"
   chflags hidden "${HOME}/Documents"
   chflags hidden "${HOME}/Music"
@@ -372,23 +254,14 @@ os_customize() {
   # 10: Put display to sleep
   # 11: Launchpad
   # 12: Notification Center
-  # Bottom left screen corner → Put display to sleep
+  # Top left screen corner → Put display to sleep
   defaults write com.apple.dock wvous-tl-corner -int 10
   # Top right screen corner → Put display to sleep
   defaults write com.apple.dock wvous-tr-corner -int 10
+  # Bottom left screen corner → Desktop
+  defaults write com.apple.dock wvous-bl-corner -int 4
   # Bottom right screen corner → Desktop
   defaults write com.apple.dock wvous-br-corner -int 4
-
-  if [[ -v CI ]]; then
-    echo
-  else
-    info 'Use Cloudflare DNS servers.'
-    sudo networksetup -setdnsservers Wi-Fi 1.1.1.1 1.0.0.1
-    m dns flush
-  fi
-
-  # info 'Set dark menu bar and Dock.'
-  # osascript -e 'tell application "System Events" to tell appearance preferences to set properties to {dark mode:true}'
 
   info 'Set Dock size and screen edge.'
   osascript -e 'tell application "System Events" to tell dock preferences to set properties to {dock size:1, screen edge:bottom}'
@@ -406,42 +279,24 @@ os_customize() {
   # second part
   # find values for System Preferences by opening the desired pane and running the following AppleScript:
   # tell application "System Preferences" to return anchors of current pane
-  if [[ -v CI ]]; then
-    echo "Done!"
-  else
-    echo
 
-    request 'Allow to send and receive SMS messages.' 'Messages'
+  request 'Allow to send and receive SMS messages.' 'Messages'
 
-    preferences_pane 'com.apple.preference.dock'
-    request_preferences 'Always prefer tabs when opening documents.'
+  preferences_pane 'com.apple.preference.dock'
+  request_preferences 'Always prefer tabs when opening documents.'
 
-    preferences_pane_anchor 'Dictation' 'com.apple.preference.keyboard'
-    request_preferences 'Turn on enhanced dictation and download other languages.'
+  preferences_pane_anchor 'Dictation' 'com.apple.preference.keyboard'
+  request_preferences 'Turn on enhanced dictation and download other languages.'
 
-    preferences_pane 'com.apple.preference.trackpad'
-    request_preferences 'ALL TABS: Set Trackpad preferences.'
+  preferences_pane 'com.apple.preference.trackpad'
+  request_preferences 'ALL TABS: Set Trackpad preferences.'
 
-    preferences_pane 'com.apple.preference.mouse'
-    request_preferences 'ALL TABS: Set Mouse preferences.'
+  preferences_pane 'com.apple.preference.mouse'
+  request_preferences 'ALL TABS: Set Mouse preferences.'
 
-    preferences_pane 'com.apple.preferences.icloud'
-    request_preferences "Review iCloud syncing settings."
+  preferences_pane 'com.apple.preferences.icloud'
+  request_preferences "Review iCloud syncing settings."
 
-    # chrome extentions
-
-    echo "Done!"
-
-    #request_chrome_extension 'Google Chrome' '1password-password-manage' 'aomjjhallfgjeglblehebfpbcfeobpgk'
-
-    # misc
-
-    request 'Create a token with the "repo" scope for CLI access.' 'Google Chrome' 'https://github.com/settings/tokens'
-    echo "host=github.com
-    protocol=https
-    password=${github_token}
-    username=${github_username}" | git credential-osxkeychain store
-
-  fi
+  echo "Done!"
 
 }

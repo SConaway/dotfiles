@@ -3,6 +3,7 @@
 install_brew() {
 
   renew_sudo
+
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
   echo "Brew Installed"
@@ -11,16 +12,20 @@ install_brew() {
 install_python() {
 
   brew install python@3
+
   echo "Python Installed"
+
 }
 
 install_ruby() {
 
   brew install ruby
+
   # install some gems
   gem install --no-document bundler maid travis
 
   echo "Ruby and gems Installed"
+
 }
 
 install_node() {
@@ -28,6 +33,7 @@ install_node() {
   brew install node yarn
 
   echo "Node Installed"
+
 }
 
 install_zsh() {
@@ -36,4 +42,5 @@ install_zsh() {
   brew install zsh
 
   echo "ZSH Installed"
+
 }
