@@ -8,11 +8,6 @@ cleanup_error_log() {
   sed -i '' -E '/^Password: /d;/#.*%/d;/\* \[new/d;/Cloning into/d;/Should we execute post_install_script/d' "${error_log}"
 }
 
-move_manual_action_files() {
-  mv "${command_files}" "${command_files_dest}"
-  mv "${helper_files}" "${post_install_files}"
-}
-
 final_message() {
   clear
 

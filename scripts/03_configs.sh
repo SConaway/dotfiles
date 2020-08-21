@@ -5,38 +5,38 @@ info() {
 }
 
 request() { # output a message and open an app
-local message="${1}"
-local app="${2}"
-shift 2
+  local message="${1}"
+  local app="${2}"
+  shift 2
 
-echo "$(tput setaf 5)•$(tput sgr0) ${message}"
-open -Wa "${app}" --args "$@" # don't continue until app closes
+  echo "$(tput setaf 5)•$(tput sgr0) ${message}"
+  open -Wa "${app}" --args "$@" # don't continue until app closes
 }
 
 request_preferences() { # 'request' for System Preferences
-request "${1}" 'System Preferences'
+  request "${1}" 'System Preferences'
 }
 
 request_chrome_extension() { # 'request' for Google Chrome extensions
-local chrome_or_canary="${1}"
-local extension_short_name="${2}"
-local extension_code="${3}"
+  local chrome_or_canary="${1}"
+  local extension_short_name="${2}"
+  local extension_code="${3}"
 
-request "Install '${extension_short_name}' extension." "${chrome_or_canary}" --no-first-run "https://chrome.google.com/webstore/detail/${extension_short_name}/${extension_code}"
+  request "Install '${extension_short_name}' extension." "${chrome_or_canary}" --no-first-run "https://chrome.google.com/webstore/detail/${extension_short_name}/${extension_code}"
 }
 
 preferences_pane() { # open 'System Preferences' is specified pane
-osascript -e "tell application \"System Preferences\"
+  osascript -e "tell application \"System Preferences\"
 reveal pane \"${1}\"
 activate
-end tell" &> /dev/null
+end tell" &>/dev/null
 }
 
 preferences_pane_anchor() { # open 'System Preferences' is specified pane and tab
-osascript -e "tell application \"System Preferences\"
+  osascript -e "tell application \"System Preferences\"
 reveal anchor \"${1}\" of pane \"${2}\"
 activate
-end tell" &> /dev/null
+end tell" &>/dev/null
 }
 
 set_cask_default_apps() {
@@ -44,8 +44,8 @@ set_cask_default_apps() {
 }
 
 configure_zsh() { # make zsh default shell
-sudo -S sh -c 'echo "/usr/local/bin/zsh" >> /etc/shells' <<< "${sudo_password}" 2> /dev/null
-sudo -S chsh -s '/usr/local/bin/zsh' "${USER}" <<< "${sudo_password}" 2> /dev/null
+  sudo -S sh -c 'echo "/usr/local/bin/zsh" >> /etc/shells' <<<"${sudo_password}" 2>/dev/null
+  sudo -S chsh -s '/usr/local/bin/zsh' "${USER}" <<<"${sudo_password}" 2>/dev/null
 }
 
 install_atom_packages() {
@@ -56,7 +56,7 @@ install_atom_packages() {
   fi
 
   # packages
-  apm install atom-beautify atom-idle-autosave atom-make atom-save-all build build-make build-tools-make busy-signal dash gist  glist highlight-line intentions linter linter-alex language-arduino language-diff language-docker linter-eslint linter-jsonlint linter-rubocop linter-shellcheck linter-tidy linter-travis-lint linter-ui-default linter-write-good language-haskell language-homebrew-formula language-pug language-swift peacock-syntax rulerz tool-bar
+  apm install atom-beautify atom-idle-autosave atom-make atom-save-all build build-make build-tools-make busy-signal dash gist glist highlight-line intentions linter linter-alex language-arduino language-diff language-docker linter-eslint linter-jsonlint linter-rubocop linter-shellcheck linter-tidy linter-travis-lint linter-ui-default linter-write-good language-haskell language-homebrew-formula language-pug language-swift peacock-syntax rulerz tool-bar
 
   # themes and syntaxes
   apm install peacock-syntax
@@ -96,12 +96,12 @@ install_launchagents() {
   for plist_file in "${helper_files}/launchd_plists/global_plists"/*.plist; do
     local plist_name=$(basename "${plist_file}")
 
-    sudo mv "${plist_file}" "${global_launchdaemons_dir}" <<< "${sudo_password}" 2> /dev/null
-    sudo chown root "${global_launchdaemons_dir}/${plist_name}" <<< "${sudo_password}" 2> /dev/null
-    sudo launchctl load -w "${global_launchdaemons_dir}/${plist_name}" <<< "${sudo_password}" 2> /dev/null
+    sudo mv "${plist_file}" "${global_launchdaemons_dir}" <<<"${sudo_password}" 2>/dev/null
+    sudo chown root "${global_launchdaemons_dir}/${plist_name}" <<<"${sudo_password}" 2>/dev/null
+    sudo launchctl load -w "${global_launchdaemons_dir}/${plist_name}" <<<"${sudo_password}" 2>/dev/null
   done
 
-  rmdir -p "${helper_files}/launchd_plists"/* 2> /dev/null
+  rmdir -p "${helper_files}/launchd_plists"/* 2>/dev/null
 }
 
 copy_commands() {
@@ -116,9 +116,9 @@ lower_startup_chime() {
   curl -fsSL 'https://raw.githubusercontent.com/vitorgalvao/lowchime/master/lowchime' --output '/tmp/lowchime'
   chmod +x '/tmp/lowchime'
   if [[ -v CI ]]; then
-    sudo -S /tmp/lowchime install 2> /dev/null
+    sudo -S /tmp/lowchime install 2>/dev/null
   else
-    sudo -S /tmp/lowchime install <<< "${sudo_password}" 2> /dev/null
+    sudo -S /tmp/lowchime install <<<"${sudo_password}" 2>/dev/null
   fi
 }
 
@@ -143,7 +143,7 @@ os_customize() {
   " | sed -E 's/ {2}//'
 
   # ask for 'sudo' authentication
-  if sudo -n true 2> /dev/null; then
+  if sudo -n true 2>/dev/null; then
     echo
   else
     echo -n "$(tput bold)When you're ready to continue, insert your password. This is done upfront for the commands that require 'sudo'.$(tput sgr0) "
@@ -166,7 +166,7 @@ os_customize() {
 
   info 'Automatically quit printer app once the print jobs complete'
   defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
-  
+
   info 'Allow iOS Simulator to run in Full Screen'
   defaults write com.apple.iphonesimulator AllowFullscreenMode -bool true
 
@@ -275,9 +275,9 @@ os_customize() {
 
   info 'Expand the following File Info panes: “General”, “Open with”, and “Sharing & Permissions”'
   defaults write com.apple.finder FXInfoPanesExpanded -dict \
-  General -bool true \
-  OpenWith -bool true \
-  Privileges -bool true
+    General -bool true \
+    OpenWith -bool true \
+    Privileges -bool true
 
   info 'Copy email addresses as "foo@example.com" instead of "Foo Bar <foo@example.com>" in Mail.app'
   defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
@@ -400,7 +400,7 @@ os_customize() {
   sudo launchctl config user path "/usr/local/bin:$PATH"
 
   for app in 'Dock' 'Finder'; do
-    killall "${app}" &> /dev/null
+    killall "${app}" &>/dev/null
   done
 
   # second part
@@ -435,7 +435,6 @@ os_customize() {
     #request_chrome_extension 'Google Chrome' '1password-password-manage' 'aomjjhallfgjeglblehebfpbcfeobpgk'
 
     # misc
-
 
     request 'Create a token with the "repo" scope for CLI access.' 'Google Chrome' 'https://github.com/settings/tokens'
     echo "host=github.com

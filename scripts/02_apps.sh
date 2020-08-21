@@ -50,7 +50,7 @@ install_brew_apps() {
 
   for app in "${brew_apps[@]}"; do
     echo "Installing $app"
-    brew install "${app}" > /dev/null || echo "Failed to install '${app}'" >> "$HOME/Desktop/failed_apps.txt"
+    brew install "${app}" >/dev/null || echo "Failed to install '${app}'" >>"$HOME/Desktop/failed_apps.txt"
     renew_sudo
   done
 
@@ -114,7 +114,7 @@ install_cask_apps_part_1() {
 
   for app in "${cask_apps_1[@]}"; do
     echo "Installing $app"
-    brew cask install "${app}" > /dev/null || echo "Failed to install '${app}'" >> "$HOME/Desktop/failed_apps.txt"
+    brew cask install "${app}" >/dev/null || echo "Failed to install '${app}'" >>"$HOME/Desktop/failed_apps.txt"
     renew_sudo
   done
 
@@ -193,33 +193,11 @@ install_cask_apps_part_2() {
 
   for app in "${cask_apps_2[@]}"; do
     echo "Installing $app"
-    brew cask install "${app}" > /dev/null || echo "Failed to install '${app}'" >> "$HOME/Desktop/failed_apps.txt"
+    brew cask install "${app}" >/dev/null || echo "Failed to install '${app}'" >>"$HOME/Desktop/failed_apps.txt"
     renew_sudo
   done
 
   echo Installing whatsyoursign
   nohup open "$(brew cask install whatsyoursign | grep '/usr/local/')" &
 
-}
-
-install_mas_apps() {
-  readonly local mas_apps=('apple_configurator_2=1037126344' 'hp_easy_scan=967004861' 'day_one=1055511498' 'cleanmydrive=523620159' 'xcode=497799835')
-
-  mas signin "${mas_email}" "${mas_password}"
-  renew_sudo
-
-  for app in "${mas_apps[@]}"; do
-    local app_id="${app#*=}"
-    mas install "${app_id}"
-    renew_sudo
-  done
-
-  echo "Mac App Store Apps Installed"
-}
-
-install_oh_my_zsh() {
-  renew_sudo
-  sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-  git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-  echo "Oh My ZSH Installed"
 }
