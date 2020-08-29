@@ -106,7 +106,7 @@ os_customize() {
   defaults write com.apple.dt.Xcode ShowBuildOperationDuration -bool YES
   
   info 'XCode: Enable maximum number of concurrent compile tasks'
-  defaults write com.apple.dt.Xcode IDEBuildOperationMaxNumberOfConcurrentCompileTasks `sysctl -n hw.ncpu`
+  defaults write com.apple.dt.Xcode IDEBuildOperationMaxNumberOfConcurrentCompileTasks "$(sysctl -n hw.ncpu)"
 
   info 'XCode: Enable extensive per operation timing logs'
   defaults write com.apple.dt.Xcode IDEBuildOperationTimingLogLevel -int 3
