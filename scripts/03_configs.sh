@@ -101,6 +101,24 @@ os_customize() {
 
   info 'Allow iOS Simulator to run in Full Screen'
   defaults write com.apple.iphonesimulator AllowFullscreenMode -bool true
+  
+  info 'XCode: Enable project build time'
+  defaults write com.apple.dt.Xcode ShowBuildOperationDuration -bool YES
+  
+  info 'XCode: Enable maximum number of concurrent compile tasks'
+  defaults write com.apple.dt.Xcode IDEBuildOperationMaxNumberOfConcurrentCompileTasks `sysctl -n hw.ncpu`
+
+  info 'XCode: Enable extensive per operation timing logs'
+  defaults write com.apple.dt.Xcode IDEBuildOperationTimingLogLevel -int 3
+  
+  info 'XCode: Show Indexing numeric progress'
+  defaults write com.apple.dt.Xcode IDEIndexerActivityShowNumericProgress -bool YES
+
+  info 'XCode: Show Indexing logging'
+  defaults write com.apple.dt.Xcode IDEIndexShowLog -bool YES
+
+  info 'XCode: Show prebuild step logs'
+  defaults write com.apple.dt.Xcode IDEShowPrebuildLogs -bool YES
 
   info 'Disable the “Are you sure you want to open this application?” dialog'
   defaults write com.apple.LaunchServices LSQuarantine -bool false
