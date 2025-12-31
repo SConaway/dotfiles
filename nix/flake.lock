@@ -75,6 +75,42 @@
         "type": "github"
       }
     },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1767104570,
+        "narHash": "sha256-GKgwu5//R+cLdKysZjGqvUEEOGXXLdt93sNXeb2M/Lk=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "e4e78a2cbeaddd07ab7238971b16468cc1d14daf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "my-nvim-config": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764953992,
+        "narHash": "sha256-gyuue1OdAU53A+G5LlDHoJ5MToaxkNVHCAzNGT5IfRw=",
+        "owner": "SConaway",
+        "repo": "astronvim-config",
+        "rev": "0d28a9b6dbe7d70c1c3500b85cdc88b867495267",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SConaway",
+        "repo": "astronvim-config",
+        "type": "github"
+      }
+    },
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
@@ -116,6 +152,8 @@
       "inputs": {
         "colmena": "colmena",
         "darwin": "darwin",
+        "home-manager": "home-manager",
+        "my-nvim-config": "my-nvim-config",
         "nixpkgs": "nixpkgs"
       }
     },

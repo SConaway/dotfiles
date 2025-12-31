@@ -11,19 +11,40 @@
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    my-nvim-config = {
+      url = "github:SConaway/astronvim-config";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, colmena, darwin, ... }: 
+  outputs = { self, nixpkgs, colmena, darwin, home-manager, ... }@inputs:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       pkgs = forAllSystems (system: nixpkgs.legacyPackages.${system});
-    in {
+
+      hmConfig = {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = { inherit inputs; };
+        home-manager.users.steven = import ./users/steven/default.nix;
+      };
+    in
+    {
       # macOS Configuration
       darwinConfigurations = {
         "mac" = darwin.lib.darwinSystem {
           system = "aarch64-darwin"; # Change to x86_64-darwin if on Intel Mac
-          modules = [ ./hosts/mac/default.nix ];
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/mac/default.nix
+            home-manager.darwinModules.home-manager
+            hmConfig
+          ];
         };
       };
 
@@ -33,38 +54,59 @@
           nixpkgs = import nixpkgs {
             system = "x86_64-linux";
           };
+          specialArgs = { inherit inputs; };
         };
 
         ca-media = {
-          imports = [ ./hosts/ca-media/default.nix ];
+          imports = [
+            ./hosts/ca-media/default.nix
+            home-manager.nixosModules.home-manager
+            hmConfig
+          ];
           deployment.targetHost = "ca-media";
           deployment.targetUser = "steven";
           deployment.tags = [ "ca" "linux" ];
         };
 
         ca-meshview = {
-          imports = [ ./hosts/ca-meshview/default.nix ];
+          imports = [
+            ./hosts/ca-meshview/default.nix
+            home-manager.nixosModules.home-manager
+            hmConfig
+          ];
           deployment.targetHost = "ca-meshview";
           deployment.targetUser = "steven";
           deployment.tags = [ "ca" "linux" ];
         };
 
         ca-qb = {
-          imports = [ ./hosts/ca-qb/default.nix ];
+          imports = [
+            ./hosts/ca-qb/default.nix
+            home-manager.nixosModules.home-manager
+            hmConfig
+          ];
           deployment.targetHost = "ca-qb";
           deployment.targetUser = "steven";
           deployment.tags = [ "ca" "linux" ];
         };
 
         id-frigate = {
-          imports = [ ./hosts/id-frigate/default.nix ];
+          imports = [
+            ./hosts/id-frigate/default.nix
+            home-manager.nixosModules.home-manager
+            hmConfig
+          ];
           deployment.targetHost = "id-frigate";
           deployment.targetUser = "steven";
           deployment.tags = [ "id" "linux" ];
         };
 
         id-tailscale = {
-          imports = [ ./hosts/id-tailscale/default.nix ];
+          imports = [
+            ./hosts/id-tailscale/default.nix
+            home-manager.nixosModules.home-manager
+            hmConfig
+          ];
           deployment.targetHost = "id-tailscale";
           deployment.targetUser = "steven";
           deployment.tags = [ "id" "linux" ];

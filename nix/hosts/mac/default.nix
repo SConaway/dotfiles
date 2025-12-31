@@ -38,18 +38,6 @@
   # homebrew.enable = true;
   # homebrew.casks = [ "firefox" "iterm2" ];
 
-  # Atuin Config (Darwin doesn't use systemd-tmpfiles, so we use activation scripts or home-manager)
-  # For now, we will just rely on the user manually linking or using the shared zsh config which is robust.
-  # But we can try to write the file using activation scripts.
-  system.activationScripts.postActivation.text = ''
-    # Simple link for atuin if it doesn't exist
-    mkdir -p /Users/steven/.config/atuin
-    ln -sf ${pkgs.writeText "atuin.toml" (builtins.readFile ../../modules/files/atuin.toml)} /Users/steven/.config/atuin/config.toml
-
-    # Link p10k.zsh
-    ln -sf ${pkgs.writeText "p10k.zsh" (builtins.readFile ../../modules/files/p10k.zsh)} /Users/steven/.p10k.zsh
-  '';
-
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
