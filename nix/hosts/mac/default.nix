@@ -63,6 +63,7 @@
     [
       alacritty
       aerospace
+      colmena
       gemini-cli
       mas
       raycast
