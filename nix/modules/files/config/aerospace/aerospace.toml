@@ -107,8 +107,8 @@ automatically-unhide-macos-hidden-apps = false
     # '''
 
     # spawn new alacritty window
-    cmd-alt-t = 'exec-and-forget alacritty msg create-window'
-    alt-shift-t = 'exec-and-forget alacritty msg create-window'
+    cmd-alt-t = 'exec-and-forget /run/current-system/sw/bin/alacritty msg create-window'
+    alt-shift-t = 'exec-and-forget /run/current-system/sw/bin/alacritty msg create-window'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
     alt-shift-h = 'move left'

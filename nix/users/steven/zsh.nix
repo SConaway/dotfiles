@@ -7,7 +7,7 @@
     # autosuggestion.enable = true; # often conflicts with other plugins, enable if desired
     syntaxHighlighting.enable = true;
 
-    initExtra = ''
+    initContent = ''
       # Powerlevel10k
       source ${../../modules/files/p10k.zsh}
       

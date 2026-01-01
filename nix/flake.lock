@@ -194,22 +194,6 @@
         "type": "github"
       }
     },
-    "my-nvim-config": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1764953992,
-        "narHash": "sha256-gyuue1OdAU53A+G5LlDHoJ5MToaxkNVHCAzNGT5IfRw=",
-        "owner": "SConaway",
-        "repo": "astronvim-config",
-        "rev": "0d28a9b6dbe7d70c1c3500b85cdc88b867495267",
-        "type": "github"
-      },
-      "original": {
-        "owner": "SConaway",
-        "repo": "astronvim-config",
-        "type": "github"
-      }
-    },
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
@@ -332,7 +316,6 @@
         "darwin": "darwin",
         "home-manager": "home-manager",
         "mac-app-util": "mac-app-util",
-        "my-nvim-config": "my-nvim-config",
         "nixpkgs": "nixpkgs_5"
       }
     },

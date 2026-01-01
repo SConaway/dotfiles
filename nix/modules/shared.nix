@@ -11,19 +11,24 @@
       bat
       btop
       curl
+      deadnix
       fzf
       gh
       git
+      go
       iftop
       lazygit
       massren
       neovim
-      nodejs-slim
+      nixd
+      nodejs
       oh-my-zsh
       python3
+      python313Packages.pygments
       ripgrep
       rsync
       rustc
+      statix
       tmux
       unzip
       wget

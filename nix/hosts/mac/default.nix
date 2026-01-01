@@ -15,9 +15,11 @@
   # time.timeZone = "America/Los_Angeles";
 
   # User Configuration
+  users.knownUsers = [ "steven" ];
   users.users.steven = {
     name = "steven";
     home = "/Users/steven";
+    uid = 501;
   };
   system.primaryUser = "steven";
 
@@ -47,6 +49,12 @@
   homebrew.enable = true;
   homebrew.casks = [ "zen" ];
 
+  homebrew.masApps = {
+    "Xcode" = 497799835;
+    "Bitwarden" = 1352778147;
+    "wBlock" = 6746388723;
+  };
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
@@ -57,7 +65,10 @@
       aerospace
       gemini-cli
       mas
-      meslo-lgs-nf
       raycast
     ];
+
+  fonts.packages = [
+    pkgs.nerd-fonts.meslo-lg
+  ];
 }

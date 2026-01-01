@@ -52,6 +52,7 @@ unfocused_hollow = true
 
 [terminal]
 osc52 = "CopyPaste"
+shell = "/run/current-system/sw/bin/zsh"
 
 [mouse]
 # hide_when_typing = true
@@ -61,17 +62,17 @@ bindings = [
 
 # force env variables for en us and utf8
 [env]
-LANG = "en_US.UTF-8"
+# LANG = "en_US.UTF-8"
 # force the next ones for raycast extension
-EDITOR = "/opt/homebrew/bin/nvim" 
-PATH = "/Users/steven/.local/bin:/Users/steven/Library/Python/3.13/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin"
-HOMEBREW_PREFIX = "/opt/homebrew"
-HOMEBREW_CELLAR = "/opt/homebrew/Cellar"
-HOMEBREW_REPOSITORY = "/opt/homebrew"
+# EDITOR = "/opt/homebrew/bin/nvim" 
+# PATH = "/Users/steven/.local/bin:/Users/steven/Library/Python/3.13/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin"
+# HOMEBREW_PREFIX = "/opt/homebrew"
+# HOMEBREW_CELLAR = "/opt/homebrew/Cellar"
+# HOMEBREW_REPOSITORY = "/opt/homebrew"
 
 [general]
 # previously alabaster_dark
-import = ["themes/themes/one_dark.toml"]
+# import = ["themes/themes/one_dark.toml"]
 # curl -sSL https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alacritty.info | tic -x -
 
 

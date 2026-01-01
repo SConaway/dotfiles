@@ -15,10 +15,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    my-nvim-config = {
-      url = "github:SConaway/astronvim-config";
-      flake = false;
-    };
+    # my-nvim-config = {
+    #   url = "github:SConaway/astronvim-config";
+    #   flake = false;
+    # };
     mac-app-util.url = "github:hraban/mac-app-util";
   };
 
