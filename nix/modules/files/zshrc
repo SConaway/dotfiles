@@ -96,7 +96,7 @@ source "$ZSH/oh-my-zsh.sh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -131,6 +131,14 @@ zle -N rerun-last-command
 bindkey '^[^[^[' rerun-last-command
 bindkey '^[^[^[^[' rerun-last-command
 
+function rebuild() {
+  cd ~/nix-config/
+  if [[ "$(uname)" == "Darwin" ]]; then
+    sudo darwin-rebuild switch --flake .#mac
+  else
+    echo "not running on darwin, edit zshrc to support"
+  fi
+}
 
 
 # curl -sSL https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alacritty.info | tic -x -

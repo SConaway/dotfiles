@@ -4,19 +4,22 @@
   imports = [ ../../modules/shared.nix ];
 
   # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
+  # services.nix-daemon.enable = true;
+  # disable nix-darwin upstream stuff: 
+  nix.enable = false;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;  # default shell on catalina
 
   # Set your time zone.
-  time.timeZone = "America/Los_Angeles";
+  # time.timeZone = "America/Los_Angeles";
 
   # User Configuration
   users.users.steven = {
     name = "steven";
     home = "/Users/steven";
   };
+  system.primaryUser = "steven";
 
   # System Defaults
   system.defaults = {
@@ -26,19 +29,35 @@
     };
     finder = {
       AppleShowAllExtensions = true;
-      FXPreferredViewStyle = "clmv";
+      FXPreferredViewStyle = "Nlsv";
     };
     NSGlobalDomain = {
       # AppleInterfaceStyle = "Dark";
       # "com.apple.swipescrolldirection" = false;
     };
+    loginwindow = {
+      LoginwindowText = ":)";
+    };
   };
+
+  # TouchID for Sudo:
+  security.pam.services.sudo_local.touchIdAuth = true;
   
   # Homebrew Integration (Optional, but recommended)
-  # homebrew.enable = true;
-  # homebrew.casks = [ "firefox" "iterm2" ];
+  homebrew.enable = true;
+  homebrew.casks = [ "zen" ];
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
+
+  environment.systemPackages = with pkgs;
+    [
+      alacritty
+      aerospace
+      gemini-cli
+      mas
+      meslo-lgs-nf
+      raycast
+    ];
 }

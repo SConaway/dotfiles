@@ -7,26 +7,27 @@
   # List packages installed in system profile.
   environment.systemPackages = with pkgs;
     [
-      git
-      zsh
-      rustc
-      python3
-      nodejs-slim
-      curl
-      wget
+      atuin
+      bat
       btop
+      curl
+      fzf
+      gh
+      git
       iftop
       lazygit
-      rsync
-      unzip
+      massren
       neovim
-      gh
-      ripgrep
-      fzf
-      bat
-      tmux
+      nodejs-slim
       oh-my-zsh
-      atuin
+      python3
+      ripgrep
+      rsync
+      rustc
+      tmux
+      unzip
+      wget
+      zsh
   ];
 
   # Shell Configuration
@@ -42,7 +43,7 @@
   
   # Nix Garbage Collection (Shared)
   nix.gc = {
-    automatic = true;
+    automatic = false; # TODO: disable on mac
     options = "--delete-older-than 7d";
   };
   

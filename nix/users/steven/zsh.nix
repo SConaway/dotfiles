@@ -24,5 +24,5 @@
   };
   
   # Link the atuin config file directly
-  xdg.configFile."atuin/config.toml".source = ../../modules/files/atuin.toml;
+  xdg.configFile."atuin/config.toml".source = ../../modules/files/config/atuin/config.toml;
 }

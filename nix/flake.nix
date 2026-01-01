@@ -19,9 +19,10 @@
       url = "github:SConaway/astronvim-config";
       flake = false;
     };
+    mac-app-util.url = "github:hraban/mac-app-util";
   };
 
-  outputs = { self, nixpkgs, colmena, darwin, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, colmena, darwin, home-manager, mac-app-util, ... }@inputs:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -42,6 +43,7 @@
           specialArgs = { inherit inputs; };
           modules = [
             ./hosts/mac/default.nix
+            mac-app-util.darwinModules.default
             home-manager.darwinModules.home-manager
             hmConfig
           ];
