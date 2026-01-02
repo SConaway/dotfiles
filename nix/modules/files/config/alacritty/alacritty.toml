@@ -27,8 +27,8 @@ bindings = [
 
     # alt left/right to move between words
     # alt delete to delete word is handled by window.option_as_alt
-    { key = "Right", mods = "Alt", chars = "\u001BF" },
-    { key = "Left", mods = "Alt", chars = "\u001BB" },
+    # { key = "Right", mods = "Alt", chars = "\u001BF" },
+    # { key = "Left", mods = "Alt", chars = "\u001BB" },
 
     # command left/right to move to beginning/end of line
     { key = "Right", mods = "Command", chars = "\u0005" },

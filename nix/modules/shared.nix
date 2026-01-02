@@ -14,6 +14,7 @@
     fzf
     gh
     git
+    glow # terminal .md renderer
     go
     iftop
     lazygit

@@ -92,11 +92,11 @@
     aerospace
     alacritty
     colmena
-    copilot-cli
+    github-copilot-cli
     discord
     docker
     ffmpeg
-    gemini-cli-bin
+    gemini-cli
     google-chrome
     iina
     keka

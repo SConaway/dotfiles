@@ -1,25 +1,18 @@
-# export ZELLIJ_AUTO_EXIT=true
-# eval "$(zellij setup --generate-auto-start zsh)"
-# Path to your oh-my-zsh installation.
-
-# export ZSH=/nix/store/lz5cg51f57zg5adc0zbfbya4jqr7jlx7-oh-my-zsh-2025-04-29/share/oh-my-zsh
 export EDITOR="nvim"
-# export FZF_BASE="$HOME/.fzf/shell"
+export PAGER="bat"
 export MANPAGER='nvim +Man!'
 export WORDCHARS="*?_-.[]~=/&;!#$%^(){}<>"
 export ZSH_COMPDUMP="${ZDOTDIR:-${ZSH}}/cache/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 
 export path=("$HOME/.local/bin" $path)
-# export PATH="$HOME/.cargo/bin:$HOME/.local/scripts:$HOME/.local/bin:/escnfs/courses/sp22-cse-20221.01/public/bin:/escnfs/home/pbui/pub/pkgsrc/bin:$PATH"
-# export GOBIN="$HOME/.local/bin"
-
-
+export IDF_CCACHE_ENABLE=1
+export MENUCONFIG_STYLE="default"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  # source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # load p10k from brew
@@ -28,6 +21,9 @@ ZSH_THEME=""
 HYPHEN_INSENSITIVE="true"
 
 COMPLETION_WAITING_DOTS=true
+# DISABLE_MAGIC_FUNCTIONS=true
+ENABLE_CORRECTION=true
+export CORRECT_IGNORE='(ci|cu|.wrangler)'
 
 ZSH_COMPDUMP="$ZSH_CACHE_DIR/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 
@@ -47,19 +43,25 @@ plugins=(
   command-not-found
   common-aliases
   cp
+  docker
   extract
   gh
   git
   gitfast
   gitignore
-  iterm2
+  httpie
+  # iterm2
+  macos
   man
+  npm
   pip
   poetry
   python
-  safe-paste
+  # safe-paste
   sudo
+  vscode
   wd
+  yarn
 )
 
 function bgnotify_formatted {
@@ -81,24 +83,16 @@ function bgnotify_formatted {
   bgnotify "$title - took ${elapsed}" "$2" # "$icon"
 }
 
-zstyle :omz:plugins:iterm2 shell-integration yes
+# zstyle ':completion:*:*:docker:*' option-stacking yes
+# zstyle ':completion:*:*:docker-*:*' option-stacking yes
+
+# zstyle :omz:plugins:iterm2 shell-integration yes
+# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 setopt correct
 
 source "$ZSH/oh-my-zsh.sh"
 
-# source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-
-# source /opt/homebrew/share/zsh-f-sy-h/F-Sy-H.plugin.zsh
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # alias ls=eza
 alias l="ls -lhF"
@@ -119,6 +113,10 @@ alias vim="nvim"
 alias cwd="pwd"
 alias q="quit"
 alias cl="clear;clear"
+alias ncdu="ncdu --color dark -t 4"
+alias yu="yarn upgrade"
+alias idf="nix shell github:mirrexagon/nixpkgs-esp-dev#esp-idf-full"
+alias nnn="PAGER='bat --paging=always' nnn -e"
 
 rerun-last-command() {
   # get last command
@@ -132,12 +130,13 @@ bindkey '^[^[^[' rerun-last-command
 bindkey '^[^[^[^[' rerun-last-command
 
 function rebuild() {
-  cd ~/nix-config/
+  pushd ~/nix-config/
   if [[ "$(uname)" == "Darwin" ]]; then
     sudo darwin-rebuild switch --flake .#mac "$@"
   else
     echo "not running on darwin, edit zshrc to support"
   fi
+  popd
 }
 alias re=rebuild
 
@@ -160,30 +159,48 @@ function gacp() {
     git commit -v $@
     git push
 }
-
-
-# # eval "$(zellij setup --generate-completion zsh)"
-# #compdef zellij
-
-autoload -U is-at-least
-
-function zr () { zellij run --name "$*" -- zsh -ic "$*";}
-function zrf () { zellij run --name "$*" --floating -- zsh -ic "$*";}
-function zri () { zellij run --name "$*" --in-place -- zsh -ic "$*";}
-function ze () { zellij edit "$*";}
-function zef () { zellij edit --floating "$*";}
-function zei () { zellij edit --in-place "$*";}
-function zpipe () {
-  if [ -z "$1" ]; then
-    zellij pipe;
-  else
-    zellij pipe -p $1;
+function find_port_blocker() {
+  if ! [ $# -eq 1 ]; then
+    echo "Please specify the port you want to check
+$ $0 [ 8000 ]"
+    return 1
   fi
+
+  lsof -i :$1
 }
+function clean_macos_crap() {
+  rm -rf {.,_.,_.}{fseventsd,Spotlight-V*,Trashes}
+  mkdir .fseventsd
+  touch .fseventsd/no_log .metadata_never_index .Trashes
+}
+# function to call nvim and then exit the shell
+function nnvim() {
+  nvim $@
+  exit
+}
+
+# eval "$(zellij setup --generate-completion zsh)"
+# compdef zellij
+
+# autoload -U is-at-least
+
+# function zr () { zellij run --name "$*" -- zsh -ic "$*";}
+# function zrf () { zellij run --name "$*" --floating -- zsh -ic "$*";}
+# function zri () { zellij run --name "$*" --in-place -- zsh -ic "$*";}
+# function ze () { zellij edit "$*";}
+# function zef () { zellij edit --floating "$*";}
+# function zei () { zellij edit --in-place "$*";}
+# function zpipe () {
+#   if [ -z "$1" ]; then
+#     zellij pipe;
+#   else
+#     zellij pipe -p $1;
+#   fi
+# }
 
 # autoload -U +X compinit && compinit
 # . <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )
 
-eval "$(atuin init zsh)"
-
 # source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"
