@@ -6,6 +6,11 @@
     ../../modules/nvim.nix
   ];
 
+  # requires `inputs.determinate.darwinModules.default` in flake.nix
+  determinate-nix.customSettings = {
+    eval-cores = 4;
+  };
+
   # Auto upgrade nix package and the daemon service.
   # services.nix-daemon.enable = true;
   # disable nix-darwin upstream stuff:
@@ -31,6 +36,9 @@
     dock = {
       # autohide = true;
       # mru-spaces = false;
+      # https://mynixos.com/nix-darwin/option/system.defaults.dock.wvous-tl-corner
+      wvous-tl-corner = 13; # top left hot corner: lock screen
+      wvous-tr-corner = 10; # top right hot corner: sleep screen
     };
     finder = {
       AppleShowAllExtensions = true;
@@ -50,6 +58,8 @@
 
   # Homebrew Integration (Optional, but recommended)
   homebrew.enable = true;
+  homebrew.onActivation.cleanup = "zap";
+  homebrew.onActivation.upgrade = true;
   # homebrew.taps = ["mediosz/tap"];
   homebrew.casks = [
     "bambu-studio"

@@ -139,6 +139,7 @@ function rebuild() {
     echo "not running on darwin, edit zshrc to support"
   fi
 }
+alias re=rebuild
 
 
 # curl -sSL https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alacritty.info | tic -x -

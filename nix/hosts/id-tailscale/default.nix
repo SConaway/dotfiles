@@ -8,7 +8,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/common.nix
+    ../../modules/linux.nix
   ];
 
   networking.hostName = "id-tailscale";

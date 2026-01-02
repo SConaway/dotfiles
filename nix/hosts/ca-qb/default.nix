@@ -4,7 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ./qBittorrent-nox.nix
-    ../../modules/common.nix
+    ../../modules/linux.nix
   ];
 
   networking.hostName = "qb";

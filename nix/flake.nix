@@ -20,6 +20,7 @@
     #   flake = false;
     # };
     mac-app-util.url = "github:hraban/mac-app-util";
+      determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
   };
 
   outputs =
@@ -60,6 +61,7 @@
             mac-app-util.darwinModules.default
             home-manager.darwinModules.home-manager
             hmConfig
+            inputs.determinate.darwinModules.default
           ];
         };
       };
