@@ -1,11 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../modules/common.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/common.nix
+  ];
 
   networking.hostName = "media";
 
@@ -13,11 +12,11 @@
 
   # Specific packages for media
   environment.systemPackages = with pkgs; [
-      jellyfin
-      jellyfin-web
-      jellyfin-ffmpeg
-      ffmpeg
-      # plex
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
+    ffmpeg
+    # plex
   ];
 
   # services.plex = {
@@ -37,11 +36,14 @@
     device = "192.168.8.9:/mnt/share";
     fsType = "nfs";
   };
-  
+
   services.nfs.server.enable = true;
   services.nfs.server.exports = ''
     /mnt/jellyfin/media  192.168.8.0/24(rw,nohide,insecure,no_subtree_check)
   '';
-  
-  networking.firewall.allowedTCPPorts = [ 111 2049 ];
+
+  networking.firewall.allowedTCPPorts = [
+    111
+    2049
+  ];
 }

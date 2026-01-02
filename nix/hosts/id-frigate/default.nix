@@ -1,11 +1,15 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../modules/common.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/common.nix
+  ];
 
   networking.hostName = "frigate";
   networking.hostId = "0ef58ad2";
@@ -15,14 +19,14 @@
 
   # Kernel - ZFS usually prefers LTS or specific versions, not latest.
   boot.kernelParams = [ "mitigations=off" ];
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages; 
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
 
   virtualisation.docker.enable = true;
 
   users.users.steven.extraGroups = [ "docker" ];
-  
+
   environment.systemPackages = with pkgs; [
-      docker
+    docker
   ];
 
   services.qemuGuest.enable = true;
@@ -31,7 +35,7 @@
   services.zfs = {
     autoScrub.enable = true;
     trim.enable = true;
-  };  
+  };
 
   fileSystems."/mnt" = {
     device = "mntpool";
@@ -41,5 +45,10 @@
     ];
   };
 
-  networking.firewall.allowedTCPPorts = [ 5000 8554 8555 1984 ];
+  networking.firewall.allowedTCPPorts = [
+    5000
+    8554
+    8555
+    1984
+  ];
 }

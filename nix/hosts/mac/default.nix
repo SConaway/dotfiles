@@ -5,11 +5,11 @@
 
   # Auto upgrade nix package and the daemon service.
   # services.nix-daemon.enable = true;
-  # disable nix-darwin upstream stuff: 
+  # disable nix-darwin upstream stuff:
   nix.enable = false;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
-  programs.zsh.enable = true;  # default shell on catalina
+  programs.zsh.enable = true; # default shell on catalina
 
   # Set your time zone.
   # time.timeZone = "America/Los_Angeles";
@@ -44,14 +44,14 @@
 
   # TouchID for Sudo:
   security.pam.services.sudo_local.touchIdAuth = true;
-  
+
   # Homebrew Integration (Optional, but recommended)
   homebrew.enable = true;
   # homebrew.taps = ["mediosz/tap"];
   homebrew.casks = [
     "bambu-studio"
     "emojipedia"
-    "handbrake"
+    "handbrake-app"
     "mediosz/tap/swipeaerospace"
     "minecraft"
     "notion"
@@ -72,28 +72,27 @@
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
 
-  environment.systemPackages = with pkgs;
-    [
-      aerospace
-      alacritty
-      colmena
-      copilot-cli
-      discord
-      docker
-      ffmpeg
-      gemini-cli-bin
-      google-chrome
-      iina
-      keka
-      mas
-      musescore
-      openscad-unstable
-      qbittorrent
-      raycast
-      spotify
-      utm
-      vscode
-    ];
+  environment.systemPackages = with pkgs; [
+    aerospace
+    alacritty
+    colmena
+    copilot-cli
+    discord
+    docker
+    ffmpeg
+    gemini-cli-bin
+    google-chrome
+    iina
+    keka
+    mas
+    musescore
+    openscad-unstable
+    qbittorrent
+    raycast
+    spotify
+    utm
+    vscode
+  ];
 
   fonts.packages = [
     pkgs.nerd-fonts.meslo-lg

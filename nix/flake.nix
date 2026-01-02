@@ -22,9 +22,23 @@
     mac-app-util.url = "github:hraban/mac-app-util";
   };
 
-  outputs = { self, nixpkgs, colmena, darwin, home-manager, mac-app-util, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      colmena,
+      darwin,
+      home-manager,
+      mac-app-util,
+      ...
+    }@inputs:
     let
-      supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       pkgs = forAllSystems (system: nixpkgs.legacyPackages.${system});
 
@@ -67,7 +81,10 @@
           ];
           deployment.targetHost = "ca-media";
           deployment.targetUser = "steven";
-          deployment.tags = [ "ca" "linux" ];
+          deployment.tags = [
+            "ca"
+            "linux"
+          ];
         };
 
         ca-meshview = {
@@ -78,7 +95,10 @@
           ];
           deployment.targetHost = "ca-meshview";
           deployment.targetUser = "steven";
-          deployment.tags = [ "ca" "linux" ];
+          deployment.tags = [
+            "ca"
+            "linux"
+          ];
         };
 
         ca-qb = {
@@ -89,7 +109,10 @@
           ];
           deployment.targetHost = "ca-qb";
           deployment.targetUser = "steven";
-          deployment.tags = [ "ca" "linux" ];
+          deployment.tags = [
+            "ca"
+            "linux"
+          ];
         };
 
         id-frigate = {
@@ -100,7 +123,10 @@
           ];
           deployment.targetHost = "id-frigate";
           deployment.targetUser = "steven";
-          deployment.tags = [ "id" "linux" ];
+          deployment.tags = [
+            "id"
+            "linux"
+          ];
         };
 
         id-tailscale = {
@@ -111,7 +137,10 @@
           ];
           deployment.targetHost = "id-tailscale";
           deployment.targetUser = "steven";
-          deployment.tags = [ "id" "linux" ];
+          deployment.tags = [
+            "id"
+            "linux"
+          ];
         };
       };
 

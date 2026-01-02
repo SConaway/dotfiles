@@ -1,11 +1,15 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../modules/common.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/common.nix
+  ];
 
   networking.hostName = "ca-meshview";
 
@@ -18,20 +22,20 @@
 
   # Extra user packages
   users.users.steven.packages = with pkgs; [
-      bat
-      nix-index
-      lazygit
-      delta
-      bootterm
+    bat
+    nix-index
+    lazygit
+    delta
+    bootterm
   ];
 
   # Extra system packages
   environment.systemPackages = with pkgs; [
-      go
-      gnumake
-      gcc
+    go
+    gnumake
+    gcc
   ];
-  
+
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     stdenv.cc.cc.lib

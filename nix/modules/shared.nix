@@ -5,34 +5,34 @@
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile.
-  environment.systemPackages = with pkgs;
-    [
-      atuin
-      bat
-      btop
-      curl
-      deadnix
-      fzf
-      gh
-      git
-      go
-      iftop
-      lazygit
-      massren
-      neovim
-      nixd
-      nodejs
-      oh-my-zsh
-      python3
-      python313Packages.pygments
-      ripgrep
-      rsync
-      rustc
-      statix
-      tmux
-      unzip
-      wget
-      zsh
+  environment.systemPackages = with pkgs; [
+    atuin
+    bat
+    btop
+    curl
+    deadnix
+    fzf
+    gh
+    git
+    go
+    iftop
+    lazygit
+    massren
+    neovim
+    nixd
+    nixfmt-tree
+    nodejs
+    oh-my-zsh
+    python3
+    python313Packages.pygments
+    ripgrep
+    rsync
+    rustc
+    statix
+    tmux
+    unzip
+    wget
+    zsh
   ];
 
   # Shell Configuration
@@ -42,18 +42,22 @@
     interactiveShellInit = ''
       export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-    '' + builtins.readFile ./files/zshrc;
+    ''
+    + builtins.readFile ./files/zshrc;
     promptInit = "";
   };
-  
+
   # Nix Garbage Collection (Shared)
   nix.gc = {
     automatic = false; # TODO: disable on mac
     options = "--delete-older-than 7d";
   };
-  
+
   # Nix Settings (Shared)
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 }

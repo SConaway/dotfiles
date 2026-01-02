@@ -1,11 +1,15 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../modules/common.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/common.nix
+  ];
 
   networking.hostName = "id-tailscale";
 
@@ -19,18 +23,18 @@
   services.fstrim.enable = true;
 
   environment.systemPackages = with pkgs; [
-      ethtool
-      tailscale
+    ethtool
+    tailscale
   ];
 
   services.tailscale.enable = true;
-  
+
   # Tailscale exit node / router settings
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
   };
-  
+
   systemd.services."ethtool-settings" = {
     description = "Configure custom ethtool offload settings";
     after = [ "network-online.target" ];

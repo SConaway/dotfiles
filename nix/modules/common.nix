@@ -35,12 +35,17 @@
   users.users.steven = {
     isNormalUser = true;
     description = "steven";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     # Packages moved to shared.nix
-    openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHa5ZkCZmgH2SA1S1BolZMm7172xb0AlOzkG1iYYJ32R"];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHa5ZkCZmgH2SA1S1BolZMm7172xb0AlOzkG1iYYJ32R"
+    ];
     shell = pkgs.zsh;
   };
-  
+
   # Programs that need specific NixOS enablement
   programs.command-not-found.enable = true;
 
@@ -54,12 +59,15 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  
+
   # Allow passwordless sudo for wheel group (fixes deployment automation)
   security.sudo.wheelNeedsPassword = false;
 
   # Allow wheel users to manage nix (fixes 'untrusted user' warnings)
-  nix.settings.trusted-users = [ "root" "@wheel" ];
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+  ];
 
   # Automatically install system updates daily
   system.autoUpgrade = {
@@ -70,7 +78,7 @@
 
   # GC Dates are NixOS specific format
   nix.gc.dates = "daily";
-  
+
   documentation.man.generateCaches = true;
 
   system.stateVersion = "25.05";
