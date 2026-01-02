@@ -117,6 +117,7 @@ alias ncdu="ncdu --color dark -t 4"
 alias yu="yarn upgrade"
 alias idf="nix shell github:mirrexagon/nixpkgs-esp-dev#esp-idf-full"
 alias nnn="PAGER='bat --paging=always' nnn -e"
+alias glow="glow -p"
 
 rerun-last-command() {
   # get last command
@@ -130,14 +131,18 @@ bindkey '^[^[^[' rerun-last-command
 bindkey '^[^[^[^[' rerun-last-command
 
 function rebuild() {
-  pushd ~/nix-config/
-  if [[ "$(uname)" == "Darwin" ]]; then
+  local oldpwd="$PWD"
+  cd ~/nix-config || return
+
+  if [[ $(uname) == Darwin ]]; then
     sudo darwin-rebuild switch --flake .#mac "$@"
   else
     echo "not running on darwin, edit zshrc to support"
   fi
-  popd
+
+  cd "$oldpwd"
 }
+
 alias re=rebuild
 
 
