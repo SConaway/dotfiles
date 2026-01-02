@@ -15,12 +15,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # my-nvim-config = {
-    #   url = "github:SConaway/astronvim-config";
-    #   flake = false;
-    # };
     mac-app-util.url = "github:hraban/mac-app-util";
-      determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
   };
 
   outputs =
@@ -73,6 +69,10 @@
             system = "x86_64-linux";
           };
           specialArgs = { inherit inputs; };
+
+        };
+        defaults = {
+          deployment.buildOnTarget = true;
         };
 
         ca-media = {

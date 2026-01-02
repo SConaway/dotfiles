@@ -31,6 +31,8 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  programs.zsh.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.steven = {
     isNormalUser = true;
@@ -52,7 +54,7 @@
   # Link Atuin config using systemd-tmpfiles (hack for non-Home-Manager setups)
   # Ensures ~/.config/atuin/config.toml exists and points to our managed file
   systemd.tmpfiles.rules = [
-    "L+ /home/steven/.config/atuin/config.toml - - - - ${pkgs.writeText "atuin.toml" (builtins.readFile ./files/atuin.toml)}"
+    "L+ /home/steven/.config/atuin/config.toml - - - - ${pkgs.writeText "atuin.toml" (builtins.readFile ./files/config/atuin/config.toml)}"
     "L+ /home/steven/.p10k.zsh - - - - ${pkgs.writeText "p10k.zsh" (builtins.readFile ./files/p10k.zsh)}"
     "f /home/steven/.zshrc 0644 steven users - # Managed by NixOS"
   ];
