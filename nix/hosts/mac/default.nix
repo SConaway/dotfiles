@@ -47,12 +47,25 @@
   
   # Homebrew Integration (Optional, but recommended)
   homebrew.enable = true;
-  homebrew.casks = [ "zen" ];
+  # homebrew.taps = ["mediosz/tap"];
+  homebrew.casks = [
+    "bambu-studio"
+    "emojipedia"
+    "handbrake"
+    "mediosz/tap/swipeaerospace"
+    "minecraft"
+    "notion"
+    "rocket"
+    "setapp"
+    "surfshark"
+    "vlc"
+    "zen"
+  ];
 
   homebrew.masApps = {
-    "Xcode" = 497799835;
     "Bitwarden" = 1352778147;
     "wBlock" = 6746388723;
+    "Xcode" = 497799835;
   };
 
   # Used for backwards compatibility, please read the changelog before changing.
@@ -61,12 +74,25 @@
 
   environment.systemPackages = with pkgs;
     [
-      alacritty
       aerospace
+      alacritty
       colmena
-      gemini-cli
+      copilot-cli
+      discord
+      docker
+      ffmpeg
+      gemini-cli-bin
+      google-chrome
+      iina
+      keka
       mas
+      musescore
+      openscad-unstable
+      qbittorrent
       raycast
+      spotify
+      utm
+      vscode
     ];
 
   fonts.packages = [
