@@ -10,7 +10,7 @@
     bat
     btop
     curl
-    deadnix
+    fd
     fzf
     gh
     git
@@ -18,8 +18,6 @@
     iftop
     lazygit
     massren
-    neovim
-    nixd
     nixfmt-tree
     nodejs
     oh-my-zsh
@@ -27,8 +25,6 @@
     python313Packages.pygments
     ripgrep
     rsync
-    rustc
-    statix
     tmux
     unzip
     wget

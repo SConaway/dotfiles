@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../../modules/shared.nix ];
+  imports = [
+    ../../modules/shared.nix
+    ../../modules/nvim.nix
+  ];
 
   # Auto upgrade nix package and the daemon service.
   # services.nix-daemon.enable = true;
@@ -58,7 +61,7 @@
     "rocket"
     "setapp"
     "surfshark"
-    "tailscale"
+    "tailscale-app"
     "vlc"
     "zen"
   ];
@@ -81,7 +84,7 @@
     discord
     docker
     ffmpeg
-    gemini-cli-bin
+    gemini-cli
     google-chrome
     iina
     keka
