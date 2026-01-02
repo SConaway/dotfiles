@@ -46,7 +46,7 @@
     shell = pkgs.zsh;
   };
 
-  # Programs that need specific NixOS enablement
+  # requires NixOS
   programs.command-not-found.enable = true;
 
   # Link Atuin config using systemd-tmpfiles (hack for non-Home-Manager setups)
@@ -76,8 +76,12 @@
     dates = "11:00";
   };
 
-  # GC Dates are NixOS specific format
-  nix.gc.dates = "daily";
+  # Nix Garbage Collection
+  nix.gc = {
+    automatic = true;
+    options = "--delete-older-than 7d";
+    dates = "daily";
+  };
 
   documentation.man.generateCaches = true;
 

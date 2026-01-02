@@ -9,6 +9,8 @@
 
     initContent = ''
       # Powerlevel10k
+      export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       source ${../../modules/files/p10k.zsh}
 
       # Source the legacy zshrc content (minus the atuin init which HM handles)

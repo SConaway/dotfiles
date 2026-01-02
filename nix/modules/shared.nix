@@ -31,23 +31,10 @@
     zsh
   ];
 
-  # Shell Configuration
-  programs.zsh = {
-    enable = true;
-    # interactiveShellInit runs before promptInit, so we must set ZSH here
-    interactiveShellInit = ''
-      export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-    ''
-    + builtins.readFile ./files/zshrc;
-    promptInit = "";
-  };
-
-  # Nix Garbage Collection (Shared)
-  nix.gc = {
-    automatic = false; # TODO: disable on mac
-    options = "--delete-older-than 7d";
-  };
+  # not sure if this is doing anything
+  nix.settings.warn-dirty = false;
+  # try this?
+  nix.settings.auto-optimise-store = true;
 
   # Nix Settings (Shared)
   nix.settings = {
@@ -56,4 +43,5 @@
       "flakes"
     ];
   };
+
 }

@@ -60,7 +60,10 @@
   homebrew.enable = true;
   homebrew.onActivation.cleanup = "zap";
   homebrew.onActivation.upgrade = true;
-  # homebrew.taps = ["mediosz/tap"];
+  homebrew.taps = [ "mediosz/tap" ];
+  homebrew.brews = [
+    "mas" # here for homebrew.masApps
+  ];
   homebrew.casks = [
     "bambu-studio"
     "emojipedia"
@@ -75,7 +78,6 @@
     "vlc"
     "zen"
   ];
-
   homebrew.masApps = {
     "Bitwarden" = 1352778147;
     "wBlock" = 6746388723;
@@ -84,7 +86,7 @@
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
-  system.stateVersion = 4;
+  system.stateVersion = 6;
 
   environment.systemPackages = with pkgs; [
     aerospace
@@ -94,11 +96,10 @@
     discord
     docker
     ffmpeg
-    gemini-cli
+    gemini-cli-bin
     google-chrome
     iina
     keka
-    mas
     musescore
     openscad-unstable
     qbittorrent
