@@ -58,6 +58,7 @@
     "rocket"
     "setapp"
     "surfshark"
+    "tailscale"
     "vlc"
     "zen"
   ];
