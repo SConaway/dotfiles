@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./qBittorrent-nox.nix
+    # ./qBittorrent-nox.nix
     ../../modules/linux.nix
   ];
 
@@ -11,7 +11,7 @@
 
   services.qemuGuest.enable = true;
 
-  networking.wg-quick.interfaces.wg0.configFile = ./files/us-sjc.conf;
+  networking.wg-quick.interfaces.wg0.configFile = "${./files/us-sjc.conf}";
 
   environment.systemPackages = with pkgs; [
     qbittorrent-nox
