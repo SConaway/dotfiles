@@ -2,20 +2,24 @@
   description = "NixOS Hive";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     colmena = {
       url = "github:zhaofengli/colmena";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
       url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mac-app-util.url = "github:hraban/mac-app-util";
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
   };
 
@@ -23,6 +27,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       colmena,
       darwin,
       home-manager,
@@ -67,6 +72,11 @@
         meta = {
           nixpkgs = import nixpkgs {
             system = "x86_64-linux";
+          };
+          nodeNixpkgs = {
+            ca-meshview = import nixpkgs-unstable {
+              system = "x86_64-linux";
+            };
           };
           specialArgs = { inherit inputs; };
 

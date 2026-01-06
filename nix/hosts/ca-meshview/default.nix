@@ -22,8 +22,6 @@
 
   # Extra user packages
   users.users.steven.packages = with pkgs; [
-    bat
-    nix-index
     lazygit
     delta
     bootterm

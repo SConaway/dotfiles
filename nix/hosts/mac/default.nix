@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -91,7 +91,7 @@
   environment.systemPackages = with pkgs; [
     aerospace
     alacritty
-    colmena
+    inputs.colmena.packages.${pkgs.system}.colmena
     github-copilot-cli
     discord
     docker
