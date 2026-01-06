@@ -99,6 +99,7 @@
     gemini-cli
     google-chrome
     iina
+    jellyfin-desktop
     keka
     musescore
     openscad-unstable
