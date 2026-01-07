@@ -28,6 +28,7 @@
     rsync
     tmux
     unzip
+    watch
     wget
     zsh
   ];
