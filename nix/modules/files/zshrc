@@ -115,7 +115,8 @@ alias q="quit"
 alias cl="clear;clear"
 alias ncdu="ncdu --color dark -t 4"
 alias yu="yarn upgrade"
-alias idf="nix shell github:mirrexagon/nixpkgs-esp-dev#esp-idf-full"
+# https://discourse.nixos.org/t/using-nix-develop-opens-bash-instead-of-zsh/25075/5
+alias idf="nix shell github:mirrexagon/nixpkgs-esp-dev#esp-idf-full -c zsh"
 alias nnn="PAGER='bat --paging=always' nnn -e"
 alias glow="glow -p"
 

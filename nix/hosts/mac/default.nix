@@ -91,6 +91,7 @@
   environment.systemPackages = with pkgs; [
     aerospace
     alacritty
+    ccache
     inputs.colmena.packages.${pkgs.system}.colmena
     github-copilot-cli
     discord
