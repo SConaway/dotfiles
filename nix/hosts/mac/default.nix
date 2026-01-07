@@ -101,6 +101,7 @@
     iina
     jellyfin-desktop
     keka
+    mosquitto
     musescore
     openscad-unstable
     qbittorrent
