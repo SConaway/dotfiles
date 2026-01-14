@@ -42,6 +42,7 @@
     fsType = "zfs";
     options = [
       "zfsutil"
+      "x-systemd.mount-timeout=600"
     ];
   };
 
