@@ -211,4 +211,4 @@ function nnvim() {
 
 # source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
-[[ "$TERM_PROGRAM" == "vscode" ]] && . "/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "/Applications/Nix Apps/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"

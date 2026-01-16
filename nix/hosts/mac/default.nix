@@ -66,6 +66,7 @@
   ];
   homebrew.casks = [
     "bambu-studio"
+    "calibre"
     "emojipedia"
     "handbrake-app"
     "mediosz/tap/swipeaerospace"
@@ -76,6 +77,7 @@
     "surfshark"
     "tailscale-app"
     "vlc"
+    "whatsapp"
     "zen"
   ];
   homebrew.masApps = {
@@ -110,6 +112,7 @@
     spotify
     utm
     vscode
+    # whatsapp-for-mac
   ];
 
   fonts.packages = [
