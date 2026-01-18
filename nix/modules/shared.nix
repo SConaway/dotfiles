@@ -11,6 +11,7 @@
     btop
     curl
     fd
+    file
     fzf
     gh
     git
