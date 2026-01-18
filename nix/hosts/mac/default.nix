@@ -112,6 +112,7 @@
     spotify
     utm
     vscode
+    wireshark
     # whatsapp-for-mac
   ];
 
