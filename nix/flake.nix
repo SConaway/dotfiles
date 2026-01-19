@@ -13,8 +13,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     mac-app-util = {
       url = "github:hraban/mac-app-util";
@@ -31,6 +35,7 @@
       colmena,
       darwin,
       home-manager,
+      home-manager-unstable,
       mac-app-util,
       ...
     }@inputs:
@@ -60,7 +65,7 @@
           modules = [
             ./hosts/mac/default.nix
             mac-app-util.darwinModules.default
-            home-manager.darwinModules.home-manager
+            home-manager-unstable.darwinModules.home-manager
             hmConfig
             inputs.determinate.darwinModules.default
           ];
@@ -102,7 +107,7 @@
         ca-meshview = {
           imports = [
             ./hosts/ca-meshview/default.nix
-            home-manager.nixosModules.home-manager
+            home-manager-unstable.nixosModules.home-manager
             hmConfig
           ];
           deployment.targetHost = "ca-meshview";

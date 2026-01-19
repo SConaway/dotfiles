@@ -9,6 +9,7 @@
   # requires `inputs.determinate.darwinModules.default` in flake.nix
   determinate-nix.customSettings = {
     eval-cores = 4;
+    warn-dirty = false;
   };
 
   # Auto upgrade nix package and the daemon service.
@@ -59,6 +60,7 @@
   # Homebrew Integration (Optional, but recommended)
   homebrew.enable = true;
   homebrew.onActivation.cleanup = "zap";
+  homebrew.onActivation.autoUpdate = true;
   homebrew.onActivation.upgrade = true;
   homebrew.taps = [ "mediosz/tap" ];
   homebrew.brews = [
@@ -94,7 +96,7 @@
     aerospace
     alacritty
     ccache
-    inputs.colmena.packages.${pkgs.system}.colmena
+    inputs.colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena
     github-copilot-cli
     discord
     docker
@@ -119,4 +121,10 @@
   fonts.packages = [
     pkgs.nerd-fonts.meslo-lg
   ];
+
+  # set environment variables
+  environment.variables = {
+    LANG = "en_US.UTF-8";
+    LC_ALL = "en_US.UTF-8";
+  };
 }

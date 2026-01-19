@@ -34,9 +34,6 @@
     zsh
   ];
 
-  # not sure if this is doing anything
-  nix.settings.warn-dirty = false;
-  # try this?
   nix.settings.auto-optimise-store = true;
 
   # Nix Settings (Shared)

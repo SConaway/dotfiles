@@ -18,7 +18,7 @@
   # Desktop
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.budgie.enable = true;
+  services.desktopManager.budgie.enable = true;
 
   # Extra user packages
   users.users.steven.packages = with pkgs; [
