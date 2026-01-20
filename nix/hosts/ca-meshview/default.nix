@@ -29,6 +29,7 @@
 
   # Extra system packages
   environment.systemPackages = with pkgs; [
+    firefox
     go
     gnumake
     gcc
