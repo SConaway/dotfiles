@@ -20,6 +20,7 @@
     iftop
     lazygit
     massren
+    ncdu
     nixfmt-tree
     nodejs
     oh-my-zsh

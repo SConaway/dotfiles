@@ -7,7 +7,7 @@
   ];
 
   # requires `inputs.determinate.darwinModules.default` in flake.nix
-  determinate-nix.customSettings = {
+  determinateNix.customSettings = {
     eval-cores = 4;
     warn-dirty = false;
   };
@@ -74,6 +74,7 @@
     "mediosz/tap/swipeaerospace"
     "minecraft"
     "notion"
+    "raycast"
     "rocket"
     "setapp"
     "surfshark"
@@ -110,7 +111,6 @@
     musescore
     openscad-unstable
     qbittorrent
-    raycast
     spotify
     utm
     vscode
