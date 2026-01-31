@@ -130,6 +130,7 @@ automatically-unhide-macos-hidden-apps = false
     alt-7 = 'workspace 7'
     alt-8 = 'workspace 8'
     alt-9 = 'workspace 9'
+    alt-j = 'workspace J'
     # alt-0 = 'workspace 0'
     # alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
     # alt-b = 'workspace B'
@@ -215,6 +216,10 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
 
+
+[[on-window-detected]]
+    if.app-name-regex-substring = 'jellyfin desktop'
+        run = 'move-node-to-workspace J'
 
 [[on-window-detected]]
     if.app-name-regex-substring = 'spotify'

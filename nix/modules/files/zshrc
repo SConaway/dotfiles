@@ -1,4 +1,4 @@
-export EDITOR="nvim"
+export EDITOR="$(which nvim)"
 export PAGER="bat"
 export MANPAGER='nvim +Man!'
 export WORDCHARS="*?_-.[]~=/&;!#$%^(){}<>"
