@@ -12,6 +12,7 @@
     curl
     fd
     file
+    fx
     fzf
     gh
     git
