@@ -78,21 +78,15 @@ darwin-rebuild switch --flake .#mac  # or colmena apply
     *   Add the host to `colmenaHive`.
     *   Include `home-manager.nixosModules.home-manager` and `hmConfig` if you want user config.
     *   Set `deployment.targetHost` to the target's IP.
-5.  **Initial Bootstrap**:
-    *   **Option A: nixos-anywhere (Recommended)**
-        This allows remote installation from your dev machine if the target has SSH access (e.g. via the installer's temporary root password).
+5.  **Initial Bootstrap (Manual nixos-install)**:
+    1.  Boot the installer on the target machine.
+    2.  Mount partitions to `/mnt` (and `/mnt/boot`).
+    3.  Copy this config to the installer (e.g., `scp -r . root@<target-ip>:/mnt/etc/nixos/config`).
+    4.  Run the installation:
         ```bash
-        nix run github:numtide/nixos-anywhere -- --flake .#<hostname> root@<target-ip>
+        nixos-install --flake /mnt/etc/nixos/config#<hostname>
         ```
-    *   **Option B: Manual nixos-install**
-        1.  Boot the installer on the target machine.
-        2.  Mount partitions to `/mnt` (and `/mnt/boot`).
-        3.  Copy this config to the installer (e.g., `scp -r . root@<target-ip>:/mnt/etc/nixos/config`).
-        4.  Run the installation:
-            ```bash
-            nixos-install --flake /mnt/etc/nixos/config#<hostname>
-            ```
-        5.  Reboot.
+    5.  Reboot.
 6.  **Deploy**:
     ```bash
     colmena apply --on <hostname>

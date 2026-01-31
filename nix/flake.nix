@@ -82,6 +82,9 @@
             ca-meshview = import nixpkgs-unstable {
               system = "x86_64-linux";
             };
+            ca-work = import nixpkgs-unstable {
+              system = "x86_64-linux";
+            };
           };
           specialArgs = { inherit inputs; };
 
@@ -132,6 +135,20 @@
           ];
         };
 
+        ca-work = {
+          imports = [
+            ./hosts/ca-work/default.nix
+            home-manager-unstable.nixosModules.home-manager
+            hmConfig
+          ];
+          deployment.targetHost = "ca-work";
+          deployment.targetUser = "steven";
+          deployment.tags = [
+            "ca"
+            "linux"
+          ];
+        };
+
         id-frigate = {
           imports = [
             ./hosts/id-frigate/default.nix
@@ -160,6 +177,9 @@
           ];
         };
       };
+
+      # enable `sudo nixos-install --flake  .#<host>`
+      nixosConfigurations = self.colmenaHive.nodes;
 
       devShells = forAllSystems (system: {
         default = pkgs.${system}.mkShell {

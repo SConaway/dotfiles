@@ -22,7 +22,6 @@
 
   # Extra user packages
   users.users.steven.packages = with pkgs; [
-    lazygit
     delta
     bootterm
   ];
