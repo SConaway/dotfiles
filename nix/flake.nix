@@ -22,7 +22,7 @@
     };
     mac-app-util = {
       url = "github:hraban/mac-app-util";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      # inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
   };

@@ -13,7 +13,7 @@
 
   # requires `inputs.determinate.darwinModules.default` in flake.nix
   determinateNix.customSettings = {
-    eval-cores = 4;
+    eval-cores = 8;
     warn-dirty = false;
   };
 
