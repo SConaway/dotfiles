@@ -23,12 +23,12 @@ This project uses **Colmena** for remote deployment.
 
 **Apply to all servers:**
 ```bash
-colmena apply
+colmena apply --reboot
 ```
 
 **Apply to a specific server:**
 ```bash
-colmena apply --on ca-media
+colmena apply --reboot --on ca-media
 ```
 
 **Apply only local Home Manager changes (if running locally on Linux):**
