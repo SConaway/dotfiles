@@ -241,9 +241,9 @@ automatically-unhide-macos-hidden-apps = false
     if.app-name-regex-substring = 'safari'
         run = 'layout floating'
 
-[[on-window-detected]]
-    if.app-name-regex-substring = 'reminders'
-        run = 'layout floating'
+# [[on-window-detected]]
+#     if.app-name-regex-substring = 'reminders'
+#         run = 'layout floating'
 
 [[on-window-detected]]
     if.app-name-regex-substring = 'cleanshot x'

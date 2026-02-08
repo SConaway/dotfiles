@@ -22,6 +22,11 @@
   # disable nix-darwin upstream stuff:
   nix.enable = false;
 
+  # allow chrome due to 'insecure' updater
+  nixpkgs.config.permittedInsecurePackages = [
+    "google-chrome-144.0.7559.97"
+  ];
+
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
 
@@ -114,6 +119,7 @@
     keka
     mosquitto
     musescore
+    nix-output-monitor
     openscad-unstable
     qbittorrent
     spotify
