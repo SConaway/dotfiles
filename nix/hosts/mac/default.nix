@@ -112,6 +112,7 @@
     discord
     docker
     ffmpeg
+    firefox
     gemini-cli
     google-chrome
     iina
@@ -120,6 +121,7 @@
     mosquitto
     musescore
     nix-output-monitor
+    opencode
     openscad-unstable
     qbittorrent
     spotify

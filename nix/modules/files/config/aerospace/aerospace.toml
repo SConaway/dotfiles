@@ -234,6 +234,10 @@ automatically-unhide-macos-hidden-apps = false
         run = 'move-node-to-workspace M'
 
 [[on-window-detected]]
+    if.app-name-regex-substring = 'whatsapp'
+        run = 'move-node-to-workspace M'
+
+[[on-window-detected]]
     if.app-name-regex-substring = 'activity monitor'
     run = 'layout floating'
 
