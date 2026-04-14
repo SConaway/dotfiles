@@ -119,6 +119,9 @@ alias yu="yarn upgrade"
 alias idf="nix develop github:mirrexagon/nixpkgs-esp-dev#esp-idf-full -c zsh"
 alias nnn="PAGER='bat --paging=always' nnn -e"
 alias glow="glow -p"
+alias oc='ocx oc'
+alias nd='nix develop -c zsh'
+alias claude="claude --allow-dangerously-skip-permissions"
 
 rerun-last-command() {
   # get last command
