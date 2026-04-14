@@ -11,6 +11,8 @@
     defaultEditor = true;
     viAlias = false;
     vimAlias = false;
+    withPython3 = false;
+    withRuby = false;
   };
 
   # Link the remote flake input to the config directory
