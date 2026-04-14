@@ -22,6 +22,7 @@
     lazygit
     massren
     ncdu
+    nixfmt
     nixfmt-tree
     nodejs
     oh-my-zsh
@@ -33,6 +34,7 @@
     unzip
     watch
     wget
+    yarn
     zsh
   ];
 
