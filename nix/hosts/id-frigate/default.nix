@@ -40,11 +40,15 @@
   fileSystems."/mnt" = {
     device = "mntpool";
     fsType = "zfs";
-    options = [
-      "zfsutil"
-      "x-systemd.mount-timeout=600"
-    ];
+    options = [ "zfsutil" ];
   };
+
+  systemd.packages = [
+    (pkgs.writeTextDir "lib/systemd/system/mnt.mount.d/timeout.conf" ''
+      [Mount]
+      TimeoutSec=600
+    '')
+  ];
 
   networking.firewall.allowedTCPPorts = [
     5000
