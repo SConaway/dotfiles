@@ -23,9 +23,9 @@
   nix.enable = false;
 
   # allow chrome due to 'insecure' updater
-  nixpkgs.config.permittedInsecurePackages = [
-    "google-chrome-144.0.7559.97"
-  ];
+  # nixpkgs.config.permittedInsecurePackages = [
+  #   "google-chrome-144.0.7559.97"
+  # ];
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
@@ -72,15 +72,28 @@
   homebrew.onActivation.cleanup = "zap";
   homebrew.onActivation.autoUpdate = true;
   homebrew.onActivation.upgrade = true;
-  homebrew.taps = [ "mediosz/tap" ];
+  homebrew.enableZshIntegration = true;
+  homebrew.enableBashIntegration = true;
+  homebrew.taps = [
+    "antoniorodr/memo"
+    "mediosz/tap"
+    "steipete/tap"
+  ];
   homebrew.brews = [
     "mas" # here for homebrew.masApps
+    "antoniorodr/memo/memo"
+    "steipete/tap/imsg"
+    "steipete/tap/mcporter"
+    "steipete/tap/remindctl"
   ];
   homebrew.casks = [
+    "anki"
     "bambu-studio"
     "calibre"
+    "docker-desktop"
     "emojipedia"
     "handbrake-app"
+    "logitech-g-hub"
     "mediosz/tap/swipeaerospace"
     "minecraft"
     "notion"
@@ -89,6 +102,8 @@
     "setapp"
     "surfshark"
     "tailscale-app"
+    "lm-studio"
+    "visual-studio-code"
     "vlc"
     "whatsapp"
     "zen"
@@ -105,12 +120,13 @@
 
   environment.systemPackages = with pkgs; [
     aerospace
-    alacritty
+    alacritty-graphics
+    bun
+    # claude-code-bin
     ccache
     inputs.colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena
     github-copilot-cli
     discord
-    docker
     ffmpeg
     firefox
     gemini-cli
@@ -121,12 +137,11 @@
     mosquitto
     musescore
     nix-output-monitor
-    opencode
     openscad-unstable
     qbittorrent
     spotify
     utm
-    vscode
+    uv
     wireshark
     # whatsapp-for-mac
   ];
