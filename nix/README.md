@@ -91,3 +91,7 @@ darwin-rebuild switch --flake .#mac  # or colmena apply
     ```bash
     colmena apply --on <hostname>
     ```
+7.  **Troubleshooting**: If shell/home config isn't applying correctly, check the Home Manager service logs on the target:
+    ```bash
+    journalctl -u home-manager-steven.service --no-pager | tail -30
+    ```
