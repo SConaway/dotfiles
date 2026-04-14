@@ -51,13 +51,6 @@
   # requires NixOS
   programs.command-not-found.enable = true;
 
-  # Link Atuin config using systemd-tmpfiles (hack for non-Home-Manager setups)
-  # Ensures ~/.config/atuin/config.toml exists and points to our managed file
-  systemd.tmpfiles.rules = [
-    "L+ /home/steven/.config/atuin/config.toml - - - - ${pkgs.writeText "atuin.toml" (builtins.readFile ./files/config/atuin/config.toml)}"
-    "L+ /home/steven/.p10k.zsh - - - - ${pkgs.writeText "p10k.zsh" (builtins.readFile ./files/p10k.zsh)}"
-    "f /home/steven/.zshrc 0644 steven users - # Managed by NixOS"
-  ];
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -85,7 +78,7 @@
     dates = "daily";
   };
 
-  documentation.man.generateCaches = true;
+  documentation.man.cache.enable = true;
 
   system.stateVersion = "25.05";
 }
