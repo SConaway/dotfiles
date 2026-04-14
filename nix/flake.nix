@@ -4,13 +4,14 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     colmena = {
       url = "github:zhaofengli/colmena";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     darwin = {
       url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable-small";
     };
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
@@ -22,7 +23,7 @@
     };
     mac-app-util = {
       url = "github:hraban/mac-app-util";
-      # inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
   };
@@ -32,6 +33,7 @@
       self,
       nixpkgs,
       nixpkgs-unstable,
+      nixpkgs-unstable-small,
       colmena,
       darwin,
       home-manager,
@@ -84,6 +86,12 @@
             };
             ca-work = import nixpkgs-unstable {
               system = "x86_64-linux";
+            };
+            ca-lyfe = import nixpkgs-unstable {
+              system = "x86_64-linux";
+            };
+            nixpi = import nixpkgs-unstable {
+              system = "aarch64-linux";
             };
           };
           specialArgs = { inherit inputs; };
@@ -143,6 +151,34 @@
           ];
           deployment.targetHost = "ca-work";
           deployment.targetUser = "steven";
+          deployment.tags = [
+            "ca"
+            "linux"
+          ];
+        };
+
+        nixpi = {
+          imports = [
+            ./hosts/nixpi/default.nix
+            home-manager-unstable.nixosModules.home-manager
+            hmConfig
+          ];
+          deployment.targetHost = "nixpi";
+          deployment.targetUser = "steven";
+          deployment.tags = [
+            "pi"
+            "linux"
+          ];
+        };
+
+        ca-lyfe = {
+          imports = [
+            ./hosts/ca-lyfe/default.nix
+            home-manager-unstable.nixosModules.home-manager
+            hmConfig
+          ];
+          deployment.targetHost = "ca-lyfe";
+          deployment.targetUser = "nixos";
           deployment.tags = [
             "ca"
             "linux"
