@@ -22,6 +22,17 @@
   # disable nix-darwin upstream stuff:
   nix.enable = false;
 
+  # allow unfree packages
+  # nixpkgs.config.allowUnfreePredicate =
+  #   pkg:
+  #   builtins.elem (builtins.baseNameOf (builtins.toString pkg)) [
+  #     "github-copilot-cli"
+  #     "jellyfin-desktop"
+  #     "discord"
+  #     "docker-desktop"
+  #     "spotify"
+  #   ];
+
   # allow chrome due to 'insecure' updater
   # nixpkgs.config.permittedInsecurePackages = [
   #   "google-chrome-144.0.7559.97"
@@ -120,7 +131,8 @@
 
   environment.systemPackages = with pkgs; [
     aerospace
-    alacritty-graphics
+    # alacritty-graphics
+    alacritty
     bun
     # claude-code-bin
     ccache
@@ -130,15 +142,18 @@
     ffmpeg
     firefox
     gemini-cli
+    ghostty-bin
     google-chrome
     iina
-    jellyfin-desktop
+    iterm2
+    # jellyfin-desktop # qtwebengine-6.11.0 broken in nixpkgs
     keka
     mosquitto
     musescore
     nix-output-monitor
     openscad-unstable
     qbittorrent
+    spotdl
     spotify
     utm
     uv
