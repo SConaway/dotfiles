@@ -77,11 +77,17 @@
       # NixOS Hive Configuration
       colmenaHive = colmena.lib.makeHive {
         meta = {
-          nixpkgs = import nixpkgs {
+          nixpkgs = import nixpkgs-unstable {
             system = "x86_64-linux";
           };
           nodeNixpkgs = {
+            ca-media = import nixpkgs-unstable {
+              system = "x86_64-linux";
+            };
             ca-meshview = import nixpkgs-unstable {
+              system = "x86_64-linux";
+            };
+            ca-qb = import nixpkgs-unstable {
               system = "x86_64-linux";
             };
             ca-work = import nixpkgs-unstable {
@@ -92,6 +98,12 @@
             };
             nixpi = import nixpkgs-unstable {
               system = "aarch64-linux";
+            };
+            id-frigate = import nixpkgs-unstable {
+              system = "x86_64-linux";
+            };
+            id-tailscale = import nixpkgs-unstable {
+              system = "x86_64-linux";
             };
           };
           specialArgs = { inherit inputs; };
@@ -104,7 +116,7 @@
         ca-media = {
           imports = [
             ./hosts/ca-media/default.nix
-            home-manager.nixosModules.home-manager
+            home-manager-unstable.nixosModules.home-manager
             hmConfig
           ];
           deployment.targetHost = "ca-media";
@@ -132,7 +144,7 @@
         ca-qb = {
           imports = [
             ./hosts/ca-qb/default.nix
-            home-manager.nixosModules.home-manager
+            home-manager-unstable.nixosModules.home-manager
             hmConfig
           ];
           deployment.targetHost = "ca-qb";
@@ -188,7 +200,7 @@
         id-frigate = {
           imports = [
             ./hosts/id-frigate/default.nix
-            home-manager.nixosModules.home-manager
+            home-manager-unstable.nixosModules.home-manager
             hmConfig
           ];
           deployment.targetHost = "id-frigate";
@@ -202,7 +214,7 @@
         id-tailscale = {
           imports = [
             ./hosts/id-tailscale/default.nix
-            home-manager.nixosModules.home-manager
+            home-manager-unstable.nixosModules.home-manager
             hmConfig
           ];
           deployment.targetHost = "id-tailscale";

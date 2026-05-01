@@ -31,6 +31,7 @@
     ripgrep
     rsync
     tmux
+    tree
     unzip
     watch
     wget
