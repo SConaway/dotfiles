@@ -2,21 +2,25 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 
 {
   imports = [
     ../../modules/linux.nix
+    inputs.agenix.nixosModules.default
   ];
 
   networking.hostName = "nixpi";
 
   networking.networkmanager.enable = lib.mkForce false;
+  age.secrets.wifi-psk.file = ../../secrets/nixpi/wifi-psk.age;
+
   networking.wireless = {
     enable = true;
     interfaces = [ "wlan0" ];
-    networks."MyFi".pskRaw = "REDACTED_WIFI_PSK";
+    networks."MyFi".pskRaw = builtins.readFile config.age.secrets.wifi-psk.path;
   };
 
   boot = {

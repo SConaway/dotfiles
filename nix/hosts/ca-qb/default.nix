@@ -1,17 +1,20 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
     # ./qBittorrent-nox.nix
     ../../modules/linux.nix
+    inputs.agenix.nixosModules.default
   ];
 
   networking.hostName = "qb";
 
   services.qemuGuest.enable = true;
 
-  networking.wg-quick.interfaces.wg0.configFile = "${./files/us-sjc.conf}";
+  age.secrets.wireguard.file = ../../secrets/ca-qb/wireguard.age;
+
+  networking.wg-quick.interfaces.wg0.configFile = config.age.secrets.wireguard.path;
 
   environment.systemPackages = with pkgs; [
     qbittorrent-nox

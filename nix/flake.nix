@@ -26,6 +26,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -39,6 +43,7 @@
       home-manager,
       home-manager-unstable,
       mac-app-util,
+      agenix,
       ...
     }@inputs:
     let
@@ -233,6 +238,7 @@
         default = pkgs.${system}.mkShell {
           buildInputs = [
             colmena.packages.${system}.colmena
+            agenix.packages.${system}.default
           ];
         };
       });
