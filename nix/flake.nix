@@ -190,7 +190,7 @@
             hmConfig
           ];
           deployment.targetHost = "ca-lyfe";
-          deployment.targetUser = "nixos";
+          deployment.targetUser = "steven";
           deployment.tags = [
             "ca"
             "linux"

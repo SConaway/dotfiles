@@ -27,7 +27,7 @@
 
   # Extra system packages
   environment.systemPackages = with pkgs; [
-    claude-code-bin
+    claude-code
   ];
 
   # programs.nix-ld.enable = true;
