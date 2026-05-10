@@ -1,0 +1,11 @@
+let
+  user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHa5ZkCZmgH2SA1S1BolZMm7172xb0AlOzkG1iYYJ32R";
+
+  ca-qb = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBvr1ijV/l3HQjJHwVrR4H2u+kVhWq0i15ZKMzNQRc9L";
+  nixpi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF+TKkDGH+mGN9pGtr2Itswro73xlp94qSDU80NBi5cO";
+  ca-lyfe = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOuHmsK8p8diqygxzukYydUY3XY/VuuaC203CmrSc1Fe";
+in
+{
+  "ca-qb/wireguard.age".publicKeys = [ ca-qb user ];
+  "nixpi/wifi-psk.age".publicKeys = [ nixpi user ];
+}

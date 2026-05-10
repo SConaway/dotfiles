@@ -87,6 +87,7 @@
   homebrew.enableBashIntegration = true;
   homebrew.taps = [
     "antoniorodr/memo"
+    "darrylmorley/whatcable"
     "mediosz/tap"
     "steipete/tap"
   ];
@@ -107,6 +108,7 @@
     "logitech-g-hub"
     "mediosz/tap/swipeaerospace"
     "minecraft"
+    "musescore"
     "notion"
     "raycast"
     "rocket"
@@ -116,6 +118,7 @@
     "lm-studio"
     "visual-studio-code"
     "vlc"
+    "whatcable"
     "whatsapp"
     "zen"
   ];
@@ -149,7 +152,6 @@
     # jellyfin-desktop # qtwebengine-6.11.0 broken in nixpkgs
     keka
     mosquitto
-    musescore
     nix-output-monitor
     openscad-unstable
     qbittorrent

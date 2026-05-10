@@ -138,7 +138,8 @@ bindkey "^[[1;3D" backward-word
 
 function rebuild() {
   local oldpwd="$PWD"
-  cd ~/nix-config || return
+  cd ~/dotfiles/nix || return
+  # cd ~/nix-config || return
 
   if [[ $(uname) == Darwin ]]; then
     sudo darwin-rebuild switch --flake .#mac "$@" |& nom --json
