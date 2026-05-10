@@ -26,12 +26,12 @@
       # export POWERLEVEL9K_DISABLE_GITSTATUSD=true
       # export POWERLEVEL9K_DISABLE_GITSTATUS=true
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-      source ${../../modules/files/shell/p10k.zsh}
+      source ${../../../shell/p10k.zsh}
       # echo "p10k done"
 
       # Source the legacy zshrc content (minus the atuin init which HM handles)
       # echo "load zshrc"
-      ${builtins.readFile ../../modules/files/shell/zshrc}
+      ${builtins.readFile ../../../shell/zshrc}
       # zprof
       # echo "initContent done"
     '';
