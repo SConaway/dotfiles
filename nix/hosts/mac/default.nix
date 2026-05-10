@@ -9,6 +9,7 @@
   imports = [
     ../../modules/shared.nix
     ../../modules/nvim.nix
+    ../../modules/leaf.nix
   ];
 
   # requires `inputs.determinate.darwinModules.default` in flake.nix

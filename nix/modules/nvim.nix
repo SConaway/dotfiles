@@ -14,6 +14,7 @@
     python3
     python3Packages.pip
     ripgrep
+    rustc
     statix
     tree-sitter
     # tree-sitter-grammars
