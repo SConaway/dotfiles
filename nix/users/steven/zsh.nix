@@ -18,7 +18,7 @@
     # '';
 
     initContent = ''
-      echo "initContent start"
+      # echo "initContent start"
       # zmodload zsh/zprof
       # Powerlevel10k
       export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh
@@ -27,13 +27,13 @@
       # export POWERLEVEL9K_DISABLE_GITSTATUS=true
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       source ${../../modules/files/p10k.zsh}
-      echo "p10k done"
+      # echo "p10k done"
 
       # Source the legacy zshrc content (minus the atuin init which HM handles)
-      echo "load zshrc"
+      # echo "load zshrc"
       ${builtins.readFile ../../modules/files/zshrc}
       # zprof
-      echo "initContent done"
+      # echo "initContent done"
     '';
   };
 

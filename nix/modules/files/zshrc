@@ -1,4 +1,4 @@
-echo hi
+# echo hi
 export EDITOR="$(which nvim)"
 export PAGER="bat"
 export MANPAGER='nvim +Man!'
@@ -173,12 +173,13 @@ function gacp() {
 }
 function find_port_blocker() {
   if ! [ $# -eq 1 ]; then
-    echo "Please specify the port you want to check
-$ $0 [ 8000 ]"
+    cat <<EOF
+Please specify the port you want to check
+$ find_port_blocker 8000
+EOF
     return 1
   fi
-
-  lsof -i :$1
+  lsof -i -n -P ":$1"
 }
 function clean_macos_crap() {
   rm -rf {.,_.,_.}{fseventsd,Spotlight-V*,Trashes}
@@ -217,4 +218,4 @@ function nnvim() {
 
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "/Applications/Nix Apps/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"
 
-echo bye
+# echo bye
