@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # Allow unfree packages
@@ -39,6 +39,7 @@
     wget
     yarn
     zsh
+    inputs.colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena
   ];
 
   nix.settings.auto-optimise-store = true;

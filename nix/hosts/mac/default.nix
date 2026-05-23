@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  inputs,
   ...
 }:
 
@@ -140,7 +139,6 @@
     bun
     # claude-code-bin
     ccache
-    inputs.colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena
     github-copilot-cli
     discord
     ffmpeg
