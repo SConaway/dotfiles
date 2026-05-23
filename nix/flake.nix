@@ -168,6 +168,7 @@
           ];
           deployment.targetHost = "ca-work";
           deployment.targetUser = "steven";
+          deployment.allowLocalDeployment = true;
           deployment.tags = [
             "ca"
             "linux"
