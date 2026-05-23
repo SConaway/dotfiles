@@ -6,6 +6,7 @@
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
+    agenix-cli
     atuin
     bat
     btop
@@ -27,6 +28,7 @@
     nodejs
     oh-my-zsh
     python3
+    python313Packages.pip
     python313Packages.pygments
     ripgrep
     rsync

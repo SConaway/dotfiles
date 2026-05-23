@@ -152,6 +152,7 @@
     iterm2
     # jellyfin-desktop # qtwebengine-6.11.0 broken in nixpkgs
     keka
+    melonDS
     mosquitto
     nix-output-monitor
     openscad-unstable

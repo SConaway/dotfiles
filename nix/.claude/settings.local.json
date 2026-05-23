@@ -3,7 +3,8 @@
     "allow": [
       "Bash(nix eval:*)",
       "Bash(export NIXPKGS_ALLOW_UNFREE=1)",
-      "Bash(sudo bash *)"
+      "Bash(sudo bash *)",
+      "Bash(agenix --help)"
     ]
   }
 }

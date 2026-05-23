@@ -20,7 +20,8 @@
   networking.wireless = {
     enable = true;
     interfaces = [ "wlan0" ];
-    networks."MyFi".pskRaw = builtins.readFile config.age.secrets.wifi-psk.path;
+    secretsFile = config.age.secrets.wifi-psk.path;
+    networks."MyFi".pskRaw = "ext:WIFI_PSK";
   };
 
   boot = {
@@ -43,6 +44,10 @@
   swapDevices = [ { device = "/var/lib/swapfile"; size = 4096; } ];
 
   hardware.enableRedistributableFirmware = true;
+
+  environment.systemPackages = with pkgs; [
+    bluez
+  ];
 
   # system.stateVersion = "23.11";
 }
