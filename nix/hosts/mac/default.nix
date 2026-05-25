@@ -110,6 +110,7 @@
     "minecraft"
     "musescore"
     "notion"
+    "raspberry-pi-imager"
     "raycast"
     "rocket"
     "setapp"
@@ -150,7 +151,8 @@
     iterm2
     # jellyfin-desktop # qtwebengine-6.11.0 broken in nixpkgs
     keka
-    melonDS
+    melonds
+    moreutils
     mosquitto
     nix-output-monitor
     openscad-unstable
