@@ -54,6 +54,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.openssh.settings.PasswordAuthentication = false;
 
   # Allow passwordless sudo for wheel group (fixes deployment automation)
   security.sudo.wheelNeedsPassword = false;

@@ -30,6 +30,10 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
@@ -44,6 +48,7 @@
       home-manager-unstable,
       mac-app-util,
       agenix,
+      disko,
       ...
     }@inputs:
     let
@@ -108,6 +113,9 @@
               system = "x86_64-linux";
             };
             id-tailscale = import nixpkgs-unstable {
+              system = "x86_64-linux";
+            };
+            small = import nixpkgs-unstable {
               system = "x86_64-linux";
             };
           };
@@ -227,6 +235,20 @@
           deployment.targetUser = "steven";
           deployment.tags = [
             "id"
+            "linux"
+          ];
+        };
+
+        small = {
+          imports = [
+            ./hosts/small/default.nix
+            home-manager-unstable.nixosModules.home-manager
+            hmConfig
+            disko.nixosModules.disko
+          ];
+          deployment.targetHost = "small";
+          deployment.targetUser = "steven";
+          deployment.tags = [
             "linux"
           ];
         };
