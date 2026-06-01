@@ -102,6 +102,7 @@
     "anki"
     "bambu-studio"
     "calibre"
+    "discord"
     "docker-desktop"
     "emojipedia"
     "handbrake-app"
@@ -141,7 +142,6 @@
     # claude-code-bin
     ccache
     github-copilot-cli
-    discord
     ffmpeg
     firefox
     gemini-cli
