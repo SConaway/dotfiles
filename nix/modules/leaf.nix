@@ -3,14 +3,14 @@
 let
   leaf = pkgs.rustPlatform.buildRustPackage {
     pname = "leaf";
-    version = "1.21.0";
+    version = "1.24.0";
     src = pkgs.fetchFromGitHub {
       owner = "RivoLink";
       repo = "leaf";
-      rev = "1.21.0";
-      hash = "sha256-i9LVpNhSRXm4eW5xEOANZPCtnExPzgO+0fDZzg634Ic=";
+      rev = "1.24.0";
+      hash = "sha256-wqp2VUBqYFk9eLrVuNqmUyEPINYhuWf5Iq8Ye0oicEA=";
     };
-    cargoHash = "sha256-7iw2d5iySMtVUSWptqeO8ZSIMsufdiew6MsxA08PI7U=";
+    cargoHash = "sha256-pg4B+wtZ5EUMX9pacNoR51VMewdcqEe4il1AD5Uhwlc=";
   };
 in
 {
