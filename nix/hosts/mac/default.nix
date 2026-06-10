@@ -189,4 +189,9 @@
     LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
   };
+
+  documentation.enable = true;
+  documentation.doc.enable = true;
+  documentation.info.enable = true;
+  documentation.man.enable = true;
 }
