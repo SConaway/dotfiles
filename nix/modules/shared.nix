@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   # Allow unfree packages
@@ -38,6 +43,7 @@
     watch
     wget
     yarn
+    zellij
     zsh
     inputs.colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena
   ];
