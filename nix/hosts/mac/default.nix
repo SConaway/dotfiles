@@ -22,6 +22,18 @@
   # disable nix-darwin upstream stuff:
   nix.enable = false;
 
+  # nixpkgs.overlays = [
+  #   (final: prev: {
+  #     manifold = prev.manifold.overrideAttrs (old: {
+  #       checkPhase = ''
+  #         runHook preCheck
+  #         test/manifold_test --gtest_filter=-Manifold.GetNormalLegacyContract:Boolean.Normals:BooleanComplex.InterpolatedNormals
+  #         runHook postCheck
+  #       '';
+  #     });
+  #   })
+  # ];
+
   # allow unfree packages
   # nixpkgs.config.allowUnfreePredicate =
   #   pkg:
@@ -81,10 +93,13 @@
   # Homebrew Integration (Optional, but recommended)
   homebrew.enable = true;
   homebrew.onActivation.cleanup = "zap";
+  homebrew.onActivation.extraFlags = [
+    "--force-cleanup"
+  ];
   homebrew.onActivation.autoUpdate = true;
   homebrew.onActivation.upgrade = true;
-  homebrew.enableZshIntegration = true;
-  homebrew.enableBashIntegration = true;
+  # homebrew.enableZshIntegration = true;
+  # homebrew.enableBashIntegration = true;
   homebrew.taps = [
     "antoniorodr/memo"
     "darrylmorley/whatcable"
