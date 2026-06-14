@@ -120,6 +120,7 @@ alias nnn="PAGER='bat --paging=always' nnn -e"
 alias glow="glow -p"
 alias oc='ocx oc'
 alias nd='nix develop -c zsh'
+alias nfu='nix flake update'
 alias claude="claude --allow-dangerously-skip-permissions"
 alias cc='claude'
 
@@ -197,25 +198,24 @@ function nnvim() {
 
 # autoload -U is-at-least
 
-# function zr () { zellij run --name "$*" -- zsh -ic "$*";}
-# function zrf () { zellij run --name "$*" --floating -- zsh -ic "$*";}
-# function zri () { zellij run --name "$*" --in-place -- zsh -ic "$*";}
-# function ze () { zellij edit "$*";}
-# function zef () { zellij edit --floating "$*";}
-# function zei () { zellij edit --in-place "$*";}
-# function zpipe () {
-#   if [ -z "$1" ]; then
-#     zellij pipe;
-#   else
-#     zellij pipe -p $1;
-#   fi
-# }
+alias zz="zellij"
+alias za="zellij attach"
+alias zls="zellij ls"
+function zr () { zellij run --name "$*" -- zsh -ic "$*";}
+function zrf () { zellij run --name "$*" --floating -- zsh -ic "$*";}
+function zri () { zellij run --name "$*" --in-place -- zsh -ic "$*";}
+function ze () { zellij edit "$*";}
+function zef () { zellij edit --floating "$*";}
+function zei () { zellij edit --in-place "$*";}
+function zpipe () {
+  if [ -z "$1" ]; then
+    zellij pipe;
+  else
+    zellij pipe -p $1;
+  fi
+}
 
 # autoload -U +X compinit && compinit
-# . <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )
-
-# source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+. <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )
 
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "/Applications/Nix Apps/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"
-
-# echo bye
