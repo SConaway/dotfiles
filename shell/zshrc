@@ -7,6 +7,7 @@ export WORDCHARS="*?_-.[]~=/&;!#$%^(){}<>"
 export ZSH_COMPDUMP="${ZDOTDIR:-${ZSH}}/cache/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 
 export path=("$HOME/.local/bin" "$HOME/.cargo/bin" $path)
+[[ -d "$HOME/.bun/bin" ]] && export path=("$HOME/.bun/bin" $path)
 export IDF_CCACHE_ENABLE=1
 export MENUCONFIG_STYLE="default"
 
