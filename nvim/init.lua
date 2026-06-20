@@ -4,11 +4,11 @@
 -- - clipboard (osc52)
 -- - better undo / cross-session
 -- - autocomplete that actually works + doesn't break snacks.picker
+-- - spellcheck for md/txt
+-- - breakindent = true; breakindentopt = "shift:4" for text
 -- - highlight `TODO:`
--- - search for help
 -- - git integration
 -- - keys
---   - how to see current bindings
 --   - leader /: comment
 -- - some sort of autoupdate? (lua: `vim.pack.update`)
 -- - wakatime
@@ -22,7 +22,8 @@ local map = vim.keymap.set
 --- globals
 g.mapleader = " "
 g.maplocalleader = ","
-g.clipboard = "unnamedplus"
+g.clipboard = "osc52"
+o.clipboard = "unnamedplus"
 ---
 
 --- text editing settings
@@ -67,13 +68,14 @@ vim.api.nvim_create_autocmd("FileType", {
 
 --- configure plugins
 -- helper function for gh urls
-local gh = function(x) return "https://github.com/" .. x end
+local _gh = function(x) return "https://github.com/" .. x end
 -- install listed plugins
 -- does not configure them
 vim.pack.add({
-  -- gh("folke/lazydev.nvim") -- TODO: pending LSP setup
-  gh("lewis6991/gitsigns.nvim"), -- git integration
-  gh("folke/snacks.nvim"), -- misc UI things
+  -- _gh("folke/lazydev.nvim") -- TODO: pending LSP setup
+  _gh("lewis6991/gitsigns.nvim"), -- git integration
+  _gh("folke/snacks.nvim"), -- misc UI things
+  _gh("folke/which-key.nvim"), -- keybinding help
 })
 
 
@@ -82,12 +84,25 @@ require("gitsigns").setup()
 
 
 -- snacks
-require("snacks").setup()
+require("snacks").setup({
+  explorer = {},
+})
+map("n", "<leader>fC", Snacks.picker.commands, { desc = "Find Commands" })
+map("n", "<leader>fc", Snacks.picker.grep_word, { desc = "Find Word" })
+map("n", "<leader>fd", Snacks.picker.diagnostics, { desc = "Find Diagnostics" })
 map("n", "<leader>ff", Snacks.picker.files, { desc = "Find Files" })
 map("n", "<leader>fh", Snacks.picker.help, { desc = "Find Help" })
--- map("n", "<leader>ft", Snacks.picker.themes, { desc = "Find Themes" })
+map("n", "<leader>fk", Snacks.picker.keymaps, { desc = "Find Keymaps" })
+map("n", "<leader>fm", Snacks.picker.man, { desc = "Find Manpages" })
+map("n", "<leader>ft", Snacks.picker.colorschemes, { desc = "Find Themes" })
+map("n", "<leader>fu", Snacks.picker.undo, { desc = "Find Undo History" })
 map("n", "<leader>fw", Snacks.picker.grep, { desc = "Find Words" })
+map("n", "<leader>e", function() require("snacks").explorer() end, { desc = "Toggle Explorer" })
 --
+
+require("which-key").setup({
+  preset = "modern",
+})
 
 -- configure LSPs
 
@@ -98,6 +113,8 @@ map("n", "<leader>fw", Snacks.picker.grep, { desc = "Find Words" })
 --- misc keybinds
 map("n", "<C-q>", ":q<cr>", {desc = "Quit"})
 map("n", "<leader>q", ":q<cr>", {desc = "Quit"})
+map("n", "<C-w>", ":w<cr>", {desc = "Save"})
+map("n", "<leader>w", ":w<cr>", {desc = "Save"})
 map("n", "<esc><esc>", ":noh<cr>", {desc = ":noh"})
 map("n", "U", "<C-r>", {desc = "Redo"})
 ---
