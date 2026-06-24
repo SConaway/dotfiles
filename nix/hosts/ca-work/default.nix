@@ -35,7 +35,7 @@
   #   stdenv.cc.cc.lib
   # ];
 
-  networking.firewall.allowedTCPPorts = [ 8123 ];
+  networking.firewall.allowedTCPPorts = [ 8000 ];
 
   # Disabled in original
   system.autoUpgrade.enable = lib.mkForce false;

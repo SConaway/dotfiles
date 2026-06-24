@@ -115,12 +115,14 @@
   ];
   homebrew.casks = [
     "anki"
+    "antigravity-cli"
     "bambu-studio"
     "calibre"
     "discord"
     "docker-desktop"
     "emojipedia"
     "handbrake-app"
+    "imazing"
     "logitech-g-hub"
     "mediosz/tap/swipeaerospace"
     "minecraft"
@@ -159,7 +161,6 @@
     github-copilot-cli
     ffmpeg
     firefox
-    gemini-cli
     ghostty-bin
     google-chrome
     iina
