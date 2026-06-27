@@ -41,7 +41,7 @@ DEFAULT_USER="steven"
 ZSH_THEME=""
 
 plugins=(
-  bgnotify
+  # bgnotify
   colored-man-pages
   command-not-found
   common-aliases
@@ -67,25 +67,24 @@ plugins=(
   yarn
 )
 
-function bgnotify_formatted {
-  ## $1=exit_status, $2=command, $3=elapsed_time
-
-  # if command = "gg" or if it contains vim, then don't show notification
-  if [[ $2 == "gg" ]] || [[ $2 == *"vim"* ]]; then
-    sleep 5
-    return
-  fi
-
-  # Humanly readable elapsed time
-  local elapsed="$(( $3 % 60 ))s"
-  (( $3 < 60 ))   || elapsed="$((( $3 % 3600) / 60 ))m $elapsed"
-  (( $3 < 3600 )) || elapsed="$((  $3 / 3600 ))h $elapsed"
-
-  [ $1 -eq 0 ] && title="Success!" || title="Nope..."
-  # [ $1 -eq 0 ] && icon="$HOME/icons/success.png" || icon="$HOME/icons/fail.png"
-  bgnotify "$title - took ${elapsed}" "$2" # "$icon"
-}
-
+# function bgnotify_formatted {
+#   ## $1=exit_status, $2=command, $3=elapsed_time
+#
+#   # if command = "gg" or if it contains vim, then don't show notification
+#   if [[ $2 == "gg" ]] || [[ $2 == *"vim"* ]]; then
+#     return
+#   fi
+#
+#   # Humanly readable elapsed time
+#   local elapsed="$(( $3 % 60 ))s"
+#   (( $3 < 60 ))   || elapsed="$((( $3 % 3600) / 60 ))m $elapsed"
+#   (( $3 < 3600 )) || elapsed="$((  $3 / 3600 ))h $elapsed"
+#
+#   [ $1 -eq 0 ] && title="Success!" || title="Nope..."
+#   # [ $1 -eq 0 ] && icon="$HOME/icons/success.png" || icon="$HOME/icons/fail.png"
+#   bgnotify "$title - took ${elapsed}" "$2" # "$icon"
+# }
+#
 # zstyle ':completion:*:*:docker:*' option-stacking yes
 # zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
@@ -95,6 +94,20 @@ function bgnotify_formatted {
 setopt correct
 
 source "$ZSH/oh-my-zsh.sh"
+
+# # Run bgnotify's slow parts (lsappinfo, terminal-notifier) async so precmd never blocks.
+# # We capture exit_status/elapsed/lastcmd in the foreground, then hand off.
+# function bgnotify_end {
+#   local exit_status=$?
+#   local elapsed=$(( EPOCHSECONDS - bgnotify_timestamp ))
+#   bgnotify_timestamp=0
+#   [[ $elapsed -ge $bgnotify_threshold ]] || return 0
+#   local _cmd="$bgnotify_lastcmd"
+#   (
+#     [[ $(bgnotify_appid) != "$bgnotify_termid" ]] || exit 0
+#     bgnotify_formatted "$exit_status" "$_cmd" "$elapsed"
+#   ) &|
+# }
 
 # alias ls=eza
 alias l="ls -lhF"
@@ -119,7 +132,7 @@ alias yu="yarn upgrade"
 alias idf="nix develop github:mirrexagon/nixpkgs-esp-dev#esp-idf-full -c zsh"
 alias nnn="PAGER='bat --paging=always' nnn -e"
 alias glow="glow -p"
-alias oc='oc'
+alias oc='opencode'
 alias nd='nix develop -c zsh'
 alias nfu='nix flake update'
 alias claude="claude --allow-dangerously-skip-permissions"
@@ -217,6 +230,13 @@ function zpipe () {
 }
 
 # autoload -U +X compinit && compinit
-. <( zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' )
+_zellij_comp="${XDG_CACHE_HOME:-$HOME/.cache}/zellij_comp.zsh"
+if [[ ! -f "$_zellij_comp" ]] || [[ "$(command -v zellij)" -nt "$_zellij_comp" ]]; then
+  zellij setup --generate-completion zsh | sed -Ee 's/^(_(zellij) ).*/compdef \1\2/' >| "$_zellij_comp" 2>/dev/null
+fi
+[[ -f "$_zellij_comp" ]] && . "$_zellij_comp"
 
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "/Applications/Nix Apps/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"
+
+# OpenClaw Completion
+[ -f "$HOME/.openclaw/completions/openclaw.zsh" ] && source "$HOME/.openclaw/completions/openclaw.zsh"
