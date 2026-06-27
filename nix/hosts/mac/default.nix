@@ -98,8 +98,8 @@
   ];
   homebrew.onActivation.autoUpdate = true;
   homebrew.onActivation.upgrade = true;
-  # homebrew.enableZshIntegration = true;
-  # homebrew.enableBashIntegration = true;
+  homebrew.enableZshIntegration = true;
+  homebrew.enableBashIntegration = true;
   homebrew.taps = [
     "antoniorodr/memo"
     "darrylmorley/whatcable"
