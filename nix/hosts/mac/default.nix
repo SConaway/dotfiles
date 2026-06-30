@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -151,35 +152,38 @@
   # $ darwin-rebuild changelog
   system.stateVersion = 6;
 
-  environment.systemPackages = with pkgs; [
-    aerospace
-    # alacritty-graphics
-    alacritty
-    bun
-    # claude-code-bin
-    ccache
-    github-copilot-cli
-    ffmpeg
-    firefox
-    ghostty-bin
-    google-chrome
-    iina
-    iterm2
-    # jellyfin-desktop # qtwebengine-6.11.0 broken in nixpkgs
-    keka
-    melonds
-    moreutils
-    mosquitto
-    nix-output-monitor
-    openscad-unstable
-    qbittorrent
-    spotdl
-    spotify
-    utm
-    uv
-    wireshark
-    # whatsapp-for-mac
-  ];
+  environment.systemPackages =
+    (with pkgs; [
+      aerospace
+      # alacritty-graphics
+      alacritty
+      bun
+      ccache
+      ffmpeg
+      firefox
+      ghostty-bin
+      google-chrome
+      iina
+      iterm2
+      # jellyfin-desktop # qtwebengine-6.11.0 broken in nixpkgs
+      keka
+      melonds
+      moreutils
+      mosquitto
+      nix-output-monitor
+      openscad-unstable
+      qbittorrent
+      spotdl
+      spotify
+      utm
+      uv
+      wireshark
+      # whatsapp-for-mac
+    ])
+    ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
+      # claude-code
+      copilot-cli
+    ]);
 
   fonts.packages = [
     pkgs.nerd-fonts.meslo-lg

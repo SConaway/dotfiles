@@ -30,6 +30,10 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
@@ -44,6 +48,7 @@
       home-manager-unstable,
       agenix,
       disko,
+      llm-agents,
       ...
     }@inputs:
     let

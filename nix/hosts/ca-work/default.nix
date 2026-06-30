@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 
@@ -26,7 +27,7 @@
   # ];
 
   # Extra system packages
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     claude-code
   ];
 
