@@ -1,15 +1,11 @@
 -- TODOs: 
 -- - LSPs
 --   - mason setup?
--- - clipboard (osc52)
 -- - better undo / cross-session
 -- - autocomplete that actually works + doesn't break snacks.picker
 -- - spellcheck for md/txt
--- - breakindent = true; breakindentopt = "shift:4" for text
 -- - highlight `TODO:`
 -- - git integration
--- - keys
---   - leader /: comment
 -- - some sort of autoupdate? (lua: `vim.pack.update`)
 -- - wakatime
 
@@ -22,11 +18,13 @@ local map = vim.keymap.set
 --- globals
 g.mapleader = " "
 g.maplocalleader = ","
-g.clipboard = "osc52"
-o.clipboard = "unnamedplus"
 ---
 
 --- text editing settings
+-- clipboard!!
+g.clipboard = "osc52" -- use terminal clipboard
+o.clipboard = "unnamedplus" -- default to it
+
 -- indentation || spaces are the best
 o.tabstop = 2
 o.softtabstop = 2
@@ -54,6 +52,9 @@ vim.api.nvim_set_hl(0, "StatusLineNC",   { bg = "none" })
 vim.api.nvim_set_hl(0, "EndOfBuffer",  { bg = "none" })
 vim.api.nvim_set_hl(0, "LineNr",       { fg = "#aaaaaa" })
 
+-- wrap settings: 
+o.breakindent = true
+o.breakindentopt = "shift:3" -- let's try 3 so it's in-between and jarring
 
 -- tame auto-comment (`formatoptions`)
 vim.api.nvim_create_autocmd("FileType", {
@@ -117,4 +118,6 @@ map("n", "<C-w>", ":w<cr>", {desc = "Save"})
 map("n", "<leader>w", ":w<cr>", {desc = "Save"})
 map("n", "<esc><esc>", ":noh<cr>", {desc = ":noh"})
 map("n", "U", "<C-r>", {desc = "Redo"})
+map("n", "<leader>/", "gcc", {desc = "comment", remap = true}) -- add remap as otherwise can't pass motions directly
+map("v", "<leader>/", "gc", {desc = "comment", remap = true}) -- add remap as otherwise can't pass motions directly
 ---
