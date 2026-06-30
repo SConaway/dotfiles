@@ -14,6 +14,7 @@
   networking.hostName = "ca-meshview";
 
   services.qemuGuest.enable = true;
+  services.fstrim.enable = true;
 
   # Desktop
   services.xserver.enable = true;

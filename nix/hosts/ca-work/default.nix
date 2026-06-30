@@ -16,6 +16,7 @@
   networking.hostName = "ca-work";
 
   services.qemuGuest.enable = true;
+  services.fstrim.enable = true;
 
   # Desktop
   # services.xserver.enable = true;

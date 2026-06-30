@@ -15,6 +15,7 @@
   networking.hostName = "ca-lyfe";
 
   services.qemuGuest.enable = true;
+  services.fstrim.enable = true;
 
   environment.systemPackages = with pkgs; [
     gh
