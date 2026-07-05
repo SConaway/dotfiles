@@ -123,6 +123,16 @@ require("snacks").setup({
     picker
   }
 })
+-- stolen from snacks' docs
+_G.dd = function(...)
+  Snacks.debug.inspect(...)
+end
+_G.bt = function()
+  Snacks.debug.backtrace()
+end
+vim._print = function(_, ...)
+  dd(...)
+end
 
 -- thanks to https://www.reddit.com/r/neovim/comments/1j55o9c/comment/mgny6eo/
 Snacks.toggle.option("spell", { name = "󰓆 Spell Checking" }):map("<leader>us")
