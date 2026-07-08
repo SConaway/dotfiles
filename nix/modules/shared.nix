@@ -16,6 +16,7 @@
     bat
     btop
     curl
+    eza
     fd
     file
     fx
@@ -45,6 +46,7 @@
     yarn
     zellij
     zsh
+    inputs.zsh-patina.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena
   ];
 
