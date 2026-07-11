@@ -297,4 +297,6 @@ map("n", "U", "<C-r>", {desc = "Redo"})
 map("n", "<leader>/", "gcc", {desc = "comment", remap = true}) -- add remap as otherwise can't pass motions directly
 map("v", "<leader>/", "gc", {desc = "comment", remap = true}) -- add remap as otherwise can't pass motions directly
 map("n", "<leader>ch", ":checkhealth<cr>", {desc = "Check Health"})
+map("n", "<leader>]", ":vsp<cr>", {desc = "Vertical split"})
+map("n", "<leader>[", ":sp<cr>", {desc = "Horizontal split"})
 ---
