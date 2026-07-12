@@ -118,6 +118,7 @@
     "anki"
     "antigravity-cli"
     "bambu-studio"
+    "betterdisplay"
     "calibre"
     "discord"
     "docker-desktop"
@@ -133,6 +134,7 @@
     "raycast"
     "rocket"
     "setapp"
+    "slack"
     "surfshark"
     "tailscale-app"
     "lm-studio"
@@ -173,6 +175,7 @@
       nix-output-monitor
       openscad-unstable
       qbittorrent
+      rclone
       spotdl
       spotify
       utm
