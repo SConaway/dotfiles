@@ -43,6 +43,30 @@
     options = [ "zfsutil" ];
   };
 
+  # mntpool holds Frigate recordings/clips: write-once, read-almost-never,
+  # already-compressed video. Skip ARC data caching and compression so it
+  # doesn't crowd out RAM or burn CPU for no benefit.
+  #
+  # This must run after mntpool is actually imported, so it's a systemd
+  # service ordered after the /mnt mount rather than a system.activationScript
+  # -- activation scripts can run as early as initrd, before secondary pools
+  # (anything but the root pool) are imported.
+  systemd.services.zfsFrigateTuning = {
+    description = "Tune mntpool ZFS properties for Frigate recordings";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "mnt.mount" ];
+    requires = [ "mnt.mount" ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      ${config.boot.zfs.package}/bin/zfs set primarycache=metadata mntpool
+      ${config.boot.zfs.package}/bin/zfs set secondarycache=metadata mntpool
+      ${config.boot.zfs.package}/bin/zfs set atime=off mntpool
+      ${config.boot.zfs.package}/bin/zfs set logbias=throughput mntpool
+      ${config.boot.zfs.package}/bin/zfs set recordsize=1M mntpool
+      ${config.boot.zfs.package}/bin/zfs set compression=off mntpool
+    '';
+  };
+
   systemd.packages = [
     (pkgs.writeTextDir "lib/systemd/system/mnt.mount.d/timeout.conf" ''
       [Mount]
