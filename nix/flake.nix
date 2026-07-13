@@ -112,6 +112,9 @@
             nixpi = import nixpkgs {
               system = "aarch64-linux";
             };
+            id-attic = import nixpkgs {
+              system = "x86_64-linux";
+            };
             id-frigate = import nixpkgs {
               system = "x86_64-linux";
             };
@@ -210,6 +213,20 @@
           deployment.targetUser = "steven";
           deployment.tags = [
             "ca"
+            "linux"
+          ];
+        };
+
+        id-attic = {
+          imports = [
+            ./hosts/id-attic/default.nix
+            home-manager.nixosModules.home-manager
+            (mkHmConfig "id-attic")
+          ];
+          deployment.targetHost = "id-attic";
+          deployment.targetUser = "root";
+          deployment.tags = [
+            "id"
             "linux"
           ];
         };

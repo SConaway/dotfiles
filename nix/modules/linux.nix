@@ -63,6 +63,7 @@
   nix.settings.trusted-users = [
     "root"
     "@wheel"
+    "steven"
   ];
 
   # Automatically install system updates daily
