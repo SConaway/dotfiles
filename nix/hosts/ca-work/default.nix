@@ -11,7 +11,7 @@
     ./hardware-configuration.nix
     ../../modules/linux.nix
     ../../modules/nvim.nix
-    # ../../modules/attic-push-linux.nix
+    ../../modules/attic-push-linux.nix
     inputs.agenix.nixosModules.default
   ];
 
