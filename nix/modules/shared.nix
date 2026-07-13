@@ -11,7 +11,7 @@
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
-    agenix-cli
+    attic-client
     atuin
     bat
     btop
@@ -58,6 +58,11 @@
       "nix-command"
       "flakes"
     ];
+
+    # Pull-through cache for source-built packages (colmena, zsh-patina, etc.)
+    # served by id-attic over Tailscale.
+    substituters = [ "http://id-attic:8080/homelab" ];
+    trusted-public-keys = [ "homelab:yCQlAzmcPZfjWhjm/W2jlZZCxhFZGVQjAELYLhPbNCk=" ];
   };
 
 }

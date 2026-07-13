@@ -16,6 +16,10 @@
 
   networking.hostName = "id-attic";
 
+  # Container networking is handled by Proxmox; NetworkManager's
+  # wpa_supplicant can't access /dev/rfkill in an unprivileged LXC.
+  networking.networkmanager.enable = lib.mkForce false;
+
   nix.settings.sandbox = false;
 
   proxmoxLXC = {

@@ -11,12 +11,16 @@
     ./hardware-configuration.nix
     ../../modules/linux.nix
     ../../modules/nvim.nix
+    # ../../modules/attic-push-linux.nix
+    inputs.agenix.nixosModules.default
   ];
 
   networking.hostName = "ca-work";
 
   services.qemuGuest.enable = true;
   services.fstrim.enable = true;
+
+  services.tailscale.enable = true;
 
   # Desktop
   # services.xserver.enable = true;

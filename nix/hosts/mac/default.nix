@@ -10,7 +10,13 @@
     ../../modules/shared.nix
     ../../modules/nvim.nix
     ../../modules/leaf.nix
+    ../../modules/attic-push-darwin.nix
+    inputs.agenix.darwinModules.default
   ];
+
+  # No sshd host keys on this personal machine; decrypt secrets with the
+  # same personal key already used as the "user" recipient in secrets.nix.
+  age.identityPaths = [ "/Users/steven/.ssh/id_ed25519" ];
 
   # requires `inputs.determinate.darwinModules.default` in flake.nix
   determinateNix.customSettings = {
