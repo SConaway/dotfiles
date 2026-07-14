@@ -88,8 +88,12 @@ vim.pack.add({
   _gh("akinsho/toggleterm.nvim"), -- terminal library
   _gh("nvim-mini/mini.nvim"), -- mini: 45+ things
   _gh("folke/todo-comments.nvim"), -- highlight TODO, etc. in comment
-  not isWork and _gh("wakatime/vim-wakatime"), -- wakatime integration, :WakaTimeApiKey to set up
 })
+if not isWork then
+  vim.pack.add({
+    _gh("wakatime/vim-wakatime"), -- wakatime integration, :WakaTimeApiKey to set up
+  })
+end
 
 
 -- git integration
