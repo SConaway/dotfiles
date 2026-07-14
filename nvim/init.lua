@@ -111,7 +111,8 @@ require("snacks").setup({
           min_width = 20,
         },
       }
-    }
+    },
+    ui_select = true,
   },
   -- lazygit = {}, -- skip this as it doesn't keep the same styles
   notifier = {},
@@ -125,7 +126,6 @@ require("snacks").setup({
         { "<esc>", "close", mode = "n" },
       },
     },
-    picker
   }
 })
 -- https://github.com/folke/snacks.nvim/blob/main/docs/keymap.md
@@ -140,6 +140,11 @@ end
 vim._print = function(_, ...)
   dd(...)
 end
+
+map("n", "<leader>gi", function() Snacks.picker.gh_issue() end, {desc = "GitHub Issues (open)" })
+map("n", "<leader>gI", function() Snacks.picker.gh_issue({ state = "all" }) end, {desc = "GitHub Issues (all)" })
+map("n", "<leader>gp", function() Snacks.picker.gh_pr() end, {desc = "GitHub Pull Requests (open)" })
+map("n", "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, {desc = "GitHub Pull Requests (all)" })
 
 -- thanks to https://www.reddit.com/r/neovim/comments/1j55o9c/comment/mgny6eo/
 Snacks.toggle.option("spell", { name = "󰓆 Spell Checking" }):map("<leader>us")
