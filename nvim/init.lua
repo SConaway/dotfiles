@@ -24,6 +24,7 @@ local function tableMerge(...)
 end
 -- map defined from Snacks
 local isWork = os.getenv("USER") == "stevenc"
+local isWT = os.getenv("WINDOWS_TERMINAL")
 vim.notify("isWork: " .. (isWork and "yes" or "no"))
 --- globals
 g.mapleader = " "
@@ -37,7 +38,9 @@ g.loaded_ruby_provider = 0
 
 --- text editing settings
 -- clipboard!!
-g.clipboard = "osc52" -- use terminal clipboard
+if not isWT then
+  g.clipboard = "osc52" -- use terminal clipboard
+end
 o.clipboard = "unnamedplus" -- default to it
 
 -- indentation || spaces are the best
