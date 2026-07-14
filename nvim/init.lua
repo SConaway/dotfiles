@@ -47,18 +47,8 @@ o.listchars = "trail:·,tab:» "
 o.spell = true
 
 vim.cmd[[colorscheme catppuccin]]
--- Clear background for transparency
--- https://github.com/neovim/neovim/blob/master/runtime/colors/catppuccin.vim
--- ref: https://github.com/folke/snacks.nvim/issues/2603#issuecomment-3629553379
-vim.api.nvim_set_hl(0, "Normal",       { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalNC",     { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat",  { bg = "none" })
-vim.api.nvim_set_hl(0, "FloatBorder",  { bg = "none" })
-vim.api.nvim_set_hl(0, "SignColumn",   { bg = "none" })
-vim.api.nvim_set_hl(0, "StatusLine",   { bg = "none" })
-vim.api.nvim_set_hl(0, "StatusLineNC",   { bg = "none" })
-vim.api.nvim_set_hl(0, "EndOfBuffer",  { bg = "none" })
-vim.api.nvim_set_hl(0, "LineNr",       { fg = "#aaaaaa" })
+g.transparent_enabled = true
+vim.api.nvim_set_hl(0, "LineNr", { fg = "#aaaaaa" })
 
 -- wrap settings:
 o.breakindent = true
@@ -82,6 +72,7 @@ local _gh = function(x) return "https://github.com/" .. x end
 -- does not configure them
 vim.pack.add({
   -- _gh("folke/lazydev.nvim") -- TODO: pending LSP setup
+  _gh("xiyaowong/transparent.nvim"), -- transparency!!
   _gh("lewis6991/gitsigns.nvim"), -- git integration
   _gh("folke/snacks.nvim"), -- snacks: lots of things
   _gh("folke/which-key.nvim"), -- keybinding help
@@ -232,6 +223,13 @@ Snacks.toggle
     end,
   })
   :map("<leader>uI") -- TODO: test this
+Snacks.toggle
+  .new({
+    id = "transparency",
+    name = "Transparency",
+    get = function() return g.transparent_enabled end,
+    set = function() require("transparent").toggle() end,
+  }):map("<leader>ut") -- transparency!
 
 -- https://github.com/folke/snacks.nvim/blob/main/docs/keymap.md
 local map = Snacks.keymap.set
