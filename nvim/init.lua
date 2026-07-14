@@ -12,6 +12,16 @@
 local vim = vim
 local o = vim.opt
 local g = vim.g
+local function tableMerge(...)
+  -- https://www.reddit.com/r/lua/comments/rtiedd/comment/o9d8xlb
+  local result = {}
+   for _, t in ipairs({...}) do
+      for _, v in ipairs(t) do
+        table.insert(result, v)
+      end
+  end
+  return result
+end
 -- map defined from Snacks
 local isWork = os.getenv("USER") == "stevenc"
 vim.notify("isWork: " .. (isWork and "yes" or "no"))
@@ -114,6 +124,8 @@ require("snacks").setup({
     picker
   }
 })
+-- https://github.com/folke/snacks.nvim/blob/main/docs/keymap.md
+local map = Snacks.keymap.set
 -- stolen from snacks' docs
 _G.dd = function(...)
   Snacks.debug.inspect(...)
@@ -231,8 +243,6 @@ Snacks.toggle
     set = function() require("transparent").toggle() end,
   }):map("<leader>ut") -- transparency!
 
--- https://github.com/folke/snacks.nvim/blob/main/docs/keymap.md
-local map = Snacks.keymap.set
 map("n", "<leader>fC", Snacks.picker.commands, { desc = "Find Commands" })
 map("n", "<leader>fc", Snacks.picker.grep_word, { desc = "Find Word" })
 map("n", "<leader>fd", Snacks.picker.diagnostics, { desc = "Find Diagnostics" })
@@ -289,9 +299,9 @@ require("todo-comments").setup()
 
 
 --- misc keybinds
-map("n", "<C-q>", ":q<cr>", {desc = "Quit"})
+-- map("n", "<C-q>", ":q<cr>", {desc = "Quit"})
 map("n", "<leader>q", ":q<cr>", {desc = "Quit"})
-map("n", "<C-w>", ":w<cr>", {desc = "Save"})
+-- map("n", "<C-w>", ":w<cr>", {desc = "Save"})
 map("n", "<leader>w", ":w<cr>", {desc = "Save"})
 map("n", "<esc><esc>", ":noh<cr>", {desc = ":noh"})
 map("n", "U", "<C-r>", {desc = "Redo"})
