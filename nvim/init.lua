@@ -1,9 +1,8 @@
--- TODOs:
+-- TODO:
 -- - LSPs
 --   - mason setup?
 -- - better undo / cross-session
 -- - autocomplete that actually works + doesn't break snacks.picker
--- - highlight `TODO:`
 -- - git integration
 -- - spelling dictionary (nvim, neovim, github, etc)
 -- - some sort of autoupdate? (lua: `vim.pack.update` and `vim.pack.del()`)
@@ -78,6 +77,7 @@ vim.pack.add({
   _gh("folke/which-key.nvim"), -- keybinding help
   _gh("akinsho/toggleterm.nvim"), -- terminal library
   _gh("nvim-mini/mini.nvim"), -- mini: 45+ things
+  _gh("folke/todo-comments.nvim"), -- highlight TODO, etc. in comment
   not isWork and _gh("wakatime/vim-wakatime"), -- wakatime integration, :WakaTimeApiKey to set up
 })
 
@@ -278,6 +278,9 @@ map("n", "<leader>gg", function() lazygit:toggle() end, { desc = "`lazygit`" })
 local miniicons = require("mini.icons")
 miniicons.setup()
 miniicons.mock_nvim_web_devicons()
+
+-- todo-comments
+require("todo-comments").setup()
 
 -- configure LSPs
 
