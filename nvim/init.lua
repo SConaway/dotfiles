@@ -24,7 +24,6 @@ local function tableMerge(...)
 end
 -- map defined from Snacks
 local isWork = os.getenv("USER") == "stevenc"
-local isWT = os.getenv("WINDOWS_TERMINAL")
 vim.notify("isWork: " .. (isWork and "yes" or "no"))
 --- globals
 g.mapleader = " "
@@ -38,7 +37,7 @@ g.loaded_ruby_provider = 0
 
 --- text editing settings
 -- clipboard!!
-if not isWT then
+if not isWork then
   g.clipboard = "osc52" -- use terminal clipboard
 end
 o.clipboard = "unnamedplus" -- default to it
@@ -117,11 +116,31 @@ require("snacks").setup({
     },
     ui_select = true,
   },
+  indent = {
+    animate = {
+      enabled = false,
+    },
+  },
   -- lazygit = {}, -- skip this as it doesn't keep the same styles
   notifier = {},
   toggle = {
     map = map, -- use the snacks.keymap function
   },
+  statuscolumn = {
+    enabled = true,
+    left = { "mark", "sign" }, -- priority of signs on the left (high to low)
+    right = { "fold", "git" }, -- priority of signs on the right (high to low)
+    folds = {
+      open = true, -- show open fold icons
+      git_hl = true, -- use Git Signs hl for fold icons
+    },
+    git = {
+      -- patterns to match Git signs
+      patterns = { "GitSign", },
+    },
+    refresh = 50, -- refresh at most every 50ms
+  },
+  quickfile = {},
   styles = {
     notification_history = {
       keys = {
