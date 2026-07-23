@@ -154,6 +154,7 @@
     "Bitwarden" = 1352778147;
     "wBlock" = 6746388723;
     "Xcode" = 497799835;
+    "iMovie" = 408981434;
   };
 
   # Used for backwards compatibility, please read the changelog before changing.
