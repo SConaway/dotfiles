@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 
@@ -10,6 +11,8 @@
     ./hardware-configuration.nix
     ../../modules/linux.nix
     ../../modules/nvim.nix
+    ../../modules/attic-push-linux.nix
+    inputs.agenix.nixosModules.default
   ];
 
   networking.hostName = "ca-lyfe";

@@ -11,6 +11,7 @@
   imports = [
     (modulesPath + "/virtualisation/proxmox-lxc.nix")
     ../../modules/linux.nix
+    ../../modules/attic-push-linux.nix
     inputs.agenix.nixosModules.default
   ];
 

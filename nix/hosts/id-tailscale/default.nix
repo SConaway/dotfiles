@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 
@@ -9,6 +10,8 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/linux.nix
+    ../../modules/attic-push-linux.nix
+    inputs.agenix.nixosModules.default
   ];
 
   networking.hostName = "id-tailscale";
