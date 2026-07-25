@@ -8,9 +8,9 @@ let
       owner = "RivoLink";
       repo = "leaf";
       rev = "1.26.1";
-      hash = "sha256-OSx797tkwjKU9j+0AhQIT7uLM75PzHVw12d5LG6vT3Q=";
+      hash = "sha256-faZ3yiAdPbN1Pxf7Gss62eYUJzaJ3ZF5BZyCVqHOC4s=";
     };
-    cargoHash = "sha256-rEISBL5vWYP5UKFKWLA2RxlqDBFTz8qPpiPOfxeNUFQ=";
+    cargoHash = "sha256-evHpyavHLJxStN8ZYDetwzxh18eQX9Nq3KL3kudk7dI=";
   };
 in
 {
