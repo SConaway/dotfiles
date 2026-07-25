@@ -47,7 +47,6 @@
     zellij
     zsh
     inputs.zsh-patina.packages.${pkgs.stdenv.hostPlatform.system}.default
-    inputs.colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena
   ];
 
   nix.settings.auto-optimise-store = true;

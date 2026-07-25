@@ -143,6 +143,7 @@
     "slack"
     "surfshark"
     "tailscale-app"
+    "telegram"
     "lm-studio"
     "visual-studio-code"
     "vlc"
@@ -193,7 +194,10 @@
     ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
       # claude-code
       copilot-cli
-    ]);
+    ])
+    ++ [
+      inputs.colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena
+    ];
 
   fonts.packages = [
     pkgs.nerd-fonts.meslo-lg

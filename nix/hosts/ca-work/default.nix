@@ -33,8 +33,10 @@
   # ];
 
   # Extra system packages
-  environment.systemPackages = with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
+  environment.systemPackages = (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     claude-code
+  ]) ++ [
+    inputs.colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena
   ];
 
   # programs.nix-ld.enable = true;
