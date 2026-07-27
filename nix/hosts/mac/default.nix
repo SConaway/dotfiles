@@ -22,6 +22,19 @@
   determinateNix.customSettings = {
     eval-cores = 8;
     warn-dirty = false;
+    accept-flake-config = true;
+
+    # Pull-through cache for source-built packages (colmena, zsh-patina, etc.)
+    # served by id-attic over Tailscale. Set here (rather than in
+    # ~/.config/nix/nix.conf) so it's part of the daemon's own trusted
+    # config instead of an untrusted client override. extra- so it adds
+    # to (rather than replaces) the default cache.nixos.org substituter.
+    extra-substituters = [
+      "http://id-attic:8080/homelab"
+    ];
+    extra-trusted-public-keys = [
+      "homelab:yCQlAzmcPZfjWhjm/W2jlZZCxhFZGVQjAELYLhPbNCk="
+    ];
   };
 
   # Auto upgrade nix package and the daemon service.
