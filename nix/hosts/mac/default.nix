@@ -24,16 +24,27 @@
     warn-dirty = false;
     accept-flake-config = true;
 
-    # Pull-through cache for source-built packages (colmena, zsh-patina, etc.)
-    # served by id-attic over Tailscale. Set here (rather than in
-    # ~/.config/nix/nix.conf) so it's part of the daemon's own trusted
-    # config instead of an untrusted client override. extra- so it adds
-    # to (rather than replaces) the default cache.nixos.org substituter.
+    # Allow steven to manage nix directly and have flake nixConfig overrides
+    # (e.g. colmena.cachix.org below) honored (fixes 'untrusted user'
+    # warnings), matching every other host in the fleet (modules/linux.nix).
+    trusted-users = [
+      "root"
+      "steven"
+    ];
+
+    # Pull-through caches for source-built packages (colmena, zsh-patina, etc.)
+    # served by id-attic over Tailscale, and colmena's own binary cache. Set
+    # here (rather than in ~/.config/nix/nix.conf) so they're part of the
+    # daemon's own trusted config regardless of the client-override trust
+    # check above. extra- so it adds to (rather than replaces) the default
+    # cache.nixos.org substituter.
     extra-substituters = [
       "http://id-attic:8080/homelab"
+      "https://colmena.cachix.org"
     ];
     extra-trusted-public-keys = [
       "homelab:yCQlAzmcPZfjWhjm/W2jlZZCxhFZGVQjAELYLhPbNCk="
+      "colmena.cachix.org-1:7BzpDnjjH8ki2CT3f6GdOk7QAzPOl+1t3LvTLXqYcSg="
     ];
   };
 

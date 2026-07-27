@@ -61,8 +61,14 @@
 
     # Pull-through cache for source-built packages (colmena, zsh-patina, etc.)
     # served by id-attic over Tailscale.
-    substituters = [ "http://id-attic:8080/homelab" ];
-    trusted-public-keys = [ "homelab:yCQlAzmcPZfjWhjm/W2jlZZCxhFZGVQjAELYLhPbNCk=" ];
+    substituters = [
+      "http://id-attic:8080/homelab"
+      "https://colmena.cachix.org"
+    ];
+    trusted-public-keys = [
+      "homelab:yCQlAzmcPZfjWhjm/W2jlZZCxhFZGVQjAELYLhPbNCk="
+      "colmena.cachix.org-1:7BzpDnjjH8ki2CT3f6GdOk7QAzPOl+1t3LvTLXqYcSg="
+    ];
   };
 
 }
