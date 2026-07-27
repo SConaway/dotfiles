@@ -26,7 +26,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+    determinate = {
+      url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+      # this is only used on my mac.
+      inputs.nixpkgs.follows = "nixpkgs-unstable-small";
+    };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
