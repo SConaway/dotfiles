@@ -3,7 +3,6 @@
 --   - mason setup?
 -- - better undo / cross-session
 -- - autocomplete that actually works + doesn't break snacks.picker
--- - git integration
 -- - spelling dictionary (nvim, neovim, github, etc)
 -- - some sort of autoupdate? (lua: `vim.pack.update` and `vim.pack.del()`)
 -- - wrap with `()`
@@ -43,10 +42,11 @@ end
 o.clipboard = "unnamedplus" -- default to it
 
 -- indentation || spaces are the best
-o.tabstop = 2
-o.softtabstop = 2
-o.shiftwidth = 0 -- forces ts/sts to be used when <tab> pressed
-o.expandtab = true
+-- TODO: decide if `guess-indent` solves this
+-- o.tabstop = 2
+-- o.softtabstop = 2
+-- o.shiftwidth = 0 -- forces ts/sts to be used when <tab> pressed
+-- o.expandtab = true
 o.ignorecase = true
 --- UI/UX!
 o.number = true
@@ -90,16 +90,13 @@ vim.pack.add({
   _gh("akinsho/toggleterm.nvim"), -- terminal library
   _gh("nvim-mini/mini.nvim"), -- mini: 45+ things
   _gh("folke/todo-comments.nvim"), -- highlight TODO, etc. in comment
+  _gh("nmac427/guess-indent.nvim"), -- guess-indent to auto configure the indentation settings
 })
 if not isWork then
   vim.pack.add({
     _gh("wakatime/vim-wakatime"), -- wakatime integration, :WakaTimeApiKey to set up
   })
 end
-
-
--- git integration
-require("gitsigns").setup()
 
 
 -- snacks
@@ -173,6 +170,20 @@ Snacks.toggle.option("spell", { name = "󰓆 Spell Checking" }):map("<leader>us"
 Snacks.toggle.option("wrap", { name = "󰖶 Wrap Long Lines" }):map("<leader>uw")
 Snacks.toggle.option("list", { name = "󱁐 List (Visible Whitespace)" }):map("<leader>ul")
 Snacks.toggle.diagnostics({ name = " Diagnostics" }):map("<leader>uD") -- TODO: test this
+Snacks.toggle.indent({ name = "Indent" }):map("<leader>ui")
+Snacks.toggle
+  .new({
+    id = "git_blame",
+    name = " Git Blame",
+    get = function()
+      return require("gitsigns.config").config.current_line_blame
+      -- return true
+    end,
+    set = function(state)
+      require("gitsigns").toggle_current_line_blame(state)
+    end,
+  })
+  :map("<leader>ub")
 Snacks.toggle
   .new({
     id = "git_sign_column",
@@ -193,12 +204,6 @@ Snacks.toggle
       return vim.wo.number
     end,
     set = function(state)
-      -- toggles relnum with num
-      -- if state then
-      --   vim.wo.relativenumber = true
-      -- else
-      --   vim.wo.relativenumber = false
-      -- end
       vim.wo.number = state
     end,
   })
@@ -252,7 +257,7 @@ Snacks.toggle
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end,
   })
-  :map("<leader>ui") -- TODO: test this
+  :map("<leader>uh") -- TODO: test this
 Snacks.toggle
   .new({
     id = "inline_hints_end",
@@ -265,14 +270,15 @@ Snacks.toggle
       vim.g.snacks_toggle_lsp_hints_end = not vim.g.snacks_toggle_lsp_hints_end
     end,
   })
-  :map("<leader>uI") -- TODO: test this
+  :map("<leader>uH") -- TODO: test this
 Snacks.toggle
   .new({
     id = "transparency",
     name = "Transparency",
     get = function() return g.transparent_enabled end,
     set = function() require("transparent").toggle() end,
-  }):map("<leader>ut") -- transparency!
+  })
+  :map("<leader>ut") -- transparency!
 
 map("n", "<leader>fC", Snacks.picker.commands, { desc = "Find Commands" })
 map("n", "<leader>fc", Snacks.picker.grep_word, { desc = "Find Word" })
@@ -286,8 +292,18 @@ map("n", "<leader>fu", Snacks.picker.undo, { desc = "Find Undo History" })
 map("n", "<leader>fw", Snacks.picker.grep, { desc = "Find Words" })
 map("n", "<leader>fn", Snacks.notifier.show_history, { desc = "Notification History" })
 map("n", "<leader>e", function() require("snacks").explorer() end, { desc = "Toggle Explorer" })
--- map("n", "<leader>gg", function() require("snacks").lazygit() end, { desc = "Open Lazygit" })
---
+map("n", "<leader>gs", Snacks.picker.git_status, { desc = "Git Status" })
+map("n", "<leader>gl", Snacks.picker.git_log_file, { desc = "Git Log this file" })
+map("n", "<leader>gj", Snacks.picker.git_log_line, { desc = "Git Log this line" })
+map("n", "<leader>gL", Snacks.picker.git_log, { desc = "Git Log" })
+
+-- git integration
+local gitsigns = require('gitsigns')
+gitsigns.setup({ current_line_blame = true })
+map("n", "<leader>gb", gitsigns.blame, {desc = "View Git Blame"})
+map("n", "<leader>gd", gitsigns.diffthis, {desc = "View Git Diff"})
+
+
 
 -- which-key for showing mappings
 local wk = require("which-key")
@@ -323,6 +339,9 @@ miniicons.mock_nvim_web_devicons()
 -- todo-comments
 require("todo-comments").setup()
 
+-- guess-indent
+require("guess-indent").setup()
+
 -- configure LSPs
 
 --
@@ -330,7 +349,7 @@ require("todo-comments").setup()
 
 
 --- misc keybinds
--- map("n", "<C-q>", ":q<cr>", {desc = "Quit"})
+map("n", "<C-q>", ":q<cr>", {desc = "Quit"})
 map("n", "<leader>q", ":q<cr>", {desc = "Quit"})
 -- map("n", "<C-w>", ":w<cr>", {desc = "Save"})
 map("n", "<leader>w", ":w<cr>", {desc = "Save"})
@@ -341,4 +360,3 @@ map("v", "<leader>/", "gc", {desc = "comment", remap = true}) -- add remap as ot
 map("n", "<leader>ch", ":checkhealth<cr>", {desc = "Check Health"})
 map("n", "<leader>]", ":vsp<cr>", {desc = "Vertical split"})
 map("n", "<leader>[", ":sp<cr>", {desc = "Horizontal split"})
----
