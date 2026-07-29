@@ -4,8 +4,8 @@
 -- - better undo / cross-session
 -- - autocomplete that actually works + doesn't break snacks.picker
 -- - spelling dictionary (nvim, neovim, github, etc)
--- - some sort of autoupdate? (lua: `vim.pack.update` and `vim.pack.del()`)
--- - wrap with `()`
+-- - some sort of autoupdate? (lua: `vim.pack.update()` and `vim.pack.del()`)
+-- - which-key, toggleterm, snacks.picker don't respect `g.transparent_enabled`
 
 --- for convenience
 local vim = vim
@@ -308,13 +308,22 @@ map("n", "<leader>gd", gitsigns.diffthis, {desc = "View Git Diff"})
 -- which-key for showing mappings
 local wk = require("which-key")
 wk.setup({
-  preset = "helix",
-})
-wk.add({
-  { "<leader>f", group = "find" }, -- group
-  { "<leader>g", group = "git" }, -- group
-  { "<leader>t", group = "terminal" }, -- group
-  { "<esc><esc>", hidden = true}, -- hide popup for <esc><esc> -> :noh
+  -- mini.surround maps bare `s` to <Nop>, which which-key's
+  -- auto-trigger skips (single-letter keys aren't auto-safe)
+  triggers = {
+    { "<auto>", mode = "nxso" },
+    { "s", mode = { "n", "x" } },
+  },
+  spec = {
+    { "<leader>f", group = "find" }, -- group
+    { "<leader>g", group = "git" }, -- group
+    { "<leader>t", group = "terminal" }, -- group
+    { "<esc><esc>", hidden = true}, -- hide popup for <esc><esc> -> :noh
+    {
+      mode = { "n", "v" },
+      { "s", group = "Surrounding"  },
+    }
+  }
 })
 
 -- toggleterm
@@ -335,6 +344,7 @@ map("n", "<leader>gg", function() lazygit:toggle() end, { desc = "`lazygit`" })
 local miniicons = require("mini.icons")
 miniicons.setup()
 miniicons.mock_nvim_web_devicons()
+require('mini.surround').setup()
 
 -- todo-comments
 require("todo-comments").setup()
