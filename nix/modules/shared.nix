@@ -71,4 +71,8 @@
     ];
   };
 
+  documentation.enable = true;
+  documentation.doc.enable = true;
+  documentation.info.enable = true;
+  documentation.man.enable = true;
 }

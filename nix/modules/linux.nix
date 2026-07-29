@@ -80,6 +80,7 @@
     dates = "daily";
   };
 
+  documentation.nixos.enable = true;
   documentation.man.cache.enable = true;
 
   system.stateVersion = "25.05";
