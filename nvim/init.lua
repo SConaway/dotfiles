@@ -23,7 +23,7 @@ local function tableMerge(...)
 end
 -- map defined from Snacks
 local isWork = os.getenv("USER") == "stevenc"
-vim.notify("isWork: " .. (isWork and "yes" or "no"))
+-- vim.notify("isWork: " .. (isWork and "yes" or "no"))
 --- globals
 g.mapleader = " "
 g.maplocalleader = ","
