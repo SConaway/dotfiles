@@ -66,6 +66,50 @@
   #   })
   # ];
 
+  # Darwin build fixes for qt6.qtwebengine, unmerged upstream as of writing
+  # (nixpkgs#520445, nixpkgs#547302). Re-enables jellyfin-desktop, which was
+  # disabled below due to qtwebengine-6.11.0 being broken on Darwin.
+  nixpkgs.overlays = [
+    (final: prev: {
+      qt6 = prev.qt6.overrideScope (
+        qt6final: qt6prev: {
+          qtwebengine = qt6prev.qtwebengine.overrideAttrs (old: {
+            patches =
+              old.patches
+              ++ final.lib.optionals final.stdenv.hostPlatform.isDarwin [
+                # Strips a relative -isysroot that chromium's build emits into
+                # the link rsp files; without it the linker resolves it from
+                # the wrong cwd and fails with "framework not found
+                # CoreFoundation". From nixpkgs#515997 (the other half of
+                # that PR, the clang_base_path rename, is superseded below by
+                # nixpkgs#520445's simpler fix).
+                ./patches/qtwebengine-lflags-remove-strip-darwin-isysroot.patch
+              ];
+            postPatch =
+              old.postPatch
+              + final.lib.optionalString final.stdenv.hostPlatform.isDarwin ''
+                substituteInPlace cmake/QtToolchainHelpers.cmake \
+                  --replace-fail 'clang_base_path="''${QWELibClang_BASE_PATH}"' 'clang_base_path="${final.stdenv.cc}"'
+
+                substituteInPlace cmake/QtConfigureHelpers.cmake \
+                  --replace-fail 'message(STATUS "Checking for Metal Toolchain")' 'message(STATUS "Checking for Metal Toolchain")
+                set(TEST_metal_toolchain TRUE PARENT_SCOPE)
+                return()'
+              '';
+            cmakeFlags =
+              (final.lib.filter (
+                flag: !(final.lib.hasPrefix "-DCMAKE_OSX_DEPLOYMENT_TARGET=" flag)
+              ) old.cmakeFlags)
+              ++ final.lib.optionals final.stdenv.hostPlatform.isDarwin [
+                "-DCMAKE_OSX_DEPLOYMENT_TARGET=12.0"
+                "-DCMAKE_CXX_COMPILER=${final.lib.getExe' final.stdenv.cc "clang++"}"
+              ];
+          });
+        }
+      );
+    })
+  ];
+
   # allow unfree packages
   # nixpkgs.config.allowUnfreePredicate =
   #   pkg:
@@ -203,7 +247,7 @@
       google-chrome
       iina
       iterm2
-      # jellyfin-desktop # qtwebengine-6.11.0 broken in nixpkgs
+      jellyfin-desktop
       keka
       melonds
       moreutils
