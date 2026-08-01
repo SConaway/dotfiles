@@ -198,6 +198,7 @@
     "discord"
     "docker-desktop"
     "emojipedia"
+    "firefox"
     "handbrake-app"
     "imazing"
     "logitech-g-hub"
@@ -212,6 +213,7 @@
     "rocket"
     "setapp"
     "slack"
+    "spotify"
     "surfshark"
     "syntax-highlight" # provides QuickLook extension for highlighting code files
     "tailscale-app"
@@ -242,7 +244,6 @@
       bun
       ccache
       ffmpeg
-      firefox
       ghostty-bin
       google-chrome
       iina
@@ -257,7 +258,6 @@
       qbittorrent
       rclone
       spotdl
-      spotify
       utm
       uv
       wireshark
