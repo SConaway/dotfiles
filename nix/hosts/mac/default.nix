@@ -147,8 +147,10 @@
       # autohide = true;
       # mru-spaces = false;
       # https://mynixos.com/nix-darwin/option/system.defaults.dock.wvous-tl-corner
-      wvous-tl-corner = 13; # top left hot corner: lock screen
+      wvous-tl-corner = 1; # top left hot corner: nothing
+      wvous-bl-corner = 1; # bottom left hot corner: nothing
       wvous-tr-corner = 10; # top right hot corner: sleep screen
+      wvous-br-corner = 1; # bottom left hot corner: nothing
     };
     finder = {
       AppleShowAllExtensions = true;
