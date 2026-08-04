@@ -208,6 +208,7 @@
     "minecraft"
     "musescore"
     "notion"
+    "openmtp"
     "qlmarkdown"
     "quicklook-video"
     "raspberry-pi-imager"
