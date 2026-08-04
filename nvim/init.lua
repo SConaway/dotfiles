@@ -42,11 +42,11 @@ end
 o.clipboard = "unnamedplus" -- default to it
 
 -- indentation || spaces are the best
--- TODO: decide if `guess-indent` solves this
--- o.tabstop = 2
--- o.softtabstop = 2
--- o.shiftwidth = 0 -- forces ts/sts to be used when <tab> pressed
--- o.expandtab = true
+-- guess-indent will set these anyway
+o.tabstop = 2
+o.softtabstop = 2
+o.expandtab = true
+o.shiftwidth = 0 -- forces ts/sts to be used when <tab> pressed
 o.ignorecase = true
 --- UI/UX!
 o.number = true
@@ -345,6 +345,26 @@ local miniicons = require("mini.icons")
 miniicons.setup()
 miniicons.mock_nvim_web_devicons()
 require('mini.surround').setup()
+require('mini.splitjoin').setup()
+local gen_loader = require('mini.snippets').gen_loader
+local snippets = require("mini.snippets")
+snippets.setup({
+  snippets = {
+    -- Load custom file with global snippets first (adjust for Windows)
+    gen_loader.from_file('~/.config/nvim/snippets/global.json'),
+
+    -- Load snippets based on current language by reading files from
+    -- "snippets/" subdirectories from 'runtimepath' directories.
+    gen_loader.from_lang(),
+  },
+  mappings = {
+    jump_next = "<Tab>",
+    jump_prev = "<S-Tab>",
+  }
+})
+snippets.start_lsp_server()
+require("mini.pairs").setup()
+
 
 -- todo-comments
 require("todo-comments").setup()
@@ -370,3 +390,5 @@ map("v", "<leader>/", "gc", {desc = "comment", remap = true}) -- add remap as ot
 map("n", "<leader>ch", ":checkhealth<cr>", {desc = "Check Health"})
 map("n", "<leader>]", ":vsp<cr>", {desc = "Vertical split"})
 map("n", "<leader>[", ":sp<cr>", {desc = "Horizontal split"})
+vim.keymap.del({ 'i', 's' }, '<Tab>')
+vim.keymap.del({ 'i', 's' }, '<S-Tab>')

@@ -1,0 +1,4 @@
+{
+    "vim setup": {"prefix": "set", "body": "require(\"$1\").setup($0)"},
+    "vim setup (local)": {"prefix": "setl", "body": "local $1 = require(\"${2:$1}\")\n$1.setup($0)"}
+}
