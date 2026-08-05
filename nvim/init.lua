@@ -48,13 +48,18 @@ o.softtabstop = 2
 o.expandtab = true
 o.shiftwidth = 0 -- forces ts/sts to be used when <tab> pressed
 o.ignorecase = true
+o.infercase = true
+o.spelloptions = 'camel'
+o.virtualedit = 'block'
 --- UI/UX!
 o.number = true
 o.relativenumber = true
 o.signcolumn = "yes" -- set to yes to prevent shifting once gitsigns loads
+o.cursorline = true
 
 o.list = true
 o.listchars = "trail:·,tab:» "
+o.fillchars = 'eob: ' -- Don't show `~` outside of buffer
 o.spell = true
 
 vim.cmd[[colorscheme catppuccin]]
@@ -74,6 +79,14 @@ vim.api.nvim_create_autocmd("FileType", {
     -- r = auto-comment on <Enter> in insert mode
   end,
 })
+
+o.undofile = true
+
+o.splitbelow = true
+o.splitright = true
+o.foldmethod = 'indent'
+o.foldlevel = 10
+
 ---
 
 --- configure plugins
@@ -378,6 +391,9 @@ require("mini.move").setup({
     line_down = '<M-Down>',
     line_up = '<M-Up>',
   }
+})
+require("mini.completion").setup({
+  delay = { completion = 50 },
 })
 
 
