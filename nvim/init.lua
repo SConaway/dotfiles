@@ -110,56 +110,61 @@ if not isWork then
     _gh("wakatime/vim-wakatime"), -- wakatime integration, :WakaTimeApiKey to set up
   })
 end
+local minimisc = require('mini.misc')
+now = function(f) minimisc.safely('now', f) end
+later = function(f) minimisc.safely('later', f) end
 
 
 -- snacks
-require("snacks").setup({
-  explorer = {},
-  picker = {
-    layouts = {
-      sidebar = {
-        layout = {
-          width = 30,
-          min_width = 20,
-        },
-      }
+now(function()
+  require("snacks").setup({
+    explorer = {},
+    picker = {
+      layouts = {
+        sidebar = {
+          layout = {
+            width = 30,
+            min_width = 20,
+          },
+        }
+      },
+      ui_select = true,
     },
-    ui_select = true,
-  },
-  indent = {
-    animate = {
-      enabled = false,
-    },
-  },
-  -- lazygit = {}, -- skip this as it doesn't keep the same styles
-  notifier = {},
-  toggle = {
-    map = map, -- use the snacks.keymap function
-  },
-  statuscolumn = {
-    enabled = true,
-    left = { "mark", "sign" }, -- priority of signs on the left (high to low)
-    right = { "fold", "git" }, -- priority of signs on the right (high to low)
-    folds = {
-      open = true, -- show open fold icons
-      git_hl = true, -- use Git Signs hl for fold icons
-    },
-    git = {
-      -- patterns to match Git signs
-      patterns = { "GitSign", },
-    },
-    refresh = 50, -- refresh at most every 50ms
-  },
-  quickfile = {},
-  styles = {
-    notification_history = {
-      keys = {
-        q = "close",
-        { "<esc>", "close", mode = "n" },
+    indent = {
+      animate = {
+        enabled = false,
       },
     },
-  }
-})
+    -- lazygit = {}, -- skip this as it doesn't keep the same styles
+    notifier = {},
+    toggle = {
+      map = map, -- use the snacks.keymap function
+    },
+    statuscolumn = {
+      enabled = true,
+      left = { "mark", "sign" }, -- priority of signs on the left (high to low)
+      right = { "fold", "git" }, -- priority of signs on the right (high to low)
+      folds = {
+        open = true, -- show open fold icons
+        git_hl = true, -- use Git Signs hl for fold icons
+      },
+      git = {
+        -- patterns to match Git signs
+        patterns = { "GitSign", },
+      },
+      refresh = 50, -- refresh at most every 50ms
+    },
+    quickfile = {},
+    styles = {
+      notification_history = {
+        keys = {
+          q = "close",
+          { "<esc>", "close", mode = "n" },
+        },
+      },
+    }
+  })
+end)
 -- https://github.com/folke/snacks.nvim/blob/main/docs/keymap.md
 local map = Snacks.keymap.set
 -- stolen from snacks' docs
@@ -173,235 +178,251 @@ vim._print = function(_, ...)
   dd(...)
 end
 
-map("n", "<leader>gi", function() Snacks.picker.gh_issue() end, {desc = "GitHub Issues (open)" })
-map("n", "<leader>gI", function() Snacks.picker.gh_issue({ state = "all" }) end, {desc = "GitHub Issues (all)" })
-map("n", "<leader>gp", function() Snacks.picker.gh_pr() end, {desc = "GitHub Pull Requests (open)" })
-map("n", "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, {desc = "GitHub Pull Requests (all)" })
+later(function()
+  map("n", "<leader>gi", function() Snacks.picker.gh_issue() end, {desc = "GitHub Issues (open)" })
+  map("n", "<leader>gI", function() Snacks.picker.gh_issue({ state = "all" }) end, {desc = "GitHub Issues (all)" })
+  map("n", "<leader>gp", function() Snacks.picker.gh_pr() end, {desc = "GitHub Pull Requests (open)" })
+  map("n", "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, {desc = "GitHub Pull Requests (all)" })
 
--- thanks to https://www.reddit.com/r/neovim/comments/1j55o9c/comment/mgny6eo/
-Snacks.toggle.option("spell", { name = "󰓆 Spell Checking" }):map("<leader>us")
-Snacks.toggle.option("wrap", { name = "󰖶 Wrap Long Lines" }):map("<leader>uw")
-Snacks.toggle.option("list", { name = "󱁐 List (Visible Whitespace)" }):map("<leader>ul")
-Snacks.toggle.diagnostics({ name = " Diagnostics" }):map("<leader>uD") -- TODO: test this
-Snacks.toggle.indent({ name = "Indent" }):map("<leader>ui")
-Snacks.toggle
-  .new({
-    id = "git_blame",
-    name = " Git Blame",
-    get = function()
-      return require("gitsigns.config").config.current_line_blame
-      -- return true
-    end,
-    set = function(state)
-      require("gitsigns").toggle_current_line_blame(state)
-    end,
-  })
-  :map("<leader>ub")
-Snacks.toggle
-  .new({
-    id = "git_sign_column",
-    name = " Git Sign Column",
-    get = function()
-      return require("gitsigns.config").config.signcolumn
-    end,
-    set = function(state)
-      require("gitsigns").toggle_signs(state)
-    end,
-  })
-  :map("<leader>ug")
-Snacks.toggle
-  .new({
-    id = "number",
-    name = " Line Numbers",
-    get = function()
-      return vim.wo.number
-    end,
-    set = function(state)
-      vim.wo.number = state
-    end,
-  })
-  :map("<leader>un")
-Snacks.toggle
-  .new({
-    id = "relativenumber",
-    name = " Relative Line Numbers",
-    get = function()
-      return vim.wo.relativenumber
-    end,
-    set = function(state)
-      -- if no nums shown, enable them too
-      if vim.wo.number == false then
-        vim.wo.number = true
-      end
-      vim.wo.relativenumber = state
-    end,
-  })
-  :map("<leader>uN")
-Snacks.toggle
-  .new({
-    id = "format_on_save",
-    name = "󰊄 Format on Save (global)",
-    get = function()
-      return not vim.g.disable_autoformat
-    end,
-    set = function(state)
-      vim.g.disable_autoformat = not state
-    end,
-  })
-  :map("<leader>uf")
+  -- thanks to https://www.reddit.com/r/neovim/comments/1j55o9c/comment/mgny6eo/
+  Snacks.toggle.option("spell", { name = "󰓆 Spell Checking" }):map("<leader>us")
+  Snacks.toggle.option("wrap", { name = "󰖶 Wrap Long Lines" }):map("<leader>uw")
+  Snacks.toggle.option("list", { name = "󱁐 List (Visible Whitespace)" }):map("<leader>ul")
+  Snacks.toggle.diagnostics({ name = " Diagnostics" }):map("<leader>uD") -- TODO: test this
+  Snacks.toggle.indent({ name = "Indent" }):map("<leader>ui")
   Snacks.toggle
     .new({
-      id = "format_on_save_buffer",
-      name = "󰊄 Format on Save (buffer)",
+      id = "git_blame",
+      name = " Git Blame",
       get = function()
-        return not vim.b.disable_autoformat
+        return require("gitsigns.config").config.current_line_blame
+        -- return true
       end,
       set = function(state)
-        vim.b.disable_autoformat = not state
+        require("gitsigns").toggle_current_line_blame(state)
       end,
-  })
-  :map("<leader>uF")
-Snacks.toggle
-  .new({
-    id = "inline_hints",
-    name = " LSP Inline Hints",
-    get = vim.lsp.inlay_hint.is_enabled,
-    set = function()
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-    end,
-  })
-  :map("<leader>uh") -- TODO: test this
-Snacks.toggle
-  .new({
-    id = "inline_hints_end",
-    name = " LSP Inline Hints at Line End",
-    get = function()
-      return vim.g.snacks_toggle_lsp_hints_end
-    end,
-    set = function()
-      require("lsp-endhints").toggle()
-      vim.g.snacks_toggle_lsp_hints_end = not vim.g.snacks_toggle_lsp_hints_end
-    end,
-  })
-  :map("<leader>uH") -- TODO: test this
-Snacks.toggle
-  .new({
-    id = "transparency",
-    name = "Transparency",
-    get = function() return g.transparent_enabled end,
-    set = function() require("transparent").toggle() end,
-  })
-  :map("<leader>ut") -- transparency!
+    })
+    :map("<leader>ub")
+  Snacks.toggle
+    .new({
+      id = "git_sign_column",
+      name = " Git Sign Column",
+      get = function()
+        return require("gitsigns.config").config.signcolumn
+      end,
+      set = function(state)
+        require("gitsigns").toggle_signs(state)
+      end,
+    })
+    :map("<leader>ug")
+  Snacks.toggle
+    .new({
+      id = "number",
+      name = " Line Numbers",
+      get = function()
+        return vim.wo.number
+      end,
+      set = function(state)
+        vim.wo.number = state
+      end,
+    })
+    :map("<leader>un")
+  Snacks.toggle
+    .new({
+      id = "relativenumber",
+      name = " Relative Line Numbers",
+      get = function()
+        return vim.wo.relativenumber
+      end,
+      set = function(state)
+        -- if no nums shown, enable them too
+        if vim.wo.number == false then
+          vim.wo.number = true
+        end
+        vim.wo.relativenumber = state
+      end,
+    })
+    :map("<leader>uN")
+  Snacks.toggle
+    .new({
+      id = "format_on_save",
+      name = "󰊄 Format on Save (global)",
+      get = function()
+        return not vim.g.disable_autoformat
+      end,
+      set = function(state)
+        vim.g.disable_autoformat = not state
+      end,
+    })
+    :map("<leader>uf")
+    Snacks.toggle
+      .new({
+        id = "format_on_save_buffer",
+        name = "󰊄 Format on Save (buffer)",
+        get = function()
+          return not vim.b.disable_autoformat
+        end,
+        set = function(state)
+          vim.b.disable_autoformat = not state
+        end,
+    })
+    :map("<leader>uF")
+  Snacks.toggle
+    .new({
+      id = "inline_hints",
+      name = " LSP Inline Hints",
+      get = vim.lsp.inlay_hint.is_enabled,
+      set = function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+      end,
+    })
+    :map("<leader>uh") -- TODO: test this
+  Snacks.toggle
+    .new({
+      id = "inline_hints_end",
+      name = " LSP Inline Hints at Line End",
+      get = function()
+        return vim.g.snacks_toggle_lsp_hints_end
+      end,
+      set = function()
+        require("lsp-endhints").toggle()
+        vim.g.snacks_toggle_lsp_hints_end = not vim.g.snacks_toggle_lsp_hints_end
+      end,
+    })
+    :map("<leader>uH") -- TODO: test this
+  Snacks.toggle
+    .new({
+      id = "transparency",
+      name = "Transparency",
+      get = function() return g.transparent_enabled end,
+      set = function() require("transparent").toggle() end,
+    })
+    :map("<leader>ut") -- transparency!
 
-map("n", "<leader>fC", Snacks.picker.commands, { desc = "Find Commands" })
-map("n", "<leader>fc", Snacks.picker.grep_word, { desc = "Find Word" })
-map("n", "<leader>fd", Snacks.picker.diagnostics, { desc = "Find Diagnostics" })
-map("n", "<leader>ff", Snacks.picker.files, { desc = "Find Files" })
-map("n", "<leader>fh", Snacks.picker.help, { desc = "Find Help" })
-map("n", "<leader>fk", Snacks.picker.keymaps, { desc = "Find Keymaps" })
-map("n", "<leader>fm", Snacks.picker.man, { desc = "Find Manpages" })
-map("n", "<leader>ft", Snacks.picker.colorschemes, { desc = "Find Themes" })
-map("n", "<leader>fu", Snacks.picker.undo, { desc = "Find Undo History" })
-map("n", "<leader>fw", Snacks.picker.grep, { desc = "Find Words" })
-map("n", "<leader>fn", Snacks.notifier.show_history, { desc = "Notification History" })
-map("n", "<leader>e", function() require("snacks").explorer() end, { desc = "Toggle Explorer" })
-map("n", "<leader>gs", Snacks.picker.git_status, { desc = "Git Status" })
-map("n", "<leader>gl", Snacks.picker.git_log_file, { desc = "Git Log this file" })
-map("n", "<leader>gj", Snacks.picker.git_log_line, { desc = "Git Log this line" })
-map("n", "<leader>gL", Snacks.picker.git_log, { desc = "Git Log" })
+  map("n", "<leader>fC", Snacks.picker.commands, { desc = "Find Commands" })
+  map("n", "<leader>fc", Snacks.picker.grep_word, { desc = "Find Word" })
+  map("n", "<leader>fd", Snacks.picker.diagnostics, { desc = "Find Diagnostics" })
+  map("n", "<leader>ff", Snacks.picker.files, { desc = "Find Files" })
+  map("n", "<leader>fh", Snacks.picker.help, { desc = "Find Help" })
+  map("n", "<leader>fk", Snacks.picker.keymaps, { desc = "Find Keymaps" })
+  map("n", "<leader>fm", Snacks.picker.man, { desc = "Find Manpages" })
+  map("n", "<leader>ft", Snacks.picker.colorschemes, { desc = "Find Themes" })
+  map("n", "<leader>fu", Snacks.picker.undo, { desc = "Find Undo History" })
+  map("n", "<leader>fw", Snacks.picker.grep, { desc = "Find Words" })
+  map("n", "<leader>fn", Snacks.notifier.show_history, { desc = "Notification History" })
+  map("n", "<leader>e", function() require("snacks").explorer() end, { desc = "Toggle Explorer" })
+  map("n", "<leader>gs", Snacks.picker.git_status, { desc = "Git Status" })
+  map("n", "<leader>gl", Snacks.picker.git_log_file, { desc = "Git Log this file" })
+  map("n", "<leader>gj", Snacks.picker.git_log_line, { desc = "Git Log this line" })
+  map("n", "<leader>gL", Snacks.picker.git_log, { desc = "Git Log" })
+end)
 
 -- git integration
-local gitsigns = require('gitsigns')
-gitsigns.setup({ current_line_blame = true })
-map("n", "<leader>gb", gitsigns.blame, {desc = "View Git Blame"})
-map("n", "<leader>gd", gitsigns.diffthis, {desc = "View Git Diff"})
+later(function()
+  local gitsigns = require('gitsigns')
+  gitsigns.setup({ current_line_blame = true })
+  map("n", "<leader>gb", gitsigns.blame, {desc = "View Git Blame"})
+  map("n", "<leader>gd", gitsigns.diffthis, {desc = "View Git Diff"})
+end)
 
 
 
 -- which-key for showing mappings
-local wk = require("which-key")
-wk.setup({
-  -- mini.surround maps bare `s` to <Nop>, which which-key's
-  -- auto-trigger skips (single-letter keys aren't auto-safe)
-  triggers = {
-    { "<auto>", mode = "nxso" },
-    { "s", mode = { "n", "x" } },
-  },
-  spec = {
-    { "<leader>f", group = "find" }, -- group
-    { "<leader>g", group = "git" }, -- group
-    { "<leader>t", group = "terminal" }, -- group
-    { "<esc><esc>", hidden = true}, -- hide popup for <esc><esc> -> :noh
-    {
-      mode = { "n", "v" },
-      { "s", group = "Surrounding"  },
+later(function()
+  local wk = require("which-key")
+  wk.setup({
+    -- mini.surround maps bare `s` to <Nop>, which which-key's
+    -- auto-trigger skips (single-letter keys aren't auto-safe)
+    triggers = {
+      { "<auto>", mode = "nxso" },
+      { "s", mode = { "n", "x" } },
+    },
+    spec = {
+      { "<leader>f", group = "find" }, -- group
+      { "<leader>g", group = "git" }, -- group
+      { "<leader>t", group = "terminal" }, -- group
+      { "<esc><esc>", hidden = true}, -- hide popup for <esc><esc> -> :noh
+      {
+        mode = { "n", "v" },
+        { "s", group = "Surrounding"  },
+      }
     }
-  }
-})
+  })
+end)
 
 -- toggleterm
-require("toggleterm").setup({
-  direction = "float"
-})
-map("n", "<leader>tr", ":ToggleTerm direction=vertical<cr>", { desc = "right" })
-map("n", "<leader>tb", ":ToggleTerm direction=horizontal<cr>", { desc = "below" })
-map("n", "<leader>tf", ":ToggleTerm direction=float<cr>", { desc = "floating" })
-map("n", "<leader>tt", ":ToggleTerm direction=float<cr>", { desc = "floating" })
-local Terminal  = require('toggleterm.terminal').Terminal
-local btop = Terminal:new({ cmd = "btop", hidden = true })
-map("n", "<leader>tp", function() btop:toggle() end, { desc = "`btop`" })
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
-map("n", "<leader>gg", function() lazygit:toggle() end, { desc = "`lazygit`" })
+later(function()
+  require("toggleterm").setup({
+    direction = "float"
+  })
+  map("n", "<leader>tr", ":ToggleTerm direction=vertical<cr>", { desc = "right" })
+  map("n", "<leader>tb", ":ToggleTerm direction=horizontal<cr>", { desc = "below" })
+  map("n", "<leader>tf", ":ToggleTerm direction=float<cr>", { desc = "floating" })
+  map("n", "<leader>tt", ":ToggleTerm direction=float<cr>", { desc = "floating" })
+end)
+later(function()
+  local Terminal  = require('toggleterm.terminal').Terminal
+  local btop = Terminal:new({ cmd = "btop", hidden = true })
+  map("n", "<leader>tp", function() btop:toggle() end, { desc = "`btop`" })
+  local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+  map("n", "<leader>gg", function() lazygit:toggle() end, { desc = "`lazygit`" })
+end)
 
 -- mini!
 local miniicons = require("mini.icons")
-miniicons.setup()
-miniicons.mock_nvim_web_devicons()
-require('mini.surround').setup()
-require('mini.splitjoin').setup()
-local gen_loader = require('mini.snippets').gen_loader
-local snippets = require("mini.snippets")
-snippets.setup({
-  snippets = {
-    -- Load custom file with global snippets first (adjust for Windows)
-    gen_loader.from_file('~/.config/nvim/snippets/global.json'),
+now(function() miniicons.setup() end)
+later(miniicons.mock_nvim_web_devicons)
+later(function() require('mini.surround').setup() end)
+later(function() require('mini.splitjoin').setup() end)
+later(function()
+  local gen_loader = require('mini.snippets').gen_loader
+  local snippets = require("mini.snippets")
+  snippets.setup({
+    snippets = {
+      -- load custom file with global snippets first (adjust for windows)
+      gen_loader.from_file('~/.config/nvim/snippets/global.json'),
 
-    -- Load snippets based on current language by reading files from
-    -- "snippets/" subdirectories from 'runtimepath' directories.
-    gen_loader.from_lang(),
-  },
-  mappings = {
-    jump_next = "<Tab>",
-    jump_prev = "<S-Tab>",
-  }
-})
-snippets.start_lsp_server()
-require("mini.pairs").setup()
-require("mini.move").setup({
-  mappings = {
-    -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
-    left = '<M-Left>',
-    right = '<M-Right>',
-    down = '<M-Down>',
-    up = '<M-Up>',
+      -- load snippets based on current language by reading files from
+      -- "snippets/" subdirectories from 'runtimepath' directories.
+      gen_loader.from_lang(),
+    },
+    mappings = {
+      jump_next = "<tab>",
+      jump_prev = "<s-tab>",
+    }
+  })
+  snippets.start_lsp_server()
+end)
 
-    -- Move current line in Normal mode
-    line_left = '<M-Left>',
-    line_right = '<M-Right>',
-    line_down = '<M-Down>',
-    line_up = '<M-Up>',
-  }
-})
-require("mini.completion").setup({
-  delay = { completion = 50 },
-})
+later(function() require("mini.pairs").setup() end)
+later(function()
+  require("mini.move").setup({
+    mappings = {
+      -- Move visual selection in Visual mode.
+      left = '<M-Left>',
+      right = '<M-Right>',
+      down = '<M-Down>',
+      up = '<M-Up>',
+      -- Move current line in Normal mode
+      line_left = '<M-Left>',
+      line_right = '<M-Right>',
+      line_down = '<M-Down>',
+      line_up = '<M-Up>',
+    }
+  })
+end)
+later(function()
+  require("mini.completion").setup({
+    delay = { completion = 50 },
+  })
+end)
 
 
 -- todo-comments
-require("todo-comments").setup()
+later(function() require("todo-comments").setup() end)
 
 -- guess-indent
-require("guess-indent").setup()
+now(function() require("guess-indent").setup() end)
 
 -- configure LSPs
 
@@ -421,5 +442,7 @@ map("v", "<leader>/", "gc", {desc = "comment", remap = true}) -- add remap as ot
 map("n", "<leader>ch", ":checkhealth<cr>", {desc = "Check Health"})
 map("n", "<leader>]", ":vsp<cr>", {desc = "Vertical split"})
 map("n", "<leader>[", ":sp<cr>", {desc = "Horizontal split"})
-vim.keymap.del({ 'i', 's' }, '<Tab>')
-vim.keymap.del({ 'i', 's' }, '<S-Tab>')
+later(function()
+  vim.keymap.del({ 'i', 's' }, '<Tab>')
+  vim.keymap.del({ 'i', 's' }, '<S-Tab>')
+end)
