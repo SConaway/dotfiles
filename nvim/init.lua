@@ -113,6 +113,7 @@ end
 local minimisc = require('mini.misc')
 now = function(f) minimisc.safely('now', f) end
 later = function(f) minimisc.safely('later', f) end
+now(minimisc.setup_restore_cursor)
 
 
 -- snacks
