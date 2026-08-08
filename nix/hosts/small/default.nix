@@ -19,6 +19,7 @@
   networking.hostName = "small";
   networking.networkmanager.enable = lib.mkForce false;
 
+  networking.interfaces.enp3s0.useDHCP = lib.mkForce false;
   networking.interfaces.enp3s0.ipv4.addresses = [{
     address = "208.87.130.161";
     prefixLength = 24;
