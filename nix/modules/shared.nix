@@ -46,7 +46,7 @@
     yarn
     zellij
     zsh
-    inputs.zsh-patina.packages.${pkgs.stdenv.hostPlatform.system}.default
+    zsh-patina
     inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
@@ -59,7 +59,7 @@
       "flakes"
     ];
 
-    # Pull-through cache for source-built packages (colmena, zsh-patina, etc.)
+    # Pull-through cache for source-built packages (colmena, leaf, etc.)
     # served by id-attic over Tailscale.
     substituters = [
       "http://id-attic:8080/homelab"
