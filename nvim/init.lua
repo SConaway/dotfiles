@@ -102,12 +102,14 @@ vim.pack.add({
   -- _gh("folke/lazydev.nvim") -- TODO: pending LSP setup
   _gh("xiyaowong/transparent.nvim"), -- transparency!!
   _gh("lewis6991/gitsigns.nvim"), -- git integration
-  _gh("folke/snacks.nvim"), -- snacks: lots of things
+  _gh("folke/snacks.nvim"), -- snacks: search pickers, file explorer, indent guides, notifications part 1, UI toggles, statuscolumn additions
   _gh("folke/which-key.nvim"), -- keybinding help
   _gh("akinsho/toggleterm.nvim"), -- terminal library
-  _gh("nvim-mini/mini.nvim"), -- mini: 45+ things
+  _gh("nvim-mini/mini.nvim"), -- mini.nvim: session resume, icons, surround, split/join, snippets, completion, autopairs, move shortcuts, cmdline completion
   _gh("folke/todo-comments.nvim"), -- highlight TODO, etc. in comment
   _gh("nmac427/guess-indent.nvim"), -- guess-indent to auto configure the indentation settings
+  _gh("MunifTanjim/nui.nvim"), -- needed for noice
+  _gh("folke/noice.nvim"), -- noice: new UI for messages, cmdline, popup
 })
 if not isWork then
   vim.pack.add({
@@ -133,7 +135,6 @@ now(function()
           },
         }
       },
-      ui_select = true,
       win = {
         input = {
           keys = {
@@ -150,7 +151,7 @@ now(function()
       },
     },
     -- lazygit = {}, -- skip this as it doesn't keep the same styles
-    notifier = {},
+    notifier = {}, -- combine with snacks notifier too
     toggle = {
       map = map, -- use the snacks.keymap function
     },
@@ -445,6 +446,24 @@ later(function()
   vim.api.nvim_create_autocmd('FileType', { pattern = {'snacks_input', 'snacks_picker_input'}, callback = f })
 end)
 
+later(function() require("noice").setup({
+  lsp = {
+    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    override = {
+      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+      ["vim.lsp.util.stylize_markdown"] = true,
+      ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+    },
+  },
+  -- combine snacks.notifier + noice notify!
+  notify = {},
+  -- you can enable a preset for easier configuration
+  presets = {
+    command_palette = true, -- position the cmdline and popupmenu together
+    long_message_to_split = true, -- long messages will be sent to a split
+    lsp_doc_border = false, -- add a border to hover docs and signature help
+  },
+}) end)
 
 -- todo-comments
 later(function() require("todo-comments").setup() end)
