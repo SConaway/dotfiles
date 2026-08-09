@@ -2,7 +2,6 @@
 -- - LSPs
 --   - mason setup?
 -- - better undo / cross-session
--- - autocomplete that actually works + doesn't break snacks.picker
 -- - spelling dictionary (nvim, neovim, github, etc)
 -- - some sort of autoupdate? (lua: `vim.pack.update()` and `vim.pack.del()`)
 
@@ -64,7 +63,11 @@ o.spell = true
 vim.cmd[[colorscheme catppuccin]]
 g.transparent_enabled = true
 -- add `NormalFloat` to list of groups to set to transparent
-vim.g.transparent_groups = vim.list_extend(vim.g.transparent_groups or {}, { "NormalFloat" })
+vim.g.transparent_groups = vim.list_extend(vim.g.transparent_groups or {}, {
+  "NormalFloat", "FloatBorder",
+  "Pmenu", "PmenuSel", "PmenuSbar", "PmenuThumb",  -- native popups
+  "MiniCompletionActiveParameter",
+})
 vim.api.nvim_set_hl(0, "LineNr", { fg = "#aaaaaa" })
 
 -- wrap settings:
@@ -395,7 +398,6 @@ later(function()
   })
   snippets.start_lsp_server()
 end)
-
 later(function() require("mini.pairs").setup() end)
 later(function()
   require("mini.move").setup({
@@ -416,7 +418,13 @@ end)
 later(function()
   require("mini.completion").setup({
     delay = { completion = 50 },
+    lsp_completion = {
+      source_func = "omnifunc", -- enables snippets to be completed
+    },
   })
+  -- disable completion for inputs!
+  local f = function(args) vim.b[args.buf].minicompletion_disable = true end
+  vim.api.nvim_create_autocmd('FileType', { pattern = {'snacks_input', 'snacks_picker_input'}, callback = f })
 end)
 
 
