@@ -134,6 +134,15 @@ now(function()
         }
       },
       ui_select = true,
+      win = {
+        input = {
+          keys = {
+            ["<Esc>"] = { "close", mode = { "n", "i" } },
+            -- <C-q> shouldn't open qflist
+            ["<C-q>"] = { "close", mode = { "i", "n" } },
+          }
+        }
+      }
     },
     indent = {
       animate = {
@@ -315,7 +324,16 @@ later(function()
   map("n", "<leader>fu", Snacks.picker.undo, { desc = "Find Undo History" })
   map("n", "<leader>fw", Snacks.picker.grep, { desc = "Find Words" })
   map("n", "<leader>fn", Snacks.notifier.show_history, { desc = "Notification History" })
-  map("n", "<leader>e", function() require("snacks").explorer() end, { desc = "Toggle Explorer" })
+  map("n", "<leader>e", function() require("snacks").explorer({
+    -- <C-q> shouldn't open qflist
+    win = {
+      list = {
+        keys = {
+          ["<C-q>"] = { "close", mode = { "i", "n" } },
+        }
+      }
+    }
+  }) end, { desc = "Toggle Explorer" })
   map("n", "<leader>gs", Snacks.picker.git_status, { desc = "Git Status" })
   map("n", "<leader>gl", Snacks.picker.git_log_file, { desc = "Git Log this file" })
   map("n", "<leader>gj", Snacks.picker.git_log_line, { desc = "Git Log this line" })
