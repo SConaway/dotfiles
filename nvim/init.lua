@@ -5,7 +5,6 @@
 -- - autocomplete that actually works + doesn't break snacks.picker
 -- - spelling dictionary (nvim, neovim, github, etc)
 -- - some sort of autoupdate? (lua: `vim.pack.update()` and `vim.pack.del()`)
--- - which-key, toggleterm, snacks.picker don't respect `g.transparent_enabled`
 
 --- for convenience
 local vim = vim
@@ -64,6 +63,8 @@ o.spell = true
 
 vim.cmd[[colorscheme catppuccin]]
 g.transparent_enabled = true
+-- add `NormalFloat` to list of groups to set to transparent
+vim.g.transparent_groups = vim.list_extend(vim.g.transparent_groups or {}, { "NormalFloat" })
 vim.api.nvim_set_hl(0, "LineNr", { fg = "#aaaaaa" })
 
 -- wrap settings:
