@@ -445,6 +445,12 @@ later(function()
   local f = function(args) vim.b[args.buf].minicompletion_disable = true end
   vim.api.nvim_create_autocmd('FileType', { pattern = {'snacks_input', 'snacks_picker_input'}, callback = f })
 end)
+-- autocomplete for cmdline
+later(function() require("mini.cmdline").setup({
+  autopeek = {
+    n_context = 5,
+  }
+}) end)
 
 later(function() require("noice").setup({
   lsp = {
