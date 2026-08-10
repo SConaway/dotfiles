@@ -3,7 +3,6 @@
 --   - mason setup?
 -- - better undo / cross-session
 -- - spelling dictionary (nvim, neovim, github, etc)
--- - some sort of autoupdate? (lua: `vim.pack.update()` and `vim.pack.del()`)
 
 --- for convenience
 local vim = vim
@@ -367,6 +366,7 @@ later(function()
     spec = {
       { "<leader>f", group = "find" }, -- group
       { "<leader>g", group = "git" }, -- group
+      { "<leader>p", group = "plugins" }, -- group
       { "<leader>t", group = "terminal" }, -- group
       { "<esc><esc>", hidden = true}, -- hide popup for <esc><esc> -> :noh
       {
@@ -531,6 +531,17 @@ map("v", "<leader>/", "gc", {desc = "comment", remap = true}) -- add remap as ot
 map("n", "<leader>ch", ":checkhealth<cr>", {desc = "Check Health"})
 map("n", "<leader>]", ":vsp<cr>", {desc = "Vertical split"})
 map("n", "<leader>[", ":sp<cr>", {desc = "Horizontal split"})
+map("n", "<leader>pc", function()
+  -- filter from :h vim.pack-examples
+  -- get all, filter by inactive, get name
+  local packages = vim.iter(vim.pack.get())
+                    :filter(function(x) return not x.active end)
+                    :map(function(x) return x.spec.name end)
+                    :totable()
+  -- TODO: confirm with user!
+  vim.pack.del(packages)
+end, {desc = "Clean Plugins"})
+map("n", "<leader>pu", vim.pack.update, {desc = "Update Plugins"})
 later(function()
   vim.keymap.del({ 'i', 's' }, '<Tab>')
   vim.keymap.del({ 'i', 's' }, '<S-Tab>')
