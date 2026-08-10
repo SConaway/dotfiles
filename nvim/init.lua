@@ -488,7 +488,7 @@ later(function() require("mini.cmdline").setup({
   }
 }) end)
 
-later(function() require("noice").setup({
+now(function() require("noice").setup({
   lsp = {
     -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
     override = {
