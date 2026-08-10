@@ -65,8 +65,11 @@ g.transparent_enabled = true
 -- add `NormalFloat` to list of groups to set to transparent
 vim.g.transparent_groups = vim.list_extend(vim.g.transparent_groups or {}, {
   "NormalFloat", "FloatBorder",
+  -- hide completion background
   "Pmenu", "PmenuSel", "PmenuSbar", "PmenuThumb",  -- native popups
   "MiniCompletionActiveParameter",
+  -- hide tabline colors: base tab, selected, BG
+  "TabLine", "TabLineSel", "TabLineFill"
 })
 vim.api.nvim_set_hl(0, "LineNr", { fg = "#aaaaaa" })
 
@@ -395,6 +398,39 @@ end)
 -- mini!
 local miniicons = require("mini.icons")
 now(function() miniicons.setup() end)
+now(function() require("mini.tabline").setup() end)
+now(function() require('mini.git').setup() end)
+now(function() require('mini.diff').setup() end)
+now(function()
+  -- https://nvim-mini.org/mini.nvim/doc/mini-statusline.html#ministatusline-example-content-defaultcontent
+  function statusline()
+    local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
+    local git           = MiniStatusline.section_git({ trunc_width = 40 })
+    local diff          = MiniStatusline.section_diff({ trunc_width = 75 })
+    local diagnostics   = MiniStatusline.section_diagnostics({ trunc_width = 75 })
+    local lsp           = MiniStatusline.section_lsp({ trunc_width = 75 })
+    -- local filename      = MiniStatusline.section_filename({ trunc_width = 140 })
+    local fileinfo      = MiniStatusline.section_fileinfo({ trunc_width = 120 })
+    local location      = MiniStatusline.section_location({ trunc_width = 75 })
+    local search        = MiniStatusline.section_searchcount({ trunc_width = 75 })
+
+    return MiniStatusline.combine_groups({
+      { hl = mode_hl,                  strings = { mode } },
+      { hl = 'MiniStatuslineDevinfo',  strings = { git, diff, diagnostics, lsp } },
+      '%<', -- Mark general truncate point
+      -- { hl = 'MiniStatuslineFilename', strings = { filename } },
+      '%=', -- End left alignment
+      { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+      { hl = mode_hl,                  strings = { search, location } },
+    })
+  end
+  require("mini.statusline").setup({
+    content = {
+      active = statusline,
+      inactive = statusline,
+    }
+  })
+end)
 later(miniicons.mock_nvim_web_devicons)
 later(function() require('mini.surround').setup() end)
 later(function() require('mini.splitjoin').setup() end)
