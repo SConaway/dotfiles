@@ -1,6 +1,4 @@
 -- TODO:
--- - LSPs
---   - mason setup?
 -- - better undo / cross-session
 -- - spelling dictionary (nvim, neovim, github, etc)
 
@@ -104,7 +102,6 @@ local _gh = function(x) return "https://github.com/" .. x end
 -- install listed plugins
 -- does not configure them
 vim.pack.add({
-  -- _gh("folke/lazydev.nvim") -- TODO: pending LSP setup
   _gh("xiyaowong/transparent.nvim"), -- transparency!!
   _gh("lewis6991/gitsigns.nvim"), -- git integration
   _gh("folke/snacks.nvim"), -- snacks: search pickers, file explorer, indent guides, notifications part 1, UI toggles, statuscolumn additions
@@ -116,6 +113,11 @@ vim.pack.add({
   _gh("MunifTanjim/nui.nvim"), -- needed for noice
   _gh("folke/noice.nvim"), -- noice: new UI for messages, cmdline, popup
   _gh("MeanderingProgrammer/render-markdown.nvim"), -- markdown!
+
+  _gh("neovim/nvim-lspconfig"), -- adds many LSP configs
+  _gh("mason-org/mason.nvim"), -- helps install LSPs/linters/formatters
+  _gh("mason-org/mason-lspconfig.nvim"), -- mason pt. 2
+  _gh("folke/lazydev.nvim"), -- enhances Lua LSP
 })
 if not isWork then
   vim.pack.add({
@@ -209,7 +211,7 @@ later(function()
   Snacks.toggle.option("spell", { name = "󰓆 Spell Checking" }):map("<leader>us")
   Snacks.toggle.option("wrap", { name = "󰖶 Wrap Long Lines" }):map("<leader>uw")
   Snacks.toggle.option("list", { name = "󱁐 List (Visible Whitespace)" }):map("<leader>ul")
-  Snacks.toggle.diagnostics({ name = " Diagnostics" }):map("<leader>uD") -- TODO: test this
+  Snacks.toggle.diagnostics({ name = " Diagnostics" }):map("<leader>uD")
   Snacks.toggle.indent({ name = "Indent" }):map("<leader>ui")
   Snacks.toggle
     .new({
@@ -297,7 +299,7 @@ later(function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
       end,
     })
-    :map("<leader>uh") -- TODO: test this
+    :map("<leader>uh")
   Snacks.toggle
     .new({
       id = "inline_hints_end",
@@ -520,7 +522,29 @@ now(function() require("guess-indent").setup() end)
 later(function() require("render-markdown").setup({}) end)
 
 -- configure LSPs
+later(function()
+  local function exists(p) return vim.fn.executable(p) == 1 end
+  local servers = {
+    "lua_ls",
+    "basedpyright", -- pyright doesn't include inlay hint support
+  }
+  if exists("go") then table.insert(servers, "gopls") end
+  if exists("nix") then table.insert(servers, "nil_ls") end
 
+  require("mason").setup({
+    pip = {
+      upgrade_pip = true,
+    },
+  })
+  require("mason-lspconfig").setup({
+    ensure_installed = servers,
+  })
+  require("lazydev").setup({})
+
+  vim.lsp.codelens.enable(true)
+  vim.lsp.linked_editing_range.enable(true)
+  vim.lsp.inlay_hint.enable(true)
+end)
 --
 ---
 
@@ -548,6 +572,8 @@ map("n", "<leader>pc", function()
   vim.pack.del(packages)
 end, {desc = "Clean Plugins"})
 map("n", "<leader>pu", vim.pack.update, {desc = "Update Plugins"})
+map("n", "<leader>pm", ":Mason<cr>", {desc = "Open Mason"})
+map("n", "<leader>li", ":checkhealth vim.lsp<cr>", {desc = "LSP Info"})
 later(function()
   vim.keymap.del({ 'i', 's' }, '<Tab>')
   vim.keymap.del({ 'i', 's' }, '<S-Tab>')
