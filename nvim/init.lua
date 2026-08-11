@@ -68,7 +68,10 @@ vim.g.transparent_groups = vim.list_extend(vim.g.transparent_groups or {}, {
   "Pmenu", "PmenuSel", "PmenuSbar", "PmenuThumb",  -- native popups
   "MiniCompletionActiveParameter",
   -- hide tabline colors: base tab, selected, BG
-  "TabLine", "TabLineSel", "TabLineFill"
+  "TabLine", "TabLineSel", "TabLineFill",
+  -- hide code and h3+ background:
+  "RenderMarkdownCode", "RenderMarkdownH3Bg",
+  "RenderMarkdownH4Bg", "RenderMarkdownH5Bg", "RenderMarkdownH6Bg"
 })
 vim.api.nvim_set_hl(0, "LineNr", { fg = "#aaaaaa" })
 
@@ -112,6 +115,7 @@ vim.pack.add({
   _gh("nmac427/guess-indent.nvim"), -- guess-indent to auto configure the indentation settings
   _gh("MunifTanjim/nui.nvim"), -- needed for noice
   _gh("folke/noice.nvim"), -- noice: new UI for messages, cmdline, popup
+  _gh("MeanderingProgrammer/render-markdown.nvim"), -- markdown!
 })
 if not isWork then
   vim.pack.add({
@@ -512,6 +516,8 @@ later(function() require("todo-comments").setup() end)
 
 -- guess-indent
 now(function() require("guess-indent").setup() end)
+
+later(function() require("render-markdown").setup({}) end)
 
 -- configure LSPs
 
