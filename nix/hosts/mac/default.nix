@@ -201,6 +201,7 @@
     "docker-desktop"
     "emojipedia"
     "firefox"
+    "fuse-t"
     "handbrake-app"
     "imazing"
     "logitech-g-hub"
@@ -251,7 +252,6 @@
       google-chrome
       iina
       iterm2
-      jellyfin-desktop
       keka
       melonds
       moreutils
