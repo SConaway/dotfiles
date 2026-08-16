@@ -136,10 +136,14 @@ alias nfu='nix flake update'
 alias claude="claude --allow-dangerously-skip-permissions"
 alias cc='claude'
 
+zmodload zsh/parameter 2>/dev/null
+
 rerun-last-command() {
   # get last command
   # this will replace current $BUFFER if set
-  LBUFFER="$(fc -ln -1)"
+  # use $history (raw, unescaped) instead of `fc -l`, which escapes
+  # embedded newlines in multi-line commands as literal "\n"
+  LBUFFER="${history[$((HISTCMD-1))]}"
   zle && zle redisplay
 }
 
@@ -148,6 +152,14 @@ bindkey '^[^[^[' rerun-last-command
 bindkey '^[^[^[^[' rerun-last-command
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
+
+insert-newline() {
+  LBUFFER+=$'\n'
+}
+zle -N insert-newline
+bindkey '^[[27;2;13~' insert-newline # shift-enter
+bindkey '^[[27;3;13~' insert-newline # option-enter (inferred from xterm modifier codes; verify with `cat -v`)
+bindkey '^[^M' insert-newline # option-enter (ESC + CR, macOS "meta sends escape" convention; confirmed via `cat -v`)
 
 function rebuild() {
   local oldpwd="$PWD"
