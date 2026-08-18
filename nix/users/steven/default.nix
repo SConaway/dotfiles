@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
-  isDarwin = pkgs.stdenv.isDarwin;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   homeDir = if isDarwin then "/Users/steven" else "/home/steven";
 in
 {
@@ -18,10 +18,12 @@ in
   programs.home-manager.enable = true;
 
   # Link other config files
-  xdg.configFile."aerospace/aerospace.toml".source =
-    ../../modules/files/config/aerospace/aerospace.toml;
-  xdg.configFile."aerospace-swipe/config.json".source =
-    ../../modules/files/config/aerospace-swipe/config.json;
-  xdg.configFile."alacritty/alacritty.toml".source =
-    ../../modules/files/config/alacritty/alacritty.toml;
+  xdg.configFile = lib.mkIf isDarwin {
+    "aerospace/aerospace.toml".source =
+      ../../modules/files/config/aerospace/aerospace.toml;
+    "aerospace-swipe/config.json".source =
+      ../../modules/files/config/aerospace-swipe/config.json;
+    "alacritty/alacritty.toml".source =
+      ../../modules/files/config/alacritty/alacritty.toml;
+  };
 }
