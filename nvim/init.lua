@@ -1,8 +1,15 @@
 -- TODO:
 -- - better undo / cross-session
 -- - plugin management, a bit
+-- - reduce LSP spam in bottom right
 -- - pairs sucks
--- - tab line: focused, modified
+-- - tab line: modified
+-- - status line: clean it up, i don'tn really care about half the stuff here
+--   - no line endings, size
+--   - the git diff is unclear to me
+--   - ( M) means what?
+--   - use `/` rather than `|` for line/cursor number
+--   - what is `0/11` next to size
 -- - spelling dictionary (nvim, neovim, github, etc)
 
 --- for convenience
@@ -72,9 +79,8 @@ vim.g.transparent_groups = vim.list_extend(vim.g.transparent_groups or {}, {
   "PmenuSbar",
   "PmenuThumb", -- native popups
   "MiniCompletionActiveParameter",
-  -- hide tabline colors: base tab, selected, BG
+  -- hide tabline colors: base tab style, BG
   "TabLine",
-  "TabLineSel",
   "TabLineFill",
   -- hide code and h3+ background:
   "RenderMarkdownCode",
@@ -83,7 +89,7 @@ vim.g.transparent_groups = vim.list_extend(vim.g.transparent_groups or {}, {
   "RenderMarkdownH5Bg",
   "RenderMarkdownH6Bg",
 })
-vim.api.nvim_set_hl(0, "LineNr", { fg = "#aaaaaa" })
+vim.api.nvim_set_hl(0, "LineNr", { fg = "#999999" })
 
 -- wrap settings:
 o.breakindent = true
@@ -130,6 +136,13 @@ vim.pack.add {
   _gh "mason-org/mason.nvim", -- helps install LSPs/linters/formatters
   _gh "mason-org/mason-lspconfig.nvim", -- mason pt. 2
   _gh "folke/lazydev.nvim", -- enhances Lua LSP
+  _gh "chrisgrieser/nvim-lsp-endhints", -- move inlay hints to end of line
+  _gh "neovim/nvim-lspconfig", -- adds many LSP configs
+  _gh "mason-org/mason.nvim", -- helps install LSPs/linters/formatters
+  _gh "mason-org/mason-lspconfig.nvim", -- mason pt. 2
+  _gh "WhoIsSethDaniel/mason-tool-installer.nvim", -- require installing formatters, etc.
+  _gh "folke/lazydev.nvim", -- enhances Lua LSP
+  _gh "stevearc/conform.nvim", -- format!
   _gh "chrisgrieser/nvim-lsp-endhints", -- move inlay hints to end of line
 }
 if not isWork then
@@ -528,6 +541,10 @@ later(function()
     "lua_ls",
     "basedpyright", -- pyright doesn't include inlay hint support
   }
+  local formatters = {
+    "black",
+    "stylua",
+  }
   if exists "go" then table.insert(servers, "gopls") end
   if exists "nix" then table.insert(servers, "nil_ls") end
 
@@ -539,7 +556,51 @@ later(function()
   require("mason-lspconfig").setup {
     ensure_installed = servers,
   }
+  local mti = require "mason-tool-installer"
+  local mti_tools = tableMerge(formatters) -- add other things here
+  mti.setup {
+    ensure_installed = mti_tools,
+  }
+  -- run_on_start runs on `VimEnter` and therefore isn't working here
+  mti.run_on_start() -- same function, just me triggering it manually
+
+  -- enhance Lua / `nvim` LSP
   require("lazydev").setup {}
+
+  -- set up formatting!!
+  require("conform").setup {
+    -- Map of filetype to formatters
+    formatters_by_ft = {
+      lua = { "stylua" },
+      -- Conform will run multiple formatters sequentially
+      go = { "goimports", "gofmt" },
+      python = { "isort", "black" },
+      -- Use the "*" filetype to run formatters on all filetypes.
+      -- ["*"] = { "codespell" },
+      -- Use the "_" filetype to run formatters on filetypes that don't
+      -- have other formatters configured.
+      ["_"] = { "trim_whitespace" },
+    },
+    -- Set this to change the default values when calling conform.format()
+    -- This will also affect the default values for format_on_save/format_after_save
+    default_format_opts = {
+      lsp_format = "fallback",
+    },
+    -- If this is set, Conform will run the formatter on save.
+    -- It will pass the table to conform.format().
+    -- This can also be a function that returns the table.
+    format_on_save = {
+      -- I recommend these options. See :help conform.format for details.
+      lsp_format = "fallback",
+      timeout_ms = 500,
+    },
+    -- Set the log level. Use `:ConformInfo` to see the location of the log file.
+    log_level = vim.log.levels.ERROR,
+    -- Conform will notify you when a formatter errors
+    notify_on_error = true,
+    -- Conform will notify you when no formatters are available for the buffer
+    notify_no_formatters = true,
+  }
 
   vim.lsp.codelens.enable(true)
   vim.lsp.linked_editing_range.enable(true)
