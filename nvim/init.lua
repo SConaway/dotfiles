@@ -1,5 +1,8 @@
 -- TODO:
 -- - better undo / cross-session
+-- - plugin management, a bit
+-- - pairs sucks
+-- - tab line: focused, modified
 -- - spelling dictionary (nvim, neovim, github, etc)
 
 --- for convenience
@@ -118,6 +121,7 @@ vim.pack.add({
   _gh("mason-org/mason.nvim"), -- helps install LSPs/linters/formatters
   _gh("mason-org/mason-lspconfig.nvim"), -- mason pt. 2
   _gh("folke/lazydev.nvim"), -- enhances Lua LSP
+  _gh("chrisgrieser/nvim-lsp-endhints"), -- move inlay hints to end of line
 })
 if not isWork then
   vim.pack.add({
@@ -295,8 +299,8 @@ later(function()
       id = "inline_hints",
       name = " LSP Inline Hints",
       get = vim.lsp.inlay_hint.is_enabled,
-      set = function()
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+      set = function(state)
+        vim.lsp.inlay_hint.enable(state)
       end,
     })
     :map("<leader>uh")
@@ -305,14 +309,14 @@ later(function()
       id = "inline_hints_end",
       name = " LSP Inline Hints at Line End",
       get = function()
-        return vim.g.snacks_toggle_lsp_hints_end
+        return g.snacks_toggle_lsp_hints_end
       end,
-      set = function()
+      set = function(state)
         require("lsp-endhints").toggle()
-        vim.g.snacks_toggle_lsp_hints_end = not vim.g.snacks_toggle_lsp_hints_end
+        g.snacks_toggle_lsp_hints_end = state
       end,
     })
-    :map("<leader>uH") -- TODO: test this
+    :map("<leader>uH")
   Snacks.toggle
     .new({
       id = "transparency",
@@ -321,6 +325,14 @@ later(function()
       set = function() require("transparent").toggle() end,
     })
     :map("<leader>ut") -- transparency!
+  Snacks.toggle
+    .new({
+      id = "rendermarkdown",
+      name = "Render Markdown",
+      get = function() return require("render-markdown").get() end,
+      set = function() require("render-markdown").toggle() end,
+    })
+    :map("<leader>um") -- markdown preview
 
   map("n", "<leader>fC", Snacks.picker.commands, { desc = "Find Commands" })
   map("n", "<leader>fc", Snacks.picker.grep_word, { desc = "Find Word" })
@@ -544,6 +556,11 @@ later(function()
   vim.lsp.codelens.enable(true)
   vim.lsp.linked_editing_range.enable(true)
   vim.lsp.inlay_hint.enable(true)
+
+  require("lsp-endhints").setup({
+    autoEnableHints = true,
+  })
+  g.snacks_toggle_lsp_hints_end = true
 end)
 --
 ---
