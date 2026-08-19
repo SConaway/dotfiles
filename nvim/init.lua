@@ -332,7 +332,15 @@ later(function()
       get = function() return require("render-markdown").get() end,
       set = function() require("render-markdown").toggle() end,
     })
-    :map("<leader>um") -- markdown preview
+    :map("<leader>um") -- markdown preview!
+  Snacks.toggle
+    .new({
+      id = "pairs",
+      name = "Autopairs",
+      get = function() return not g.minipairs_disable end,
+      set = function(state) g.minipairs_disable = not state end,
+    })
+    :map("<leader>up")
 
   map("n", "<leader>fC", Snacks.picker.commands, { desc = "Find Commands" })
   map("n", "<leader>fc", Snacks.picker.grep_word, { desc = "Find Word" })
