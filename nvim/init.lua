@@ -4,12 +4,10 @@
 -- - reduce LSP spam in bottom right
 -- - pairs sucks
 -- - tab line: modified
--- - status line: clean it up, i don'tn really care about half the stuff here
---   - no line endings, size
+-- - status line: clean it up
 --   - the git diff is unclear to me
---   - ( M) means what?
---   - use `/` rather than `|` for line/cursor number
---   - what is `0/11` next to size
+--   - add the little progress bar
+--   - add clock!
 -- - spelling dictionary (nvim, neovim, github, etc)
 
 --- for convenience
@@ -418,25 +416,70 @@ now(function() require("mini.git").setup() end)
 now(function() require("mini.diff").setup() end)
 now(function()
   -- https://nvim-mini.org/mini.nvim/doc/mini-statusline.html#ministatusline-example-content-defaultcontent
-  function statusline()
+  -- much of this is stolen from `mini.nvim/lua/mini/statusline.lua` itself
+  local function statusline()
     local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
     local git = MiniStatusline.section_git { trunc_width = 40 }
     local diff = MiniStatusline.section_diff { trunc_width = 75 }
     local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
     local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
-    -- local filename      = MiniStatusline.section_filename({ trunc_width = 140 })
-    local fileinfo = MiniStatusline.section_fileinfo { trunc_width = 120 }
-    local location = MiniStatusline.section_location { trunc_width = 75 }
-    local search = MiniStatusline.section_searchcount { trunc_width = 75 }
+    -- local filename = MiniStatusline.section_filename { trunc_width = 140 }
+    local fileinfo = function()
+      local filetype = vim.bo.filetype
 
+      local sizeBytes = math.max(vim.fn.line2byte(vim.fn.line "$" + 1) - 1, 0)
+      local size = ""
+      if sizeBytes < 1024 then
+        size = string.format("%dB", sizeBytes)
+      elseif sizeBytes < 1048576 then
+        size = string.format("%.2fKiB", sizeBytes / 1024)
+      else
+        size = string.format("%.2fMiB", sizeBytes / 1048576)
+      end
+      return string.format("%s%s %s", miniicons.get("filetype", filetype), filetype, size)
+    end
+    local search = function()
+      if vim.v.hlsearch == 0 then return "" end
+      -- `searchcount()` can return errors because it is evaluated very often in
+      -- statusline. For example, when typing `/` followed by `\(`, it gives E54.
+      local ok, s_count = pcall(vim.fn.searchcount, { recompute = true })
+      if not ok or s_count.current == nil or s_count.total == 0 then return "" end
+
+      if s_count.incomplete == 1 then return "?/?" end
+
+      local too_many = ">" .. s_count.maxcount
+      local current = s_count.current > s_count.maxcount and too_many or s_count.current
+      local total = s_count.total > s_count.maxcount and too_many or s_count.total
+      return "  " .. current .. "/" .. total
+    end
     return MiniStatusline.combine_groups {
       { hl = mode_hl, strings = { mode } },
-      { hl = "MiniStatuslineDevinfo", strings = { git, diff, diagnostics, lsp } },
+      {
+        hl = "MiniStatuslineDevinfo",
+        strings = {
+          git,
+          " ",
+          diff,
+          " ",
+          diagnostics,
+          " ",
+          lsp,
+        },
+      },
       "%<", -- Mark general truncate point
-      -- { hl = 'MiniStatuslineFilename', strings = { filename } },
-      "%=", -- End left alignment
-      { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
-      { hl = mode_hl, strings = { search, location } },
+      "%=", -- center!
+      -- { hl = "MiniStatuslineFilename", strings = { filename } },
+      "%=", -- center!
+      { hl = "MiniStatuslineFileinfo", strings = { fileinfo() } },
+      search(),
+      " ",
+      {
+        hl = mode_hl,
+        strings = {
+          -- location
+          "%l/%v",
+        },
+      },
     }
   end
   require("mini.statusline").setup {
