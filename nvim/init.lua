@@ -589,11 +589,14 @@ later(function()
     -- If this is set, Conform will run the formatter on save.
     -- It will pass the table to conform.format().
     -- This can also be a function that returns the table.
-    format_on_save = {
-      -- I recommend these options. See :help conform.format for details.
-      lsp_format = "fallback",
-      timeout_ms = 500,
-    },
+    format_on_save = function(bufnr)
+      -- return nothing to skip
+      if g.disable_autoformat or vim.b[bufnr].disable_autoformat then return end
+      return {
+        lsp_format = "fallback",
+        timeout_ms = 500,
+      }
+    end,
     -- Set the log level. Use `:ConformInfo` to see the location of the log file.
     log_level = vim.log.levels.ERROR,
     -- Conform will notify you when a formatter errors
