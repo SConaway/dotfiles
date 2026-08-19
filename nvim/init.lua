@@ -63,7 +63,7 @@ o.signcolumn = "yes" -- set to yes to prevent shifting once gitsigns loads
 o.cursorline = true
 
 o.list = true
-o.listchars = "trail:·,tab:» "
+o.listchars = "trail:·,tab:-»"
 o.fillchars = "eob: " -- Don't show `~` outside of buffer
 o.spell = true
 
