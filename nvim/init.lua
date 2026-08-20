@@ -95,11 +95,22 @@ o.breakindentopt = "shift:3" -- let's try 3 so it's in-between and jarring
 
 -- tame auto-comment (`formatoptions`)
 vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("tame-formatoptions", { clear = true }),
   pattern = "*",
   callback = function()
     vim.opt_local.formatoptions:remove { "r" }
     -- o = auto-comment on `o`/`O` in normal mode
     -- r = auto-comment on <Enter> in insert mode
+  end,
+})
+
+-- live-reload init.lua on save
+vim.api.nvim_create_autocmd("BufWritePost", {
+  group = vim.api.nvim_create_augroup("live-reload-init", { clear = true }),
+  pattern = vim.env.MYVIMRC,
+  callback = function()
+    vim.cmd.source(vim.env.MYVIMRC)
+    vim.notify("init.lua reloaded", vim.log.levels.INFO)
   end,
 })
 
@@ -648,7 +659,8 @@ later(function()
     notify_no_formatters = true,
   }
 
-  vim.lsp.codelens.enable(true)
+  -- this is starting to annoy me!
+  -- vim.lsp.codelens.enable(true)
   vim.lsp.linked_editing_range.enable(true)
   vim.lsp.inlay_hint.enable(true)
 
@@ -687,6 +699,7 @@ map("n", "<leader>pu", vim.pack.update, { desc = "Update Plugins" })
 map("n", "<leader>pm", ":Mason<cr>", { desc = "Open Mason" })
 map("n", "<leader>li", ":checkhealth vim.lsp<cr>", { desc = "LSP Info" })
 later(function()
-  vim.keymap.del({ "i", "s" }, "<Tab>")
-  vim.keymap.del({ "i", "s" }, "<S-Tab>")
+  -- pcall: on config reload these may already be gone
+  pcall(vim.keymap.del, { "i", "s" }, "<Tab>")
+  pcall(vim.keymap.del, { "i", "s" }, "<S-Tab>")
 end)
