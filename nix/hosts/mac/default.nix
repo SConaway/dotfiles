@@ -194,6 +194,7 @@
   homebrew.casks = [
     "anki"
     "antigravity-cli"
+    "arduino-ide"
     "bambu-studio"
     "betterdisplay"
     "calibre"
