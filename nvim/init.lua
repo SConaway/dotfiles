@@ -3,6 +3,7 @@
 -- - plugin management, a bit
 -- - reduce LSP spam in bottom right
 -- - pairs sucks
+-- - save without formatting?
 -- - tab line: modified
 -- - status line: clean it up
 --   - the git diff is unclear to me
@@ -153,6 +154,7 @@ vim.pack.add {
   _gh "folke/lazydev.nvim", -- enhances Lua LSP
   _gh "stevearc/conform.nvim", -- format!
   _gh "chrisgrieser/nvim-lsp-endhints", -- move inlay hints to end of line
+  _gh "folke/trouble.nvim", -- diagnostics
 }
 if not isWork then
   vim.pack.add {
@@ -160,8 +162,8 @@ if not isWork then
   }
 end
 local minimisc = require "mini.misc"
-now = function(f) minimisc.safely("now", f) end
-later = function(f) minimisc.safely("later", f) end
+local now = function(f) minimisc.safely("now", f) end
+local later = function(f) minimisc.safely("later", f) end
 now(minimisc.setup_restore_cursor)
 
 -- snacks
@@ -240,7 +242,7 @@ later(function()
   Snacks.toggle.option("wrap", { name = "󰖶 Wrap Long Lines" }):map "<leader>uw"
   Snacks.toggle.option("list", { name = "󱁐 List (Visible Whitespace)" }):map "<leader>ul"
   Snacks.toggle.diagnostics({ name = " Diagnostics" }):map "<leader>uD"
-  Snacks.toggle.indent({ name = "Indent" }):map "<leader>ui"
+  Snacks.toggle.indent():map "<leader>ui"
   Snacks.toggle
     .new({
       id = "git_blame",
@@ -584,7 +586,7 @@ end)
 later(function() require("todo-comments").setup() end)
 
 -- guess-indent
-now(function() require("guess-indent").setup() end)
+now(function() require("guess-indent").setup {} end)
 
 later(function() require("render-markdown").setup {} end)
 
@@ -668,6 +670,20 @@ later(function()
     autoEnableHints = true,
   }
   g.snacks_toggle_lsp_hints_end = true
+
+  require("trouble").setup {}
+
+  map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
+  map("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
+  map("n", "grs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
+  map(
+    "n",
+    "<leader>cl",
+    "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+    { desc = "LSP Definitions / references / ... (Trouble)" }
+  )
+  map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
+  map("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
 end)
 --
 ---
