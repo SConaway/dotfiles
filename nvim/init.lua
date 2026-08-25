@@ -397,10 +397,7 @@ later(function()
       { "<leader>p", group = "plugins" }, -- group
       { "<leader>t", group = "terminal" }, -- group
       { "<esc><esc>", hidden = true }, -- hide popup for <esc><esc> -> :noh
-      {
-        mode = { "n", "v" },
-        { "s", group = "Surrounding" },
-      },
+      { "s", group = "Surrounding" },
     },
   }
 end)
