@@ -2,6 +2,7 @@
 -- - better undo / cross-session
 -- - plugin management, a bit
 -- - reduce LSP spam in bottom right
+-- - install tree-sitter grammars
 -- - pairs sucks
 -- - save without formatting?
 -- - tab line: modified
@@ -152,6 +153,7 @@ vim.pack.add {
   _gh "mason-org/mason-lspconfig.nvim", -- mason pt. 2
   _gh "WhoIsSethDaniel/mason-tool-installer.nvim", -- require installing formatters, etc.
   _gh "folke/lazydev.nvim", -- enhances Lua LSP
+  _gh "dchinmay2/clangd_extensions.nvim", -- clangd stuff!
   _gh "stevearc/conform.nvim", -- format!
   _gh "chrisgrieser/nvim-lsp-endhints", -- move inlay hints to end of line
   _gh "folke/trouble.nvim", -- diagnostics
@@ -577,7 +579,7 @@ now(function()
     presets = {
       command_palette = true, -- position the cmdline and popupmenu together
       long_message_to_split = true, -- long messages will be sent to a split
-      lsp_doc_border = false, -- add a border to hover docs and signature help
+      lsp_doc_border = true, -- add a border to hover docs and signature help
     },
   }
 end)
@@ -593,13 +595,20 @@ later(function() require("render-markdown").setup {} end)
 -- configure LSPs
 later(function()
   local function exists(p) return vim.fn.executable(p) == 1 end
+  -- stolen from astrocommunity.pack.cpp:
+  local uname = (vim.uv or vim.loop).os_uname()
+  local is_linux_arm = uname.sysname == "Linux" and (uname.machine == "aarch64" or vim.startswith(uname.machine, "arm"))
   local servers = {
     "lua_ls",
     "basedpyright", -- pyright doesn't include inlay hint support
   }
+  if not is_linux_arm then table.insert(servers, "clangd") end -- doesn't install on arm linux?
   local formatters = {
     "black",
     "stylua",
+  }
+  local tools = {
+    "codelldb",
   }
   if exists "go" then table.insert(servers, "gopls") end
   if exists "nix" then table.insert(servers, "nil_ls") end
@@ -613,7 +622,7 @@ later(function()
     ensure_installed = servers,
   }
   local mti = require "mason-tool-installer"
-  local mti_tools = tableMerge(formatters) -- add other things here
+  local mti_tools = tableMerge(formatters, tools) -- add other things here
   mti.setup {
     ensure_installed = mti_tools,
   }
@@ -684,6 +693,9 @@ later(function()
   )
   map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
   map("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
+  map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+  map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+  map("n", "gs", vim.lsp.buf.signature_help, { desc = "Open signature help" })
 end)
 --
 ---
