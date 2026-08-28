@@ -185,6 +185,7 @@
     "steipete/tap"
   ];
   homebrew.brews = [
+    "bear" # doesn't work from `nix`
     "mas" # here for homebrew.masApps
     "antoniorodr/memo/memo"
     "steipete/tap/imsg"
@@ -198,6 +199,7 @@
     "bambu-studio"
     "betterdisplay"
     "calibre"
+    "claude"
     "discord"
     "docker-desktop"
     "emojipedia"
@@ -226,7 +228,6 @@
     "lm-studio"
     "visual-studio-code"
     "vlc"
-    "whatcable"
     "whatsapp"
     "zen"
   ];
