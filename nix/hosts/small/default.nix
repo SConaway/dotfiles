@@ -35,6 +35,13 @@
   services.qemuGuest.enable = true;
   services.fstrim.enable = true;
 
+  # qxl's DRM/TTM console driver can deadlock (buffer eviction stuck on a
+  # GPU fence that never signals, which blocks PID 1 itself via
+  # drm_modeset_lock) leaving the guest fully unresponsive until a hard
+  # power-cycle from the hypervisor. This host is headless VNC/serial-only,
+  # so drop the accelerated console entirely rather than risk the hang.
+  boot.blacklistedKernelModules = [ "qxl" ];
+
   services.tailscale.enable = true;
 
   system.autoUpgrade.enable = lib.mkForce false;
