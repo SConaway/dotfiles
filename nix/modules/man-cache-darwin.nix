@@ -108,6 +108,39 @@
         homebrew = "/opt/homebrew/share/man";
         local = "/usr/local/share/man";
       };
+
+      # Xcode/CommandLineTools man pages (clang, xcodebuild, ...) -- these
+      # need a third mechanism, distinct from both nix derivations above and
+      # externalManSources above. externalManSources still works for a
+      # *directory whose path is fixed* even though its *contents* are
+      # mutable (mandb rebuilds the cache every activation, but always
+      # against the same literal path, so a plain MANDB_MAP for that literal
+      # path is knowable at eval time). Here the path itself is what's
+      # mutable: it's wherever `xcode-select -p` currently points --
+      # /Library/Developer/CommandLineTools, /Applications/Xcode.app/...,
+      # /Applications/Xcode-beta.app/..., and it can change any time the
+      # user runs `xcode-select -s`, entirely outside of nix or even of a
+      # `darwin-rebuild switch`.
+      #
+      # A literal path that can't be known at eval time can't appear on the
+      # left of a MANDB_MAP/MANDATORY_MANPATH directive, since those files
+      # are only regenerated on switch. So instead of pointing man-db at the
+      # real (unknowable) path, we point it at a fixed alias symlink under
+      # externalManCacheDir -- itself a literal, eval-time-known path -- and
+      # have the activation script re-target that symlink at whatever
+      # `xcode-select -p` resolves to, every activation. `MANDATORY_MANPATH`
+      # (below, in extraConfig) is what actually pulls the alias into
+      # man-db's search path at all: unlike externalManSources' real
+      # sources, nothing about $PATH would ever lead man-db to a directory
+      # under ~/.cache on its own.
+      #
+      # Values are relative to `xcode-select -p`; add another entry here if
+      # a tool's man page turns up somewhere else under the developer dir
+      # (e.g. a platform SDK).
+      xcodeManSources = {
+        xcode-usr = "usr/share/man";
+        xcode-toolchain = "Toolchains/XcodeDefault.xctoolchain/usr/share/man";
+      };
     in
     {
       # Cache for home.packages (nvim, zsh, atuin, ...). This is the one
@@ -115,6 +148,30 @@
       # home-manager's own man module already knows how, we just have to
       # turn it on.
       programs.man.generateCaches = true;
+
+      # None of the above matters for a bare `man`/`apropos`/`whatis` typed
+      # at the prompt unless that word actually resolves to *this* man-db.
+      # On macOS, /etc/zprofile's path_helper puts /usr/bin ahead of
+      # anything nix adds later, so those commands otherwise hit Apple's
+      # own man/apropos -- a completely separate implementation (BSD-style
+      # script, not GNU man-db) that has no notion of ~/.manpath or
+      # MANDB_MAP at all. It wouldn't ignore the caches built by this file,
+      # it just never looks at the config that points to them.
+      #
+      # Fixed generally (not just for man/apropos/whatis) by pulling the
+      # nix profile bin dirs back to the front of PATH. `lib.mkAfter` pins
+      # this to the end of the generated .zshrc so it runs after
+      # path_helper and any other PATH-setting has already happened;
+      # `typeset -U path` keeps the array deduplicated so this doesn't
+      # leave duplicate entries behind.
+      programs.zsh.initContent = lib.mkAfter ''
+        typeset -U path
+        path=(
+          ${config.home.profileDirectory}/bin
+          /run/current-system/sw/bin
+          $path
+        )
+      '';
 
       # Wires the two nix-managed caches (home.packages via
       # generateCaches above, environment.systemPackages via
@@ -132,6 +189,12 @@
         ''
         + lib.concatStrings (
           lib.mapAttrsToList (name: src: "MANDB_MAP ${src} ${externalManCacheDir}/${name}\n") externalManSources
+        )
+        + lib.concatStrings (
+          lib.mapAttrsToList (name: _: ''
+            MANDATORY_MANPATH ${externalManCacheDir}/${name}-src
+            MANDB_MAP ${externalManCacheDir}/${name}-src ${externalManCacheDir}/${name}
+          '') xcodeManSources
         );
 
       # Rebuilds the mandb caches for externalManSources on every home-manager
@@ -144,43 +207,75 @@
       home.activation.manCacheExternal = lib.hm.dag.entryAfter [ "writeBoundary" ] (
         ''
           $DRY_RUN_CMD mkdir -p "${externalManCacheDir}"
+
+          # Shared by the externalManSources loop and the dynamic Xcode
+          # block below: builds/refreshes the alias symlink + mandb cache
+          # for one name/real-directory pair.
+          #
+          # Building this straightforwardly -- `mandb -C conf --create
+          # "$src"` with conf mapping "$src" directly to our cache dir, the
+          # same recipe systemManCache above uses -- silently does NOT work
+          # for /usr/share/man or /usr/local/share/man (though it does for
+          # /opt/homebrew/share/man). Verified by hand: man-db still tries
+          # to write its cache under /var/cache/man, which doesn't exist on
+          # macOS and isn't created by anything, and fails without ever
+          # consulting our MANDB_MAP override. This is man-db upstream's own
+          # doing, not a nixpkgs packaging bug: it hardcodes a handful of
+          # canonical FHS paths (visible as MANDB_MAP lines already present
+          # in its own default man_db.conf) to a single systemwide cache
+          # location, apparently so any process running mandb against one
+          # of them lands in the same place regardless of who's asking --
+          # and it enforces this by exact string match on the source path,
+          # ignoring a -C override for cache *creation* against that
+          # literal path specifically.
+          #
+          # Building against a symlink alias instead sidesteps the match
+          # (the alias's path string doesn't equal the hardcoded one),
+          # while the resulting cache is byte-for-byte what a "real" build
+          # against the source would have produced, since mandb only cares
+          # about the alias's contents, not its name. Lookups through
+          # MANDB_MAP for the real source (externalManSources, via
+          # extraConfig above) or through the alias itself
+          # (xcodeManSources, via MANDATORY_MANPATH in extraConfig) then
+          # work fine either way, because those are plain config-driven
+          # reads, not cache-creation calls.
+          build_external_man_cache() {
+            local name="$1" src="$2"
+            local alias="${externalManCacheDir}/$name-src"
+            local conf="${externalManCacheDir}/$name.conf"
+            $DRY_RUN_CMD ln -sfn "$src" "$alias"
+            printf 'MANDB_MAP %s %s\n' "$alias" "${externalManCacheDir}/$name" > "$conf"
+            $DRY_RUN_CMD ${config.programs.man.package}/bin/mandb -C "$conf" --no-straycats --create "$alias" >/dev/null
+          }
         ''
         + lib.concatStrings (
           lib.mapAttrsToList (name: src: ''
             if [ -d "${src}" ]; then
-              # Building this straightforwardly -- `mandb -C conf --create
-              # "${src}"` with conf mapping "${src}" directly to our cache
-              # dir, the same recipe systemManCache above uses -- silently
-              # does NOT work for /usr/share/man or /usr/local/share/man
-              # (though it does for /opt/homebrew/share/man). Verified by
-              # hand: man-db still tries to write its cache under
-              # /var/cache/man, which doesn't exist on macOS and isn't
-              # created by anything, and fails without ever consulting our
-              # MANDB_MAP override. This is man-db upstream's own doing, not
-              # a nixpkgs packaging bug: it hardcodes a handful of canonical
-              # FHS paths (visible as MANDB_MAP lines already present in
-              # its own default man_db.conf) to a single systemwide cache
-              # location, apparently so any process running mandb against
-              # one of them lands in the same place regardless of who's
-              # asking -- and it enforces this by exact string match on the
-              # source path, ignoring a -C override for cache *creation*
-              # against that literal path specifically.
-              #
-              # Building against a symlink alias instead sidesteps the
-              # match (the alias's path string doesn't equal the hardcoded
-              # one), while the resulting cache is byte-for-byte what a
-              # "real" build against the source would have produced, since
-              # mandb only cares about the alias's contents, not its name.
-              # Lookups through MANDB_MAP for the *real* source path (see
-              # extraConfig above) then work fine, because that's a plain
-              # config-driven read, not a cache-creation call.
-              alias="${externalManCacheDir}/${name}-src"
-              conf="${externalManCacheDir}/${name}.conf"
-              $DRY_RUN_CMD ln -sfn "${src}" "$alias"
-              printf 'MANDB_MAP %s %s\n' "$alias" "${externalManCacheDir}/${name}" > "$conf"
-              $DRY_RUN_CMD ${config.programs.man.package}/bin/mandb -C "$conf" --no-straycats --create "$alias" >/dev/null
+              build_external_man_cache "${name}" "${src}"
             fi
           '') externalManSources
+        )
+        + ''
+
+          # Xcode/CommandLineTools man pages -- see the xcodeManSources
+          # comment above for why this needs its own block instead of just
+          # being another externalManSources entry. Re-resolved every
+          # activation since `xcode-select -s` can repoint this at any
+          # time, independent of any nix rebuild.
+          xcodeDev=$(/usr/bin/xcode-select -p 2>/dev/null || true)
+        ''
+        + lib.concatStrings (
+          lib.mapAttrsToList (name: relPath: ''
+            if [ -n "$xcodeDev" ] && [ -d "$xcodeDev/${relPath}" ]; then
+              build_external_man_cache "${name}" "$xcodeDev/${relPath}"
+            else
+              # Xcode uninstalled, switched, or this particular man dir
+              # doesn't exist under the active developer dir -- drop any
+              # stale alias so MANDATORY_MANPATH (extraConfig above) just
+              # skips it instead of pointing man-db at a dead symlink.
+              $DRY_RUN_CMD rm -f "${externalManCacheDir}/${name}-src"
+            fi
+          '') xcodeManSources
         )
       );
     };
