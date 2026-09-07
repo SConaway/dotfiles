@@ -1,6 +1,5 @@
 -- TODO:
 -- - better undo / cross-session
--- - plugin management, a bit
 -- - reduce LSP spam in bottom right
 -- - install tree-sitter grammars
 -- - pairs sucks
@@ -587,7 +586,14 @@ later(function() require("todo-comments").setup() end)
 -- guess-indent
 now(function() require("guess-indent").setup {} end)
 
-later(function() require("render-markdown").setup {} end)
+later(
+  function()
+    require("render-markdown").setup {
+      enabled = false,
+      completions = { lsp = { enabled = true } },
+    }
+  end
+)
 
 -- configure LSPs
 later(function()
