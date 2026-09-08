@@ -1,7 +1,7 @@
 local util = require "config.util"
 
 return {
-  src = util.gh "nvim-mini/mini.nvim", -- mini.nvim: session resume, icons, surround, split/join, snippets, completion, autopairs, move shortcuts, cmdline completion
+  src = util.gh "nvim-mini/mini.nvim", -- mini.nvim: session resume, icons, surround, split/join, snippets, completion, move shortcuts, cmdline completion
   config = function()
     require("mini.misc").setup_restore_cursor()
 

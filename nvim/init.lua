@@ -2,7 +2,6 @@
 -- - better undo / cross-session
 -- - reduce LSP spam in bottom right
 -- - install tree-sitter grammars
--- - pairs sucks
 -- - save without formatting?
 -- - tab line: modified
 -- - status line: clean it up

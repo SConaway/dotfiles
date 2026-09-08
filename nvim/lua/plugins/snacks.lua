@@ -77,12 +77,12 @@ return {
     Snacks.toggle.option("spell", { name = "󰓆 Spell Checking" }):map "<leader>us"
     Snacks.toggle.option("wrap", { name = "󰖶 Wrap Long Lines" }):map "<leader>uw"
     Snacks.toggle.option("list", { name = "󱁐 List (Visible Whitespace)" }):map "<leader>ul"
-    Snacks.toggle.diagnostics({ name = " Diagnostics" }):map "<leader>uD"
+    Snacks.toggle.diagnostics({ name = "Diagnostics" }):map "<leader>uD"
     Snacks.toggle.indent():map "<leader>ui"
     Snacks.toggle
       .new({
         id = "git_blame",
-        name = " Git Blame",
+        name = "Git Blame",
         get = function() return require("gitsigns.config").config.current_line_blame end,
         set = function(state) require("gitsigns").toggle_current_line_blame(state) end,
       })
@@ -90,7 +90,7 @@ return {
     Snacks.toggle
       .new({
         id = "git_sign_column",
-        name = " Git Sign Column",
+        name = "Git Sign Column",
         get = function() return require("gitsigns.config").config.signcolumn end,
         set = function(state) require("gitsigns").toggle_signs(state) end,
       })
@@ -98,7 +98,7 @@ return {
     Snacks.toggle
       .new({
         id = "number",
-        name = " Line Numbers",
+        name = "Line Numbers",
         get = function() return vim.wo.number end,
         set = function(state) vim.wo.number = state end,
       })
@@ -106,7 +106,7 @@ return {
     Snacks.toggle
       .new({
         id = "relativenumber",
-        name = " Relative Line Numbers",
+        name = "Relative Line Numbers",
         get = function() return vim.wo.relativenumber end,
         set = function(state)
           -- if no nums shown, enable them too
@@ -134,7 +134,7 @@ return {
     Snacks.toggle
       .new({
         id = "inline_hints",
-        name = " LSP Inline Hints",
+        name = "LSP Inline Hints",
         get = vim.lsp.inlay_hint.is_enabled,
         set = function(state) vim.lsp.inlay_hint.enable(state) end,
       })
@@ -142,7 +142,7 @@ return {
     Snacks.toggle
       .new({
         id = "inline_hints_end",
-        name = " LSP Inline Hints at Line End",
+        name = "LSP Inline Hints at Line End",
         get = function() return vim.g.snacks_toggle_lsp_hints_end end,
         set = function(state)
           require("lsp-endhints").toggle()
@@ -170,8 +170,14 @@ return {
       .new({
         id = "pairs",
         name = "Autopairs",
-        get = function() return not vim.g.minipairs_disable end,
-        set = function(state) vim.g.minipairs_disable = not state end,
+        get = function() return not require("nvim-autopairs").state.disabled end,
+        set = function(state)
+          if state then
+            require("nvim-autopairs").enable()
+          else
+            require("nvim-autopairs").disable()
+          end
+        end,
       })
       :map "<leader>up"
 

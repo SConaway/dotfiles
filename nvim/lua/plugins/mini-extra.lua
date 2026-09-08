@@ -26,8 +26,6 @@ return {
     }
     snippets.start_lsp_server()
 
-    require("mini.pairs").setup()
-
     require("mini.move").setup {
       mappings = {
         -- Move visual selection in Visual mode.

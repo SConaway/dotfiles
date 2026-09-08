@@ -16,6 +16,7 @@ local order = {
   "mini-extra",
   "todo-comments",
   "guess-indent",
+  "autopairs",
   "noice",
   "render-markdown",
   "lsp",
