@@ -11,6 +11,7 @@ return {
     util.gh "dchinmay2/clangd_extensions.nvim", -- clangd stuff!
     util.gh "stevearc/conform.nvim", -- format!
     util.gh "folke/trouble.nvim", -- diagnostics
+    util.gh "b0o/schemastore.nvim", -- SchemaStore!
   },
   defer = true,
   config = function()
@@ -19,15 +20,20 @@ return {
     local uname = (vim.uv or vim.loop).os_uname()
     local is_linux_arm = uname.sysname == "Linux"
       and (uname.machine == "aarch64" or vim.startswith(uname.machine, "arm"))
+    -- installed by `mason-lspconfig`!
     local servers = {
       "lua_ls",
       "basedpyright", -- pyright doesn't include inlay hint support
+      "jsonls",
+      "yamlls",
     }
     if not is_linux_arm then table.insert(servers, "clangd") end -- doesn't install on arm linux?
+    -- installed by `mason-tool-installer`
     local formatters = {
       "black",
       "stylua",
     }
+    -- installed by `mason-tool-installer`
     local tools = {
       "codelldb",
     }
@@ -39,6 +45,8 @@ return {
         upgrade_pip = true,
       },
     }
+    -- install things I like
+    -- keeping this because it auto-enables the LSP servers!
     require("mason-lspconfig").setup {
       ensure_installed = servers,
     }
@@ -100,6 +108,16 @@ return {
       autoEnableHints = true,
     }
     vim.g.snacks_toggle_lsp_hints_end = true
+
+    -- add schemas to jsonls -- skip for yamlls as it provides it
+    vim.lsp.config("jsonls", {
+      settings = {
+        json = {
+          schemas = require("schemastore").json.schemas(),
+          validate = { enable = true },
+        },
+      },
+    })
 
     require("trouble").setup {}
 
