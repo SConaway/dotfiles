@@ -73,8 +73,9 @@ return {
         {
           hl = mode_hl,
           strings = {
-            -- location
-            "%l/%v",
+            -- location -- line num / num lines :: col num / num cols
+            -- num cols stolen from `mini.nvim/lua/mini/statusline.lua :: section_location`
+            '%l/%L :: %v/%-2{virtcol("$") - 1} (%p%%)',
           },
         },
       }

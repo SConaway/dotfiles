@@ -6,7 +6,6 @@
 -- - tab line: modified
 -- - status line: clean it up
 --   - the git diff is unclear to me
---   - add the little progress bar
 --   - add clock!
 -- - spelling dictionary (nvim, neovim, github, etc)
 
