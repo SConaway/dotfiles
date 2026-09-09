@@ -46,15 +46,16 @@ g.transparent_enabled = true
 g.transparent_groups = vim.list_extend(g.transparent_groups or {}, {
   "NormalFloat",
   "FloatBorder",
+  -- catppuccin (built-in to nvim) hardcodes guibg for `TabLine...`
+  -- "TabLine",
+  "TabLineFill",
+  -- "TabLineSel",
   -- hide completion background
   "Pmenu",
   "PmenuSel",
   "PmenuSbar",
   "PmenuThumb", -- native popups
   "MiniCompletionActiveParameter",
-  -- hide tabline colors: base tab style, BG
-  "TabLine",
-  "TabLineFill",
   -- hide code and h3+ background:
   "RenderMarkdownCode",
   "RenderMarkdownH3Bg",

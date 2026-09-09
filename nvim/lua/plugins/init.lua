@@ -8,6 +8,7 @@
 -- (guess-indent) stay un-deferred.
 local order = {
   "transparent",
+  "bufferline",
   "snacks",
   "gitsigns",
   "which-key",

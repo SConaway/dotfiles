@@ -3,7 +3,6 @@
 -- - reduce LSP spam in bottom right
 -- - install tree-sitter grammars
 -- - save without formatting?
--- - tab line: modified
 -- - status line: clean it up
 --   - the git diff is unclear to me
 --   - add clock!

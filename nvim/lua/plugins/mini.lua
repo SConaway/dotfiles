@@ -8,7 +8,6 @@ return {
     local miniicons = require "mini.icons"
     miniicons.setup()
 
-    require("mini.tabline").setup()
     require("mini.git").setup()
     require("mini.diff").setup()
 
