@@ -133,7 +133,7 @@ alias glow="glow -p"
 alias oc='opencode'
 alias nd='nix develop -c zsh'
 alias nfu='nix flake update'
-alias claude="claude --allow-dangerously-skip-permissions"
+alias claude="claude --allow-dangerously-skip-permissions --trust-folder"
 alias cc='claude'
 
 zmodload zsh/parameter 2>/dev/null
