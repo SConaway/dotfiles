@@ -240,7 +240,4 @@ if [[ ! -f "$_zellij_comp" ]] || [[ "$(command -v zellij)" -nt "$_zellij_comp" ]
 fi
 [[ -f "$_zellij_comp" ]] && . "$_zellij_comp"
 
-[[ "$TERM_PROGRAM" == "vscode" ]] && . "/Applications/Nix Apps/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"
-
-# OpenClaw Completion
-[ -f "$HOME/.openclaw/completions/openclaw.zsh" ] && source "$HOME/.openclaw/completions/openclaw.zsh"
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
