@@ -234,7 +234,7 @@
   homebrew.masApps = {
     "Bitwarden" = 1352778147;
     "wBlock" = 6746388723;
-    "Xcode" = 497799835;
+    # "Xcode" = 497799835;
     "iMovie" = 408981434;
   };
 
