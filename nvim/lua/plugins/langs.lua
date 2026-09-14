@@ -14,6 +14,7 @@ return {
     util.gh "b0o/schemastore.nvim", -- SchemaStore!
     util.gh "nvim-treesitter/nvim-treesitter", -- treesitter utils!
     util.gh "RRethy/nvim-treesitter-endwise", -- adds `end` at end of function (after `<Enter>`)
+    util.gh "SmiteshP/nvim-navic", -- lsp-based code context!
   },
   defer = true,
   config = function()
@@ -165,6 +166,15 @@ return {
       "vue",
       "yaml",
       "zsh",
+    }
+
+    local navic = require "nvim-navic"
+    navic.setup {
+      lsp = {
+        -- set auto_attach to true, rather than having to attach inside each
+        -- LSP's on_attach function
+        auto_attach = true,
+      },
     }
 
     local map = Snacks.keymap.set

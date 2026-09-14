@@ -48,23 +48,32 @@ return {
         local total = s_count.total > s_count.maxcount and too_many or s_count.total
         return "  " .. current .. "/" .. total
       end
+      local context = function()
+        local navic = require "nvim-navic"
+        if navic.is_available() then
+          return navic.get_location {}
+        else
+          return ""
+        end
+      end
       return MiniStatusline.combine_groups {
         { hl = mode_hl, strings = { mode } },
         {
           hl = "MiniStatuslineDevinfo",
           strings = {
             git,
-            " ",
+            -- " ",
             diff,
-            " ",
+            -- " ",
             diagnostics,
-            " ",
+            -- " ",
             lsp,
           },
         },
         "%<", -- Mark general truncate point
         "%=", -- center!
         -- { hl = "MiniStatuslineFilename", strings = { filename } },
+        context(),
         "%=", -- center!
         { hl = "MiniStatuslineFileinfo", strings = { fileinfo() } },
         search(),
