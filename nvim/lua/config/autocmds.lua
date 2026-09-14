@@ -9,6 +9,19 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("disable-statusline", { clear = true }),
+  pattern = "*",
+  callback = function(args)
+    local ft = vim.bo[args.buf].filetype
+    -- if filetype is
+    --  - qf
+    --  - snacks_*
+    -- disable statusline
+    if ft == "qf" or ft:find "^snacks_" then vim.b[args.buf].ministatusline_disable = true end
+  end,
+})
+
 -- hot-reload core config (init.lua, lua/config/*.lua) on save: clears the
 -- module cache and re-requires everything, including plugins. Narrower,
 -- per-file hot-reload for lua/plugins/*.lua lives in plugins/init.lua.
