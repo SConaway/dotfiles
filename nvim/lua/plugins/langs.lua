@@ -18,7 +18,7 @@ return {
   },
   defer = true,
   config = function()
-    local function exists(p) return vim.fn.executable(p) == 1 end
+    local function binary_exists(p) return vim.fn.executable(p) == 1 end
     -- stolen from astrocommunity.pack.cpp:
     local uname = (vim.uv or vim.loop).os_uname()
     local is_linux_arm = uname.sysname == "Linux"
@@ -40,8 +40,8 @@ return {
     local tools = {
       "codelldb",
     }
-    if exists "go" then table.insert(servers, "gopls") end
-    if exists "nix" then table.insert(servers, "nil_ls") end
+    if binary_exists "go" then table.insert(servers, "gopls") end
+    if binary_exists "nix" then table.insert(servers, "nil_ls") end
 
     require("mason").setup {
       pip = {
