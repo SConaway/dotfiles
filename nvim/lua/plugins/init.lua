@@ -9,6 +9,7 @@
 local order = {
   "transparent",
   "bufferline",
+  "dropbar",
   "snacks",
   "gitsigns",
   "which-key",
