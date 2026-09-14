@@ -12,6 +12,8 @@ return {
     util.gh "stevearc/conform.nvim", -- format!
     util.gh "folke/trouble.nvim", -- diagnostics
     util.gh "b0o/schemastore.nvim", -- SchemaStore!
+    util.gh "nvim-treesitter/nvim-treesitter", -- treesitter utils!
+    util.gh "RRethy/nvim-treesitter-endwise", -- adds `end` at end of function (after `<Enter>`)
   },
   defer = true,
   config = function()
@@ -120,6 +122,50 @@ return {
     })
 
     require("trouble").setup {}
+
+    local treesitter = require "nvim-treesitter"
+    require("nvim-treesitter.install").update {}
+    treesitter.install {
+      "bash",
+      "c",
+      "cpp",
+      "css",
+      "csv",
+      "git_config",
+      "git_rebase",
+      "gitattributes",
+      "gitcommit",
+      "gitignore",
+      "go",
+      "go",
+      "gomod",
+      "html",
+      "ini",
+      "javascript",
+      "json",
+      "jsx",
+      "latex",
+      "lua",
+      "make",
+      "markdown",
+      "markdown_inline",
+      "nix",
+      "objc",
+      "python",
+      "regex",
+      "scss",
+      "sql",
+      "svelte",
+      "systemverilog",
+      "toml",
+      "tsx",
+      "tsx",
+      "typescript",
+      "typst",
+      "vue",
+      "yaml",
+      "zsh",
+    }
 
     local map = Snacks.keymap.set
     map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
