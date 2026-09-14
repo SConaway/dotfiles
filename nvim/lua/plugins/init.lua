@@ -20,6 +20,7 @@ local order = {
   "autopairs",
   "noice",
   "render-markdown",
+  "highlight-colors",
   "langs",
 }
 if not require("config.util").is_work then table.insert(order, "wakatime") end

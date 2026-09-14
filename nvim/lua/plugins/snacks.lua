@@ -180,6 +180,20 @@ return {
         end,
       })
       :map "<leader>up"
+    Snacks.toggle
+      .new({
+        id = "colors",
+        name = "Render Colors",
+        get = function() return require("nvim-highlight-colors").is_active() end,
+        set = function(state)
+          if state then
+            require("nvim-highlight-colors").turnOn()
+          else
+            require("nvim-highlight-colors").turnOff()
+          end
+        end,
+      })
+      :map "<leader>uc"
 
     map("n", "<leader>fC", Snacks.picker.commands, { desc = "Find Commands" })
     map("n", "<leader>fc", Snacks.picker.grep_word, { desc = "Find Word" })
