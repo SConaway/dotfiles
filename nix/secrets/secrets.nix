@@ -6,6 +6,7 @@ let
   ca-lyfe = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOuHmsK8p8diqygxzukYydUY3XY/VuuaC203CmrSc1Fe";
   id-attic = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJssKz+xwWfNM+ZUu5VfuLlZQkMFcqLUhrfnffC1qAZP";
   ca-work = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFW0fbol4QVcMuwvVcFAzKickzXNbAyfet2jjMW3TCXk";
+  ca-actual = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAkitZJsJ9+7VACitP/eUjboc2YcvPW4oEp8mXQlwUGv";
   small = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIdgmL6YLhqFF34HSQyn75E+npPNr+7c/ag3/4PptI5c";
   id-tailscale = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEkw9tMqTXBfceR1cos1y0q50kG1PKQAAYyTmV8zi48m";
 in
@@ -19,6 +20,7 @@ in
     ca-work
     small
     ca-lyfe
+    ca-actual
     id-tailscale
     id-attic
     user

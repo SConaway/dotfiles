@@ -99,6 +99,9 @@
             system = "x86_64-linux";
           };
           nodeNixpkgs = {
+            ca-actual = import nixpkgs-unstable {
+              system = "x86_64-linux";
+            };
             ca-media = import nixpkgs {
               system = "x86_64-linux";
             };
@@ -215,6 +218,20 @@
             (mkHmConfig "ca-lyfe")
           ];
           deployment.targetHost = "ca-lyfe";
+          deployment.targetUser = "steven";
+          deployment.tags = [
+            "ca"
+            "linux"
+          ];
+        };
+
+        ca-actual = {
+          imports = [
+            ./hosts/ca-actual/default.nix
+            home-manager.nixosModules.home-manager
+            (mkHmConfig "ca-actual")
+          ];
+          deployment.targetHost = "ca-actual";
           deployment.targetUser = "steven";
           deployment.tags = [
             "ca"
