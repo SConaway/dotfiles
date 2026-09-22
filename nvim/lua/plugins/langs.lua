@@ -87,8 +87,13 @@ return {
       -- It will pass the table to conform.format().
       -- This can also be a function that returns the table.
       format_on_save = function(bufnr)
-        -- return nothing to skip
+        -- return if:
+        -- `!` in command (e.g. `:w!`, `:wq!`)
+        if vim.v.cmdbang == 1 then return end
+        -- or disabled by snacks' toggle
         if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return end
+
+        -- else: return an object so that it formats
         return {
           lsp_format = "fallback",
           timeout_ms = 500,
