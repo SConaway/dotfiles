@@ -47,6 +47,8 @@ return {
         source_func = "omnifunc", -- enables snippets to be completed
       },
     }
+    _G.map("i", "<Tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
+
     -- disable completion for inputs!
     vim.api.nvim_create_autocmd("FileType", {
       pattern = { "snacks_input", "snacks_picker_input" },

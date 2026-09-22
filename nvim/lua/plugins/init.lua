@@ -58,11 +58,11 @@ end
 -- (deferred, above); this removes them again afterwards, same as the old
 -- init.lua did in its very last later() block. Scheduled last so it runs
 -- after that deferred setup, whichever tick it landed on.
-vim.schedule(function()
-  -- pcall: on config reload these may already be gone
-  pcall(vim.keymap.del, { "i", "s" }, "<Tab>")
-  pcall(vim.keymap.del, { "i", "s" }, "<S-Tab>")
-end)
+-- vim.schedule(function()
+--   -- pcall: on config reload these may already be gone
+--   pcall(vim.keymap.del, { "i", "s" }, "<Tab>")
+--   pcall(vim.keymap.del, { "i", "s" }, "<S-Tab>")
+-- end)
 
 -- hot-reload: re-run a single plugin file's config() on save, no restart
 -- needed. Doesn't install a brand-new `src` beyond a quick vim.pack.add

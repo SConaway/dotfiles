@@ -58,6 +58,7 @@ return {
 
     -- https://github.com/folke/snacks.nvim/blob/main/docs/keymap.md
     local map = Snacks.keymap.set
+    _G.map = map
     -- stolen from snacks' docs
     _G.dd = function(...) Snacks.debug.inspect(...) end
     _G.bt = function() Snacks.debug.backtrace() end
