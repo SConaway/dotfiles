@@ -195,6 +195,14 @@ return {
         end,
       })
       :map "<leader>uc"
+    Snacks.toggle
+      .new({
+        id = "illuminate",
+        name = "Illuminate",
+        get = function() return not vim.g.disable_illuminate end,
+        set = function(state) vim.g.disable_illuminate = not state end,
+      })
+      :map "<leader>uI"
 
     map("n", "<leader>fC", Snacks.picker.commands, { desc = "Find Commands" })
     map("n", "<leader>fc", Snacks.picker.grep_word, { desc = "Find Word" })

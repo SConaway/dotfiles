@@ -23,6 +23,7 @@ local order = {
   "render-markdown",
   "highlight-colors",
   "langs",
+  "illuminate",
 }
 if not require("config.util").is_work then table.insert(order, "wakatime") end
 
