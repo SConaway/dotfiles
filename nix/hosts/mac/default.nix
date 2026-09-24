@@ -180,7 +180,6 @@
   homebrew.enableBashIntegration = true;
   homebrew.taps = [
     "antoniorodr/memo"
-    "darrylmorley/whatcable"
     "mediosz/tap"
     "steipete/tap"
   ];
