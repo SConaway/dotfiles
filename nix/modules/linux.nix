@@ -48,10 +48,6 @@
     shell = pkgs.zsh;
   };
 
-  # requires NixOS
-  programs.command-not-found.enable = true;
-
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false;
