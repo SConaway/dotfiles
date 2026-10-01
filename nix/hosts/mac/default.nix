@@ -190,6 +190,7 @@
     "steipete/tap/imsg"
     "steipete/tap/mcporter"
     "steipete/tap/remindctl"
+    "espressif/eim/eim"
   ];
   homebrew.casks = [
     "anki"
@@ -246,8 +247,10 @@
       aerospace
       # alacritty-graphics
       alacritty
+      bootterm
       bun
       ccache
+      cmake
       ffmpeg
       ghostty-bin
       google-chrome
