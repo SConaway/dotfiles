@@ -228,7 +228,7 @@
         ca-actual = {
           imports = [
             ./hosts/ca-actual/default.nix
-            home-manager.nixosModules.home-manager
+            home-manager-unstable.nixosModules.home-manager
             (mkHmConfig "ca-actual")
           ];
           deployment.targetHost = "ca-actual";
