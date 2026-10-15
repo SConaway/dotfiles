@@ -93,6 +93,9 @@ unsetopt nomatch
 
 source "$ZSH/oh-my-zsh.sh"
 
+# common-aliases leaks its loop variable
+unset ft
+
 # # Run bgnotify's slow parts (lsappinfo, terminal-notifier) async so precmd never blocks.
 # # We capture exit_status/elapsed/lastcmd in the foreground, then hand off.
 # function bgnotify_end {
