@@ -27,6 +27,7 @@
     go
     iftop
     lazygit
+    leaf-markdown-viewer
     massren
     ncdu
     nixfmt

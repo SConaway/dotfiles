@@ -11,7 +11,6 @@
     ./hardware-configuration.nix
     ./disko.nix
     ../../modules/linux.nix
-    ../../modules/leaf.nix
     ../../modules/attic-push-linux.nix
     inputs.agenix.nixosModules.default
   ];

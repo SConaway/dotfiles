@@ -10,7 +10,6 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/linux.nix
-    ../../modules/leaf.nix
     ../../modules/nvim.nix
     ../../modules/attic-push-linux.nix
     inputs.agenix.nixosModules.default

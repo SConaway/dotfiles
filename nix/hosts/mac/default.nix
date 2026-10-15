@@ -9,7 +9,6 @@
   imports = [
     ../../modules/shared.nix
     ../../modules/nvim.nix
-    ../../modules/leaf.nix
     ../../modules/attic-push-darwin.nix
     ../../modules/man-cache-darwin.nix
     inputs.agenix.darwinModules.default
