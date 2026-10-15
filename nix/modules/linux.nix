@@ -62,12 +62,8 @@
     "steven"
   ];
 
-  # Automatically install system updates daily
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = true;
-    dates = "11:00";
-  };
+  # Updates are deployed with colmena; the channel-based autoUpgrade (no flake set) drifted from it.
+  system.autoUpgrade.enable = false;
 
   # Nix Garbage Collection
   nix.gc = {
