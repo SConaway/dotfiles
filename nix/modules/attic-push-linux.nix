@@ -18,7 +18,7 @@ in
     wantedBy = [ "multi-user.target" ];
     after = [
       "network-online.target"
-      "atticd.service"
+      "tailscaled.service"
     ];
     wants = [ "network-online.target" ];
     serviceConfig = {
