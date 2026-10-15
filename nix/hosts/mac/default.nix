@@ -108,6 +108,15 @@
         }
       );
     })
+
+    # atuin's pty e2e test times out in the darwin sandbox (nixpkgs#573527)
+    (final: prev: {
+      atuin = prev.atuin.overrideAttrs (old: {
+        checkFlags = (old.checkFlags or [ ]) ++ [
+          "--skip=filtered_commands_leave_no_captured_output"
+        ];
+      });
+    })
   ];
 
   # allow unfree packages
