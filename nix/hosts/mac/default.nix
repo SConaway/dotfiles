@@ -153,7 +153,7 @@
   system.defaults = {
     dock = {
       # autohide = true;
-      # mru-spaces = false;
+      mru-spaces = false; # AeroSpace: don't auto-rearrange Spaces
       # https://mynixos.com/nix-darwin/option/system.defaults.dock.wvous-tl-corner
       wvous-tl-corner = 1; # top left hot corner: nothing
       wvous-bl-corner = 1; # bottom left hot corner: nothing
